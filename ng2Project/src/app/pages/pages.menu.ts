@@ -15,17 +15,51 @@ export const PAGES_MENU = [
         }
       },
       {
-        path: "new",
+        path: 'new',
         data: {
           menu: {
-            title: "Test Page",
-            icon: "ion-android-home",
-            pathMatch: "prefix",
+            title: 'Test Page',
+            icon: 'ion-android-home',
+            pathMatch: 'prefix',
             selected: false,
             expanded: false,
-            order: 0
-          }
-        }
+            order: 0,
+          },
+        },
+      },
+      {
+        path: 'imgViewer',
+        data: {
+          menu: {
+            // title: 'general.menu.image_viewer',
+            title: 'Image Viewer',
+            icon: 'ion-android-home',
+            pathMatch: 'prefix',
+            selected: false,
+            expanded: false,
+            order: 0,
+          },
+        },
+        children: [
+          {
+            path: 'tables',
+            data: {
+              menu: {
+                // title: 'general.menu.tables',
+                title: 'Tables',
+              },
+            },
+          },
+          {
+            path: 'details',
+            data: {
+              menu: {
+                // title: 'general.menu.details',
+                title: 'Details',
+              },
+            },
+          },
+        ],
       },
       {
         path: 'editors',
