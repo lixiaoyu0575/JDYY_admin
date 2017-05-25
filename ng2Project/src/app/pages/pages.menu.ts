@@ -14,7 +14,7 @@ export const PAGES_MENU = [
           }
         }
       },
-      {
+      /*{
         path: 'new',
         data: {
           menu: {
@@ -395,7 +395,7 @@ export const PAGES_MENU = [
             target: '_blank'
           }
         }
-      }
+      }*/
     ]
   }
 ];
