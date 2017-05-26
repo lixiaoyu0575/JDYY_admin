@@ -18,7 +18,7 @@ export const PAGES_MENU = [
         path: "new",
         data: {
           menu: {
-            title: "Test Page",
+            title: 'Test Page',
             icon: "ion-android-home",
             pathMatch: "prefix",
             selected: false,
@@ -180,6 +180,28 @@ export const PAGES_MENU = [
             data: {
               menu: {
                 title: 'general.menu.form_layouts',
+              }
+            }
+          }
+        ]
+      },
+      {
+        path: 'report',
+        data: {
+          menu: {
+            title: 'Report',
+            icon: 'ion-compose',
+            selected: false,
+            expanded: false,
+            order: 400,
+          },
+        },
+        children: [
+          {
+            path: 'list',
+            data: {
+              menu: {
+                title: 'List',
               }
             }
           }

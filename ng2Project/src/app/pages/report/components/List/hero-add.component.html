@@ -1,0 +1,66 @@
+
+<div>
+  <h3>脑瘫儿童临床评估量表登记</h3>
+  <form>
+    <div class="form-group">
+      <label >姓名：</label>
+      <input #heroName placeholder="输入真实姓名">
+    </div>
+    <br>
+    <div class="form-group">
+      <label >性别：</label>
+      <select class="form-group">
+        <option>男</option>
+        <option>女</option>
+        <option>未知</option>
+      </select>
+    </div>
+    <br>
+    <div class="form-group">
+      <label >年龄：</label>
+      <input #heroAge placeholder="输入真实年龄">
+    </div>
+    <br>
+    <div class="form-group">
+      <label >临床主诉：</label>
+      <textarea  type="text" class="form-control"  placeholder="填写临床主诉"></textarea>
+    </div>
+    <br>
+    <div class="input-demo radio-demo row">
+      <label>临床分型：</label>
+      <div class="col-md-6" style="display: inline">
+        <label class="radio-inline custom-radio nowrap">
+          <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+          <span >痉挛型四肢瘫</span>
+        </label>
+      </div>
+      <div class="col-md-6" style="display: inline">
+        <label class="radio-inline custom-radio nowrap">
+          <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+          <span>痉挛型右侧偏瘫</span>
+        </label>
+      </div>
+      <div class="col-md-6" style="display: inline">
+        <label class="radio-inline custom-radio nowrap">
+          <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+          <span>痉挛型双瘫</span>
+        </label>
+      </div>
+      <div class="col-md-6" style="display: inline">
+        <label class="radio-inline custom-radio nowrap">
+          <input type="radio" name="inlineRadioOptions" id="inlineRadio4" value="option4">
+          <span>痉挛型左侧偏瘫</span>
+        </label>
+      </div>
+    </div>
+    <!--<div class="checkbox">
+      <ba-checkbox [(ngModel)]="isChecked" [label]="'Check me out'" [ngModelOptions]="{standalone: true}"></ba-checkbox>
+    </div>-->
+    <br>
+
+  </form>
+  <button (click)="add(heroName.value, heroAge.value);gotoHeroes(); heroName.value=''; heroAge.value=''">
+    创建报告
+  </button>
+
+</div>

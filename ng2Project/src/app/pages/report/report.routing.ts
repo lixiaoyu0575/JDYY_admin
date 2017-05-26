@@ -1,0 +1,26 @@
+/**
+ * Created by th3ee on 5/23/17.
+ */
+/**
+ * Created by th3ee on 5/18/17.
+ */
+import { Routes, RouterModule }  from '@angular/router';
+import { NgModule } from '@angular/core';
+import { ReportComponent } from './report.component';
+import { HeroesComponent } from './components/List/heroes.component';
+import { HeroDetailComponent } from './components/Detail/hero-detail.component';
+import { AddHeroComponent } from './components/List/hero-add.component';
+
+// noinspection TypeScriptValidateTypes
+const routes: Routes = [
+  {
+    path: '',
+    component: ReportComponent,
+    children: [
+      { path: 'list', component: HeroesComponent },
+      { path: 'detail/:id', component: HeroDetailComponent },
+      { path: 'add', component: AddHeroComponent },
+    ]
+  }
+];
+export const routing = RouterModule.forChild(routes);
