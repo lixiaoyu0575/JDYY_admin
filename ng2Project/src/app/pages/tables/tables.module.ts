@@ -6,6 +6,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { DataTableModule } from "angular2-datatable";
 import { HttpModule } from "@angular/http";
 import { DataFilterPipe } from './components/dataTables/data-filter.pipe';
+import { IdFilterPipe, NameFilterPipe, AgeFilterPipe, ExamContentFilterPipe, TimeFilterPipe, StatusFilterPipe } from './components/image-table/image-table-filter.pipe';
 import { HotTable, HotTableModule } from 'ng2-handsontable';
 
 import { routing } from './tables.routing';
@@ -32,6 +33,12 @@ import { ScienceDemoComponent } from './components/hotTables/handsontable/scienc
 import { SportDemoComponent } from './components/hotTables/handsontable/sport-demo';
 import { AdvancedDemoComponent } from './components/hotTables/handsontable/advanced-demo';
 
+import { ImageTableComponent } from './components/image-table/image-table.component';
+import { ImgViewerComponent } from './components/img-viewer/img-viewer.component';
+import { ImageTableService } from './components/image-table/image-table.service';
+
+import { TreeModule } from 'angular-tree-component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -41,7 +48,8 @@ import { AdvancedDemoComponent } from './components/hotTables/handsontable/advan
     Ng2SmartTableModule,
     DataTableModule,
     HttpModule,
-    HotTableModule
+    HotTableModule,
+    TreeModule,
   ],
   declarations: [
     Tables,
@@ -55,6 +63,12 @@ import { AdvancedDemoComponent } from './components/hotTables/handsontable/advan
     SmartTables,
     DataTables,
     DataFilterPipe,
+    IdFilterPipe,
+    NameFilterPipe,
+    ExamContentFilterPipe,
+    TimeFilterPipe,
+    StatusFilterPipe,
+    AgeFilterPipe,
     HotTablesComponent,
     HandsontableSectionComponent,
     BasicDemoComponent,
@@ -62,12 +76,15 @@ import { AdvancedDemoComponent } from './components/hotTables/handsontable/advan
     FinanceDemoComponent,
     ScienceDemoComponent,
     SportDemoComponent,
-    SheetDemoComponent
+    SheetDemoComponent,
+    ImgViewerComponent,
+    ImageTableComponent,
   ],
   providers: [
     BasicTablesService,
     SmartTablesService,
-    DataTablesService
+    DataTablesService,
+    ImageTableService,
   ]
 })
 export class TablesModule {

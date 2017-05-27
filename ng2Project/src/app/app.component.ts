@@ -52,3 +52,14 @@ export class App {
   }
 
 }
+
+// ,
+// "./libs/imgViewer/dicomParser.min.js",
+//   "./libs/imgViewer/codecs/openJPEG-FixedMemory.js",
+//   "./libs/imgViewer/codecs/charLS-FixedMemory-browser.js",
+//   "./libs/imgViewer/codecs/jpegLossless.js",
+//   "./libs/imgViewer/codecs/jpeg.js",
+//   "./libs/imgViewer/codecs/pako.min.js",
+//   "./libs/imgViewer/cornerstoneWADOImageLoader.js",
+//   "./libs/imgViewer/uids.js",
+//   "./libs/imgViewer/exampleImageLoader.js"

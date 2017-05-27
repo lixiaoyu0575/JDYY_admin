@@ -48,3 +48,9 @@ declare var AmCharts:any;
 declare var Chart:any;
 declare var Chartist:any;
 declare const chroma: any;
+
+declare let cornerstone: any,
+  cornerstoneTools: any,
+  cornerstoneWADOImageLoader: any,
+  testDeclare: any;
+
