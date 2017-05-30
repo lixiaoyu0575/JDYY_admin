@@ -14,6 +14,18 @@ export const PAGES_MENU = [
           }
         }
       },
+      {
+        path: 'report',
+        data: {
+          menu: {
+            title: 'List',
+            icon: 'ion-android-home',
+            selected: false,
+            expanded: false,
+            order: 0
+          }
+        }
+      },
       /*{
         path: 'new',
         data: {
