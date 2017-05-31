@@ -16,13 +16,14 @@ import { routing } from './report.routing';
 import { NgbDropdownModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { InMemoryDataService } from './components/List/in-memory-data.service';
+import { SendApplyComponent } from './components/sendapp/sendapp.component';
 
 
 
 @NgModule({
   imports:      [ CommonModule, FormsModule , routing, HttpModule, NgbDropdownModule,
     NgbModalModule, InMemoryWebApiModule.forRoot(InMemoryDataService)],
-  declarations: [ ReportComponent, HeroesComponent, DashboardComponent, AddHeroComponent, DefaultModal, ApplyComponent],
+  declarations: [ ReportComponent, HeroesComponent, DashboardComponent, AddHeroComponent, DefaultModal, ApplyComponent, SendApplyComponent],
   providers:    [ HeroService , UserService],
   entryComponents: [DefaultModal],
   bootstrap:    [ ReportComponent ],

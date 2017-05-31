@@ -4,12 +4,13 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
-import { Hero } from './hero';
+import { Hero, Usercreds } from './hero';
 @Injectable()
 export class HeroService {
   private heroesUrl = 'api/heroes';
   private emailUrl = 'http://localhost:3333/sendmail';
   private headers = new Headers({'Content-Type': 'application/json'});
+  private emailheaders = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
 
   constructor(private http: Http) {
   }
@@ -38,22 +39,22 @@ export class HeroService {
       .catch(this.handleError);
   }
 
-  create(name: string, age: string, status: number): Promise<Hero> {
+  create(name: string, age: string, status: number, user: string[]): Promise<Hero> {
     return this.http.post(this.heroesUrl, JSON.stringify({
       name: name,
-      age: age, status: status,
+      age: age,
+      status: status,
+      user: user,
     }), {headers: this.headers})
       .toPromise()
       .then((res) => res.json().data)
       .catch(this.handleError);
   }
 
-  sendMail(usercreds) {
-    const emailheaders = new Headers();
+  sendMail(usercreds: Usercreds) {
     let emailid = 'name=' + usercreds.recipients + '&text=' + usercreds.message + '&title=' + usercreds.subject;
     console.log(emailid);
-    emailheaders.append('Content-Type', 'application/X-www-form-urlencoded');
-    this.http.post(this.emailUrl, usercreds, { headers: emailheaders }).subscribe((data) => {
+    return this.http.post(this.emailUrl, usercreds, { headers: this.emailheaders }).subscribe((data) => {
       if (data.json().success) {
         console.log('Sent successfully');
       }

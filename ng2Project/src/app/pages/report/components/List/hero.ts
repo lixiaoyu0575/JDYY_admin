@@ -15,3 +15,9 @@ export class User {
   email: string;
   level: number;
 }
+
+export class Usercreds {
+  recipients: string;
+  message: string;
+  subject: string;
+}

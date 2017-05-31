@@ -1,24 +1,32 @@
+<div class="widgets">
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
 
-<div>
+     <div>
   <h3>脑瘫儿童临床评估量表登记</h3>
-  <form>
+       <hr style="background-color:whitesmoke">
     <div class="form-group">
       <label >姓名：</label>
-      <input #heroName placeholder="输入真实姓名">
+      <input type="text" class="form-control" #heroName placeholder="输入真实姓名">
     </div>
     <br>
+    <div class="col-md-3" style="padding-left: 0">
     <div class="form-group">
       <label >性别：</label>
-      <select class="form-group">
+      <select class="form-control">
         <option>男</option>
         <option>女</option>
         <option>未知</option>
       </select>
     </div>
+    </div>
     <br>
+    <div class="col-md-3" style="padding-left: 0">
     <div class="form-group">
       <label >年龄：</label>
-      <input #heroAge placeholder="输入真实年龄">
+      <input class="form-control" #heroAge placeholder="输入真实年龄">
+    </div>
     </div>
     <br>
     <div class="form-group">
@@ -26,7 +34,7 @@
       <textarea  type="text" class="form-control"  placeholder="填写临床主诉"></textarea>
     </div>
     <br>
-    <div class="input-demo radio-demo row">
+    <div class="form-group">
       <label>临床分型：</label>
       <div class="col-md-6" style="display: inline">
         <label class="radio-inline custom-radio nowrap">
@@ -56,11 +64,14 @@
     <!--<div class="checkbox">
       <ba-checkbox [(ngModel)]="isChecked" [label]="'Check me out'" [ngModelOptions]="{standalone: true}"></ba-checkbox>
     </div>-->
-    <br>
-
-  </form>
-  <button (click)="add(heroName.value, heroAge.value);gotoHeroes(); heroName.value=''; heroAge.value=''">
-    创建报告
-  </button>
-
+      <br>
+    <button type="submit" class="btn btn-danger"
+            (click)="add(heroName.value, heroAge.value);gotoHeroes(); heroName.value=''; heroAge.value=''">
+      创建报告
+    </button>
+    </div>
+    </div>
+    <div class="col-md-3"></div>
+  </div>
 </div>
+

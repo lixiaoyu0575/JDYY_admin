@@ -152,11 +152,7 @@ export class HeroesComponent implements OnInit {
   }
 
   gotoAdd(): void {
-    // console.log("hety");
-    this.router.navigate(['../apply'], { relativeTo: this.route } );
-    // this.router.navigateByUrl('localhost:4200/#/detail/12');
-    // console.log(this.selectedHero.id);
-    // console.log("hety");
+    this.router.navigate(['../sendapply'], { relativeTo: this.route } );
   }
 
 /*  add(name: string, age: string, status: number): void {

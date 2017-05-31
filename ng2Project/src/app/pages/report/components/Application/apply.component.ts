@@ -40,7 +40,7 @@ export class ApplyComponent implements OnInit {
     this.getHeroes();
   }
   gotoAdd(): void {
-    this.router.navigate(['../../add'], { relativeTo: this.route } );
+    this.router.navigate(['../../diagnose', this.hero.id], { relativeTo: this.route } );
   }
   getHeroes(): void {
     this.heroService.getHeroes().then((heroes) => {
@@ -68,7 +68,7 @@ export class ApplyComponent implements OnInit {
     this.heroService.update(this.hero)
       .then(() => this.goBack());
   }
-  add(name: string, age: string, status: number): void {
+  /*add(name: string, age: string, status: number): void {
     name = name.trim();
     age = age.trim();
     status = 0;
@@ -77,6 +77,6 @@ export class ApplyComponent implements OnInit {
       console.log(hero);
       this.heroes.push(hero);
     });
-  }
+  }*/
 
 }
