@@ -23,6 +23,11 @@ export class ImgViewerComponent implements OnInit {
   localUrlPrefix: string;
   imgUrl: string;
   imgUrlPrefix: string;
+
+  direction: string;
+  isReportShow: boolean;
+  isImageShow: boolean;
+
   actionMapping: IActionMapping = {
     mouse: {
       // contextMenu: (tree, node, $event) => {
@@ -88,6 +93,11 @@ export class ImgViewerComponent implements OnInit {
     this.imgUrlPrefix = 'wadouri:http://' + localIp + ':8081';
     // this.localUrlPrefix = 'http://localhost:8081';
     // this.imgUrlPrefix = 'wadouri:http://localhost:8081';
+
+
+    this.direction = "row";
+    this.isReportShow = true;
+    this.isImageShow = true;
   }
   ngOnInit(): void {
     // Retrieve the DOM element itself
@@ -105,15 +115,15 @@ export class ImgViewerComponent implements OnInit {
       $('#mrbottomleft').text('WW/WC: ' + Math.round(viewport.voi.windowWidth) + '/' + Math.round(viewport.voi.windowCenter));
       $('#mrbottomright').text('Zoom: ' + viewport.scale.toFixed(2));
     });
-    const config = {
-      webWorkerPath : '/scripts/lib/labelModule/libs/imgViewer/cornerstoneWADOImageLoaderWebWorker.js',
-      taskConfiguration: {
-        'decodeTask' : {
-          codecsPath: '/scripts/lib/labelModule/libs/imgViewer/cornerstoneWADOImageLoaderCodecs.js'
-        }
-      }
-    };
-    cornerstoneWADOImageLoader.webWorkerManager.initialize(config);
+    // const config = {
+    //   webWorkerPath : './../../../../../../libs/imgViewer/cornerstoneWADOImageLoaderWebWorker.js',
+    //   taskConfiguration: {
+    //     'decodeTask' : {
+    //       codecsPath: './../../../../../../libs/imgViewer/cornerstoneWADOImageLoaderCodecs.js'
+    //     }
+    //   }
+    // };
+    // cornerstoneWADOImageLoader.webWorkerManager.initialize(config);
     this.loadImg();
     $('.list-group-item').removeClass('active');
 
@@ -125,6 +135,15 @@ export class ImgViewerComponent implements OnInit {
     }, 1);
   }
 
+  toggleReport() {
+    this.isReportShow = !this.isReportShow;
+  }
+  toggleImage() {
+    this.isImageShow = !this.isImageShow;
+  }
+  toggleDirection() {
+  }
+
   loadImg() {
     const imageId = this.imgUrl;
     const element = this.element;
@@ -134,7 +153,7 @@ export class ImgViewerComponent implements OnInit {
     //   canvas.remove();
     // }
     // Load the image and enable tools
-    cornerstone.loadImage(imageId).then((image) => {
+    cornerstone.loadImage('example://1').then((image) => {
       cornerstone.displayImage(element, image);
       cornerstoneTools.mouseInput.enable(element);
       cornerstoneTools.mouseWheelInput.enable(element);

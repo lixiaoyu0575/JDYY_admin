@@ -78,42 +78,16 @@ export const PAGES_MENU = [
                 title: 'Image Table',
               }
             }
+          },
+          {
+            path: 'imageGallery',
+            data: {
+              menu: {
+                title: 'Image Gallery',
+              }
+            }
           }
         ]
-      },
-      {
-        path: 'imgViewer',
-        data: {
-          menu: {
-            // title: 'general.menu.image_viewer',
-            title: 'Image Viewer',
-            icon: 'ion-android-home',
-            pathMatch: 'prefix',
-            selected: false,
-            expanded: false,
-            order: 0,
-          },
-        },
-        children: [
-          {
-            path: 'tables',
-            data: {
-              menu: {
-                // title: 'general.menu.tables',
-                title: 'Tables',
-              },
-            },
-          },
-          {
-            path: 'details',
-            data: {
-              menu: {
-                // title: 'general.menu.details',
-                title: 'Details',
-              },
-            },
-          },
-        ],
       },
       /*{
        path: 'editors',

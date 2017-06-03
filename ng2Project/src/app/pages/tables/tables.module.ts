@@ -36,8 +36,11 @@ import { AdvancedDemoComponent } from './components/hotTables/handsontable/advan
 import { ImageTableComponent } from './components/image-table/image-table.component';
 import { ImgViewerComponent } from './components/img-viewer/img-viewer.component';
 import { ImageTableService } from './components/image-table/image-table.service';
+import { ImageGalleryComponent } from './components/image-gallery/image-gallery.component';
+import { SharedModule } from './../../shared/_module';
 
 import { TreeModule } from 'angular-tree-component';
+import { MdTabsModule } from '@angular/material';
 
 @NgModule({
   imports: [
@@ -50,6 +53,8 @@ import { TreeModule } from 'angular-tree-component';
     HttpModule,
     HotTableModule,
     TreeModule,
+    MdTabsModule,
+    SharedModule,
   ],
   declarations: [
     Tables,
@@ -79,6 +84,7 @@ import { TreeModule } from 'angular-tree-component';
     SheetDemoComponent,
     ImgViewerComponent,
     ImageTableComponent,
+    ImageGalleryComponent,
   ],
   providers: [
     BasicTablesService,

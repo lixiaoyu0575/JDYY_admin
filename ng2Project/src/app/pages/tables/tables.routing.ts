@@ -7,6 +7,7 @@ import { DataTables } from './components/dataTables/dataTables.component';
 import { HotTablesComponent } from './components/hotTables/hotTables.component';
 import { ImageTableComponent } from './components/image-table/image-table.component';
 import { ImgViewerComponent } from './components/img-viewer/img-viewer.component';
+import { ImageGalleryComponent } from './components/image-gallery/image-gallery.component';
 // noinspection TypeScriptValidateTypes
 const routes: Routes = [
   {
@@ -19,6 +20,7 @@ const routes: Routes = [
       { path: 'hottables', component: HotTablesComponent },
       { path: 'imageTable', component: ImageTableComponent },
       { path: 'imgViewer', component: ImgViewerComponent },
+      { path: 'imageGallery', component: ImageGalleryComponent },
     ]
   }
 ];

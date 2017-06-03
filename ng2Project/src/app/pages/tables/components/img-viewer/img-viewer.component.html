@@ -1,102 +1,106 @@
-<md-tab-group>
-  <md-tab>
-    <ng-template md-tab-label>
-      The <em>best</em> pasta
-    </ng-template>
-    <ba-card>
-      <div class="row">
-        <div class="col-xs-3">
-          <form>
-            <input #filter (keyup)="filterNodes(filter.value, tree)" placeholder="过滤"/>
-          </form>
-          <div style="height: 400px; width: 100%">
+<md-card class="card-demo" (click)="toggleDirection()">
+  <md-card-title>'Flex' to Fill Row  TEST </md-card-title>
+  <md-card-subtitle>Simple row using "flex" on 3rd element to fill available main axis.</md-card-subtitle>
+  <button (click)="toggleReport()">toggleReport</button>
+  <button (click)="toggleImage()">toggleImage</button>
+  <md-card-content>
+    <div class="containerX">
+      <div [fxLayout]="direction" (click)="toggleDirection()" class="colored box" style="cursor: pointer;">
+        <!--<div [fxFlex]="someValue">  fxFlex="20"  </div>-->
+        <div fxFlex>  Image
+          <ba-card>
+            <div class="row">
+              <div class="col-xs-3">
+                <form>
+                  <input #filter (keyup)="filterNodes(filter.value, tree)" placeholder="过滤"/>
+                </form>
+                <div style="height: 400px; width: 100%">
 
-            <tree-root
-              #tree
-              [nodes]="nodes"
-              [options]="customTemplateStringOptions"
-              [focused]="true"
-              (onEvent)="onEvent($event)"
-            >
-              <ng-template #treeNodeTemplate let-node >
+                  <tree-root
+                    #tree
+                    [nodes]="nodes"
+                    [options]="customTemplateStringOptions"
+                    [focused]="true"
+                    (onEvent)="onEvent($event)"
+                  >
+                    <ng-template #treeNodeTemplate let-node >
                 <span title="{{node.data.subTitle}}"  [class.labelDone]="node.data.isLabelDone"
                       [class.labelNotDone]="!node.data.isLabelDone">{{ node.data.name }}</span>
-                <span class="pull-right">{{ childrenCount(node) }}</span>
-                <!--<button (click)="test(node)">test</button>-->
+                      <span class="pull-right">{{ childrenCount(node) }}</span>
+                      <!--<button (click)="test(node)">test</button>-->
 
-                <!--<button (click)="go($event)">Custom Action</button>-->
-              </ng-template>
-              <ng-template #loadingTemplate>载入中, 请稍候....</ng-template>
-            </tree-root>
-          </div>
+                      <!--<button (click)="go($event)">Custom Action</button>-->
+                    </ng-template>
+                    <ng-template #loadingTemplate>载入中, 请稍候....</ng-template>
+                  </tree-root>
+                </div>
+              </div>
+              <div class="col-xs-2">
+                <ul class="list-group">
+                  <a id="rectangleroi1" class="list-group-item" (click)="chooseType1()">Type 1
+                    <svg width="10px" height="10px"><rect stroke="black" width="10px" height="10px" fill="red"></rect></svg></a>
+                  <a id="rectangleroi2" class="list-group-item" (click)="chooseType2()">Type 2
+                    <svg width="10px" height="10px"><rect stroke="black" width="10px" height="10px" fill="yellow"></rect></svg></a>
+                  <a id="rectangleroi3" class="list-group-item" (click)="chooseType3()">Type 3
+                    <svg width="10px" height="10px"><rect stroke="black" width="10px" height="10px" fill="pink"></rect></svg></a>
+                  <a id="rectangleroi4" class="list-group-item" (click)="chooseType4()">Type 4
+                    <svg width="10px" height="10px"><rect stroke="black" width="10px" height="10px" fill="greenyellow"></rect></svg></a>
+                  <a id="rectangleroi5" class="list-group-item" (click)="chooseType5()">Type 5
+                    <svg width="10px" height="10px"><rect stroke="black" width="10px" height="10px" fill="orange"></rect></svg></a>
+                  <!--<a id="freehand1" class="list-group-item" (click)="chooseFreehand1()">Type 1(freehand)</a>-->
+                  <!--<a id="freehand2" class="list-group-item" (click)="chooseFreehand2()">Type 2(freehand)</a>-->
+                </ul>
+                <ul class="list-group">
+                  <a id="submit" class="list-group-item" (click)="submit()">保存</a>
+                  <a id="clear" class="list-group-item" (click)="clear()">清空</a>
+                  <!--<a id="restore" class="list-group-item" (click)="restore()">Restore</a>-->
+                </ul>
+                <br>
+              </div>
+              <div class="col-xs-7">
+                <div class="row">
+                  <div class="col-xs-2">
+                    <button id="rightDrag" class="btn btn-sm-default active-tool" (click)="activateTool('rightDrag')">右键拖拽</button>
+                  </div>
+                  <div class="col-xs-2">
+                    <button id="rightWwwc" class="btn btn-sm-default active-tool" (click)="activateTool('rightWwwc')">右键对比度</button>
+                  </div>
+                </div>
+                <div #dicomDom id="dicomDom"
+                     style="width:768px;height:768px;position:relative;display:inline-block;color:white;"
+                     oncontextmenu="return false"
+                     class='cornerstone-enabled-image'
+                     unselectable='on'
+                     onselectstart='return false;'
+                     onmousedown='return false;'>
+                  <div id="dicomImage"
+                       style="width:512px;height:512px;top:0px;left:0px; position:absolute;">
+                  </div>
+                  <!--<div id="mrtopleft" style="position: absolute;top:3px; left:3px">-->
+                  <!--Patient Name-->
+                  <!--</div>-->
+                  <!--<div id="mrtopright" style="position: absolute;top:3px; right:3px">-->
+                  <!--Hospital-->
+                  <!--</div>-->
+                  <div id="mrbottomright" style="position: absolute;bottom:6px; right:3px">
+                    <div id="frameRate"></div>
+                    <div id="zoomText">Zoom: </div>
+                    <div id="sliceText">Image: </div>
+                  </div>
+                  <div id="mrbottomleft" style="position: absolute;bottom:3px; left:3px">
+                    WW/WC:
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ba-card>
         </div>
-        <div class="col-xs-2">
-          <ul class="list-group">
-            <a id="rectangleroi1" class="list-group-item" (click)="chooseType1()">Type 1
-              <svg width="10px" height="10px"><rect stroke="black" width="10px" height="10px" fill="red"></rect></svg></a>
-            <a id="rectangleroi2" class="list-group-item" (click)="chooseType2()">Type 2
-              <svg width="10px" height="10px"><rect stroke="black" width="10px" height="10px" fill="yellow"></rect></svg></a>
-            <a id="rectangleroi3" class="list-group-item" (click)="chooseType3()">Type 3
-              <svg width="10px" height="10px"><rect stroke="black" width="10px" height="10px" fill="pink"></rect></svg></a>
-            <a id="rectangleroi4" class="list-group-item" (click)="chooseType4()">Type 4
-              <svg width="10px" height="10px"><rect stroke="black" width="10px" height="10px" fill="greenyellow"></rect></svg></a>
-            <a id="rectangleroi5" class="list-group-item" (click)="chooseType5()">Type 5
-              <svg width="10px" height="10px"><rect stroke="black" width="10px" height="10px" fill="orange"></rect></svg></a>
-            <!--<a id="freehand1" class="list-group-item" (click)="chooseFreehand1()">Type 1(freehand)</a>-->
-            <!--<a id="freehand2" class="list-group-item" (click)="chooseFreehand2()">Type 2(freehand)</a>-->
-          </ul>
-          <ul class="list-group">
-            <a id="submit" class="list-group-item" (click)="submit()">保存</a>
-            <a id="clear" class="list-group-item" (click)="clear()">清空</a>
-            <!--<a id="restore" class="list-group-item" (click)="restore()">Restore</a>-->
-          </ul>
-          <br>
-        </div>
-        <div class="col-xs-7">
-          <div class="row">
-            <div class="col-xs-2">
-              <button id="rightDrag" class="btn btn-sm-default active-tool" (click)="activateTool('rightDrag')">右键拖拽</button>
-            </div>
-            <div class="col-xs-2">
-              <button id="rightWwwc" class="btn btn-sm-default active-tool" (click)="activateTool('rightWwwc')">右键对比度</button>
-            </div>
-          </div>
-          <div #dicomDom id="dicomDom"
-               style="width:768px;height:768px;position:relative;display:inline-block;color:white;"
-               oncontextmenu="return false"
-               class='cornerstone-enabled-image'
-               unselectable='on'
-               onselectstart='return false;'
-               onmousedown='return false;'>
-            <div id="dicomImage"
-                 style="width:512px;height:512px;top:0px;left:0px; position:absolute;">
-            </div>
-            <!--<div id="mrtopleft" style="position: absolute;top:3px; left:3px">-->
-            <!--Patient Name-->
-            <!--</div>-->
-            <!--<div id="mrtopright" style="position: absolute;top:3px; right:3px">-->
-            <!--Hospital-->
-            <!--</div>-->
-            <div id="mrbottomright" style="position: absolute;bottom:6px; right:3px">
-              <div id="frameRate"></div>
-              <div id="zoomText">Zoom: </div>
-              <div id="sliceText">Image: </div>
-            </div>
-            <div id="mrbottomleft" style="position: absolute;bottom:3px; left:3px">
-              WW/WC:
-            </div>
-          </div>
-        </div>
+        <div fxFlex>  Report  </div>
       </div>
-    </ba-card>
-
-  </md-tab>
-  <md-tab>
-    <ng-template md-tab-label>
-      <md-icon>thumb_down</md-icon> The worst sushi
-    </ng-template>
-    <h1>Terrible sushi restaurants</h1>
-    <p>...</p>
-  </md-tab>
-</md-tab-group>
+    </div>
+  </md-card-content>
+  <md-card-footer>
+    <div class="hint">&lt;div  fxLayout="{{ direction }}" &gt;</div>
+  </md-card-footer>
+</md-card>
 

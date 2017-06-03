@@ -6,8 +6,9 @@ import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {  MaterialModule } from '@angular/material';
+import { SharedModule} from './shared/_module';
 
-// import {  MaterialModule } from '@angular/material';
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -52,6 +53,8 @@ export type StoreType = {
     PagesModule,
     routing,
     BrowserAnimationsModule,
+    MaterialModule,
+    SharedModule,
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     APP_PROVIDERS
