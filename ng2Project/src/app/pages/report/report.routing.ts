@@ -23,7 +23,6 @@ const routes: Routes = [
       { path: 'diagnose/:name', component: AddHeroComponent },
       { path: 'add', component: AddHeroComponent },
       { path: 'sendapply', component: SendApplyComponent },
-     // { path: 'apply', component: ApplyComponent },
     ]
   }
 ];

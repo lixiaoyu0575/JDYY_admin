@@ -23,19 +23,12 @@ export class HeroService {
   getHeroes(): Promise<Hero[]> { // return an array of Hero[] data type
     return this.http.get('http://202.117.54.45:3333/gethero')
       .toPromise().then(response => response.json() as Hero[]);
-      // .catch(this.handleError);
   }
 
   private handleError(error: any): Promise<any> {
     console.error('An error occured', error);
     return Promise.reject(error.message || error); // ?
   }
-
-/*  getHero(id: number): Promise<Hero> {
-    const url = `${this.heroesUrl}/${id}`;
-    return this.http.get(url).toPromise().then(response => response.json().data as Hero)
-      .catch(this.handleError);
-  }*/
 
   getHero(name: string): Promise<Hero> {
     return this.http.post('http://202.117.54.45:3333/getherodetail', JSON.stringify({
