@@ -9,6 +9,9 @@
       <input #heroAge type="text"  class="form-control" placeholder="年龄">
     </div>
     <div class="form-group">
+      <input #heroScantype type="text" class="form-control" placeholder="扫描类型">
+    </div>
+    <div class="form-group">
       <input #heroReason type="text" class="form-control" placeholder="申请阅片原因">
     </div>
     <div class="form-group">
@@ -23,7 +26,7 @@
         </div>
       </div>
       <div class="col-md-1">
-        <button  class="btn btn-success" (click)="add(heroName.value, heroAge.value , heroReason.value,
+        <button  class="btn btn-success" (click)="add(heroName.value, heroAge.value , heroScantype.value ,heroReason.value,
          heroDiagnosis.value);gotoHeroes(); heroName.value=''; heroAge.value=''; sendMail()" >发送申请</button>
       </div>
       <div class="col-md-1">

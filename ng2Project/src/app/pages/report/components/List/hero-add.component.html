@@ -1,5 +1,5 @@
 <div class="widgets">
-  <div class="row">
+  <div class="row" *ngIf="hero">
     <div class="col-md-3"></div>
     <div class="col-md-6">
 
@@ -8,7 +8,7 @@
        <hr style="background-color:whitesmoke">
     <div class="form-group">
       <label >姓名：</label>
-      <input type="text" class="form-control" #heroName placeholder="输入真实姓名">
+      <input type="text" class="form-control"  placeholder="输入真实姓名">
     </div>
     <br>
     <div class="col-md-3" style="padding-left: 0">
@@ -25,7 +25,7 @@
     <div class="col-md-3" style="padding-left: 0">
     <div class="form-group">
       <label >年龄：</label>
-      <input class="form-control" #heroAge placeholder="输入真实年龄">
+      <input class="form-control"  placeholder="输入真实年龄">
     </div>
     </div>
     <br>
@@ -66,7 +66,7 @@
     </div>-->
       <br>
     <button type="submit" class="btn btn-danger"
-            (click)="add(heroName.value, heroAge.value);gotoHeroes(); heroName.value=''; heroAge.value=''">
+            (click)="update();gotoHeroes();">
       创建报告
     </button>
     </div>

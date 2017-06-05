@@ -5,7 +5,6 @@ import { Component , OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 import { HeroService } from '../List/hero.service';
-import { UserService } from '../List/user.service';
 import 'rxjs/add/operator/switchMap'; // make the parameters Observable
 import { Hero , User } from '../List/hero';
 import { LocalDataSource } from 'ng2-smart-table';
@@ -25,7 +24,6 @@ export class ApplyComponent implements OnInit {
   constructor(
     private router: Router,
     private heroService: HeroService,
-    private userService: UserService,
     private route: ActivatedRoute,
     private location: Location,
 
@@ -37,11 +35,11 @@ export class ApplyComponent implements OnInit {
         console.log(hero);
         this.hero = hero[0];
       });
-    this.getUser();
+    // this.getUser();
     this.getHeroes();
   }
   gotoAdd(): void {
-    this.router.navigate(['../../diagnose', this.hero.id], { relativeTo: this.route } );
+    this.router.navigate(['../../diagnose', this.hero.name], { relativeTo: this.route } );
   }
   getHeroes(): void {
     this.heroService.getHeroes().then((heroes) => {
@@ -49,7 +47,7 @@ export class ApplyComponent implements OnInit {
       console.log(this.heroes);
     });
   }
-  getUser(): void {
+/*  getUser(): void {
     this.userService.getData().then((data) => {
       this.source.load(data);
       console.log(data);
@@ -58,12 +56,12 @@ export class ApplyComponent implements OnInit {
       this.nowuser = data[0];
       this.applyTo = data[1].name;
     });
-  }
+  }*/
   goBack(): void {
     this.location.back(); // !
   }
   doVerify(): void {
-    this.hero.status = 1;
+    this.hero.status = '已审核';
   }
   save(): void {
     this.heroService.update(this.hero)

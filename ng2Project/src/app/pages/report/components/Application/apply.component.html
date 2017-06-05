@@ -16,17 +16,11 @@
   </div>
   <div class="row" >
     <div class="col-md-1">
-      <div  class="form-group" >
-        <select  class="form-control" >
-          <option *ngFor="let item of users" value="applyTo">{{item.name}}</option>
-        </select>
-      </div>
-    </div>
-    <div class="col-md-1">
       <button  class="btn btn-success" (click)="gotoAdd()" >填写报告</button>
     </div>
+    <div class="col-md-10"></div>
     <div class="col-md-1">
-      <button type="submit" class="btn btn-success" (click)="goBack()">返回</button>
+      <button type="submit" class="btn btn-default" (click)="goBack()">返回</button>
     </div>
   </div>
 

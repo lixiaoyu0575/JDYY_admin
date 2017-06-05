@@ -27,7 +27,6 @@ export class AddHeroComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.switchMap((params: Params) => this.heroService.getHero(params['name']))
       .subscribe(hero => {
-        console.log(hero);
         this.hero = hero;
       });
      this.getHeroes();
@@ -35,25 +34,11 @@ export class AddHeroComponent implements OnInit {
   gotoHeroes(): void {
     this.router.navigate(['../../'], { relativeTo: this.route } ); // !
   }
-  /*save(): void {
-    this.heroService.update(this.hero)
-      .then(() => this.goBack());
-  }*/
 
-  add(name: string, age: string, reason: string, originaldiagnosis: string, status: number, user: any[]): void {
-    name = name.trim();
-    age = age.trim();
-    status = 0;
-    user = ['Andy'];
-    this.hero.status = 1;
-    if (!name) {
-      return;
-    }
+  update(): void {
+    console.log(this.hero[0].status);
+    this.hero[0].status = '已审核';
+    console.log(this.hero[0].status);
     this.heroService.update(this.hero);
-    /*this.heroService.create(name, age, status, user).then( hero => {
-      console.log(hero);
-      this.heroes.push(hero);
-      this.selectedHero = null;
-    });*/
   }
 }

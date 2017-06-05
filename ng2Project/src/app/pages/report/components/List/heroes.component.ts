@@ -1,7 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import {Hero, User} from './hero';
 import { HeroService } from './hero.service';
-import { UserService } from './user.service';
+import { LoginService } from '../../../login/login.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LocalDataSource } from 'ng2-smart-table';
 import { Location } from '@angular/common';
@@ -66,11 +66,23 @@ import { DefaultModal } from '../default-modal/default-modal.component';
 })
 export class HeroesComponent implements OnInit {
 
+
+  idFilterQuery = '';
+  nameFilterQuery = '';
+  ageFilterQuery = '';
+  examContentFilterQuery = '';
+  timeFilterQuery = '';
+  statusFilterQuery = '';
+  rowsOnPage = 10;
+  sortBy = 'email';
+  sortOrder = 'asc';
+
+
   heroes: Hero[];
   users: User[];
   shareTo: string;
   selecteduser: string;
-  nowuser: User;
+  nowuser: string;
   title= 'Tour of Heros';
   selectedHero: Hero;
   source: LocalDataSource = new LocalDataSource();
@@ -80,23 +92,19 @@ export class HeroesComponent implements OnInit {
     message: '',
   };
   constructor(private router: Router, private route: ActivatedRoute,
-              private heroService: HeroService, private userService: UserService,
+              private heroService: HeroService,
+              private loginService: LoginService,
               private location: Location,
               private modalService: NgbModal) {}
 
   getUser(): void {
-    this.userService.getData().then((data) => {
-      this.source.load(data);
-      console.log(data);
+    this.loginService.getuser().then((data) => {
+      // this.source.load(data);
       this.users = data;
-      console.log(this.users);
-      this.nowuser = data[0];
+      this.nowuser = localStorage['user_name'];
       this.selecteduser = data[0].name;
       this.shareTo = data[1].name;
       this.emailContent.recipients = data[1].email;
-      console.log(this.source);
-      console.log(this.nowuser.email);
-      console.log(this.nowuser.name);
     });
   }
   getHeroes(): void {
@@ -110,7 +118,6 @@ export class HeroesComponent implements OnInit {
     this.location.back(); // !
   }
   doShare(): void {
-
         this.selectedHero.user.push(this.shareTo);
         this.heroService.update(this.selectedHero)
       .then(() => {
@@ -118,23 +125,17 @@ export class HeroesComponent implements OnInit {
         });
       }
 
-
-  /*showModal(): void {
-    const activeModal = this.modalService.open(DefaultModal, {size: 'lg'});
-    activeModal.componentInstance.modalHeader = '提交报告';
-  }*/
-
   switchUser(): void {
-    this.userService.getData().then((data) => {
-      this.source.load(data);
+    this.loginService.getuser().then((data) => {
+      // this.source.load(data);
       console.log(data);
      for (let i = 0; i < data.length; i++) {
        if (data[i].name === this.selecteduser) {
-         this.nowuser = data[i];
+         this.nowuser = data[i].name;
        }
      }
     });
-  };
+  }
 
   ngOnInit(): void {
     this.getUser();
@@ -142,9 +143,7 @@ export class HeroesComponent implements OnInit {
   }
 
   onSelect(hero: Hero): void {
-    // console.log(this.router);
     this.selectedHero = hero;
-    // console.log(this.selectedHero.id);
   }
   gotoDetail(): void {
     this.router.navigate(['../apply', this.selectedHero.name], { relativeTo: this.route } );
@@ -154,17 +153,8 @@ export class HeroesComponent implements OnInit {
     this.router.navigate(['../sendapply'], { relativeTo: this.route } );
   }
 
-/*  add(name: string, age: string, status: number): void {
-    name = name.trim();
-    if (!name) { return; }
-    this.heroService.create(name, age, status).then( hero => {
-      this.heroes.push(hero);
-      this.selectedHero = null;
-    });
-  }*/
-
   sendMail() {
-    this.emailContent.message = '' + this.nowuser.name + '发来了报告诊断申请';
+    this.emailContent.message = '' + this.nowuser + '发来了报告诊断申请';
     console.log(this.emailContent);
     this.heroService.sendMail(this.emailContent);
 

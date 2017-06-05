@@ -15,11 +15,6 @@ export class HeroService {
   constructor(private http: Http) {
   }
 
-/*  getHeroes(): Promise<Hero[]> { // return an array of Hero[] data type
-    return this.http.get(this.heroesUrl).toPromise().then(response => response.json().data as Hero[])
-      .catch(this.handleError);
-  }*/
-
   getHeroes(): Promise<Hero[]> { // return an array of Hero[] data type
     return this.http.get('http://202.117.54.45:3333/gethero')
       .toPromise().then(response => response.json() as Hero[]);
@@ -39,21 +34,23 @@ export class HeroService {
   }
 
   update(hero: Hero): Promise<Hero> {
-    const url = `${this.heroesUrl}/${hero.id}`;
-    return this.http.put(url, JSON.stringify(hero), {headers: this.headers})
+    return this.http.post('http://202.117.54.45:3333/updatehero', JSON.stringify(hero), {headers: this.headers})
       .toPromise()
       .then(() => hero)
       .catch(this.handleError);
   }
 
-  create(name: string, age: string, reason: string,
-         originaldiagnosis: string, status: number, user: string[]): Promise<Hero> {
+  create(name: string, age: string, scantype: string , reason: string,
+         originaldiagnosis: string, status: string, time: string,
+         user: string[]): Promise<Hero> {
     return this.http.post('http://202.117.54.45:3333/addhero', JSON.stringify({
       name: name,
       age: age,
+      scantype: scantype,
       reason: reason,
       originaldiagnosis: originaldiagnosis,
       status: status,
+      time: time,
       user: user,
     }), { headers: this.headers })
       .toPromise()

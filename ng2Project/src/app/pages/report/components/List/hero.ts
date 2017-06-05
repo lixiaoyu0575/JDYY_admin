@@ -5,9 +5,11 @@ export class Hero {
   id: number;
   name: string;
   age: string;
+  scantype: string;
   reason: string;
   originaldiagnosis: string;
-  status: number;
+  status: string;
+  time: string;
   user: string[];
 }
 

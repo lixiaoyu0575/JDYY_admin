@@ -5,9 +5,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HeroService } from '../List/hero.service';
 import { Router , ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { UserService } from '../List/user.service';
 import { Hero , User } from '../List/hero';
 import { LocalDataSource } from 'ng2-smart-table';
+import { LoginService } from '../../../login/login.service';
 
 @Component({
   moduleId: module.id,
@@ -20,7 +20,7 @@ export class SendApplyComponent implements OnInit {
   selectedHero: Hero;
   users: User[];
   nowuser: User;
-  currentUrl = 'http://localhost:4200/#/pages/report';
+  currentUrl = 'http://localhost:4200';
   applyTo: string;
   emailContent = {
     recipients: '',
@@ -31,18 +31,18 @@ export class SendApplyComponent implements OnInit {
   constructor(private router: Router,
               private route: ActivatedRoute,
               private heroService: HeroService,
-              private userService: UserService,
+              private loginService: LoginService,
               private location: Location) {}
   getHeroes(): void {
     this.heroService.getHeroes().then(heroes => this.heroes = heroes);
   }
   getUser(): void {
-    this.userService.getData().then((data) => {
-      this.source.load(data);
-      console.log(data);
+    this.loginService.getuser().then((data) => {
+      // this.source.load(data);
+      // console.log(data);
       this.users = data;
-      this.nowuser = data[0];
-      console.log(this.users);
+      this.nowuser = localStorage['user_name'];
+      // console.log(this.users);
       this.applyTo = data[1].name;
     });
   }
@@ -56,17 +56,21 @@ export class SendApplyComponent implements OnInit {
   goBack(): void {
     this.location.back(); // !
   }
-  add(name: string, age: string, reason: string, originaldiagnosis: string, status: number, user: any[]): void {
+  add(name: string, age: string, scantype: string ,
+      reason: string, originaldiagnosis: string, status: string, time: string , user: any[]): void {
+    const date = new Date();
     name = name.trim();
     age = age.trim();
+    scantype = scantype.trim();
     reason = reason.trim();
     originaldiagnosis = originaldiagnosis.trim();
-    status = 0;
+    status = '未审核';
+    time = date.toDateString();
     user = [this.applyTo];
     if (!name) {
       return;
     }
-    this.heroService.create(name, age, reason, originaldiagnosis, status, user).then( hero => {
+    this.heroService.create(name, age, scantype , reason, originaldiagnosis, status, time , user).then( hero => {
       console.log(hero);
       this.heroes.push(hero);
       this.selectedHero = null;

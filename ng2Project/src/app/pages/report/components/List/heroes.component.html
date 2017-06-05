@@ -1,6 +1,6 @@
 <div class="widget" >
   <div class="row">
-    <div class="col-md-8" *ngIf="nowuser"><h2>{{nowuser.name}}的患者报告列表</h2></div>
+    <div class="col-md-8" *ngIf="nowuser"><h2>{{nowuser}}的患者报告列表</h2></div>
   </div>
   <div class="row">
     <div class="col-md-10">
@@ -9,7 +9,7 @@
     </div>
     </div>
 
-    <div class="col-md-2">
+    <!--<div class="col-md-2">
       <div  class="form-group">
         <label for="exampleSelect1">切换用户</label>
         <select *ngIf="nowuser" class="form-control" [ngModel]="selecteduser"
@@ -18,14 +18,15 @@
           <option *ngFor="let user of users" [value]="user.name">{{user.name}}</option>
         </select>
       </div>
-    </div>
+    </div>-->
   </div>
-<div class="horizontal-scroll" *ngIf="heroes&&nowuser">
+  <br>
+<!--<div class="horizontal-scroll" *ngIf="heroes&&nowuser">
   <table class="table table-hover">
     <thead>
     <tr class="black-muted-bg">
-      <th>Hero Id</th>
-      <th class="align-right">Name</th>
+      <th class="align-left">姓名</th>
+      <th class="nowrap">报告状态</th>
     </tr>
     </thead>
     <tbody>
@@ -33,17 +34,96 @@
 
     <tr  *ngFor="let item of heroes"   (click)="onSelect(item)"  class="no-top-border">
       <ng-container *ngIf='item.user.indexOf(nowuser.name) > -1'>
+      <td class="align-left">{{item.name}}</td>
       <td ngClass="nowrap">{{item.status}}</td>
-      <td class="align-right">{{item.name}}</td>
       </ng-container>
     </tr>
 
     </tbody>
   </table>
   <hr>
-</div>
+</div>-->
+  <div class="row" *ngIf="heroes&&nowuser">
+      <div class="panel panel-default">
+        <table class="table table-hover" [mfData]="heroes | idFilter : idFilterQuery |
+         nameFilter : nameFilterQuery | ageFilter : ageFilterQuery | examContentFilter : examContentFilterQuery |
+         timeFilter : timeFilterQuery | statusFilter : statusFilterQuery "
+               #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+          <thead>
+          <tr>
+            <th style="width: 10%"></th>
+            <th style="width: 15%">
+              <mfDefaultSorter by="_ID">ID</mfDefaultSorter>
+            </th>
+            <th style="width: 15%">
+              <mfDefaultSorter by="name">姓名</mfDefaultSorter>
+            </th>
+            <th style="width: 15%">
+              <mfDefaultSorter by="age">年龄</mfDefaultSorter>
+            </th>
+            <th style="width: 15%">
+              <mfDefaultSorter by="scantype">检查类型</mfDefaultSorter>
+            </th>
+            <th style="width: 20%">
+              <mfDefaultSorter [by]="time">时间</mfDefaultSorter>
+            </th>
+            <th style="width: 10%">
+              <mfDefaultSorter [by]="status">申请状态</mfDefaultSorter>
+            </th>
+          </tr>
+          <tr>
+            <th colspan="1">
+            </th>
+            <th colspan="1">
+              <input class="form-control" [(ngModel)]="idFilterQuery" />
+            </th>
+            <th colspan="1">
+              <input class="form-control" [(ngModel)]="nameFilterQuery" />
+            </th>
+            <th colspan="1">
+              <input class="form-control" [(ngModel)]="ageFilterQuery" />
+            </th>
+            <th colspan="1">
+              <input class="form-control" [(ngModel)]="examContentFilterQuery" />
+            </th>
+            <th colspan="1">
+              <input class="form-control" [(ngModel)]="timeFilterQuery" />
+            </th>
+            <th colspan="1">
+              <input class="form-control" [(ngModel)]="statusFilterQuery" />
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of heroes" (click)="onSelect(item)">
+            <ng-container *ngIf='item.user.indexOf(nowuser) > -1'>
+            <td>
+              <button (click)="remove(item)" class="btn btn-danger">x</button>
+            </td>
+            <td>{{item._id}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.age}}</td>
+            <td>{{item.scantype}}</td>
+            <td>{{item.time}}</td>
+            <td [ngStyle]="{'color':item.status==='未审核'?'#ff5151':'#7afec6'}">{{item.status}}</td>
+            </ng-container>
+            <!--<td class="text-right">{{item.age}}</td>-->
+            <!--<td>{{item.city | uppercase}}</td>-->
+          </tr>
+          </tbody>
+         <!-- <tfoot>
+          <tr>
+            <td colspan="7">
+              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+          </tfoot>-->
+        </table>
+      </div>
+  </div>
+  <br>
 <div *ngIf="selectedHero" >
-  <div class="row" *ngIf="selectedHero.status===1">
+  <div class="row" *ngIf="selectedHero.status==='已审核'">
   <div class="col-md-1">
      <h3 style="color: #8bd22f">已审核</h3>
   </div>
@@ -64,7 +144,7 @@
     </div>
 
   </div>
-  <div class="row" *ngIf="selectedHero.status===0">
+  <div class="row" *ngIf="selectedHero.status==='未审核'">
     <div class="col-md-1">
     <h3 style="color: #AAAABB">
       未审核
