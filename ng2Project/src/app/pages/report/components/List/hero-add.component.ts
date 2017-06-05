@@ -25,8 +25,9 @@ export class AddHeroComponent implements OnInit {
     this.heroService.getHeroes().then(heroes => this.heroes = heroes);
   }
   ngOnInit(): void {
-    this.route.params.switchMap((params: Params) => this.heroService.getHero(+params['id']))
+    this.route.params.switchMap((params: Params) => this.heroService.getHero(params['name']))
       .subscribe(hero => {
+        console.log(hero);
         this.hero = hero;
       });
      this.getHeroes();
@@ -39,7 +40,7 @@ export class AddHeroComponent implements OnInit {
       .then(() => this.goBack());
   }*/
 
-  add(name: string, age: string, status: number, user: any[]): void {
+  add(name: string, age: string, reason: string, originaldiagnosis: string, status: number, user: any[]): void {
     name = name.trim();
     age = age.trim();
     status = 0;

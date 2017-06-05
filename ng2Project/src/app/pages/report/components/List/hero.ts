@@ -5,6 +5,8 @@ export class Hero {
   id: number;
   name: string;
   age: string;
+  reason: string;
+  originaldiagnosis: string;
   status: number;
   user: string[];
 }

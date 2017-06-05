@@ -76,15 +76,13 @@ export class HeroesComponent implements OnInit {
   source: LocalDataSource = new LocalDataSource();
   emailContent = {
     recipients: '',
-    subject: '诊断报告共享',
+    subject: '您有一份阅片诊断申请',
     message: '',
   };
   constructor(private router: Router, private route: ActivatedRoute,
               private heroService: HeroService, private userService: UserService,
               private location: Location,
               private modalService: NgbModal) {}
-
-
 
   getUser(): void {
     this.userService.getData().then((data) => {
@@ -103,6 +101,7 @@ export class HeroesComponent implements OnInit {
   }
   getHeroes(): void {
     this.heroService.getHeroes().then((heroes) => {
+      console.log(heroes);
       this.heroes = heroes;
       console.log(this.heroes);
     });
@@ -148,7 +147,7 @@ export class HeroesComponent implements OnInit {
     // console.log(this.selectedHero.id);
   }
   gotoDetail(): void {
-    this.router.navigate(['../apply', this.selectedHero.id], { relativeTo: this.route } );
+    this.router.navigate(['../apply', this.selectedHero.name], { relativeTo: this.route } );
   }
 
   gotoAdd(): void {
@@ -165,7 +164,7 @@ export class HeroesComponent implements OnInit {
   }*/
 
   sendMail() {
-    this.emailContent.message = '您有一份来自' + this.nowuser.name + '的报告邀请';
+    this.emailContent.message = '' + this.nowuser.name + '发来了报告诊断申请';
     console.log(this.emailContent);
     this.heroService.sendMail(this.emailContent);
 

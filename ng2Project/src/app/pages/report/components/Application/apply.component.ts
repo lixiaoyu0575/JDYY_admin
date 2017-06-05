@@ -32,9 +32,10 @@ export class ApplyComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.params.switchMap((params: Params) => this.heroService.getHero(+params['id']))
+    this.route.params.switchMap((params: Params) => this.heroService.getHero(params['name']))
       .subscribe(hero => {
-        this.hero = hero;
+        console.log(hero);
+        this.hero = hero[0];
       });
     this.getUser();
     this.getHeroes();
