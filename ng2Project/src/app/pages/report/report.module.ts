@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { NgaModule } from '../../theme/nga.module';
 import { DataTableModule } from 'angular2-datatable';
 import { IdFilterPipe, NameFilterPipe, AgeFilterPipe, ExamContentFilterPipe, TimeFilterPipe, StatusFilterPipe }
 from './components/List/image-table-filter.pipe';
@@ -21,7 +22,7 @@ import { SendApplyComponent } from './components/sendapp/sendapp.component';
 import {LoginService} from '../login/login.service';
 
 @NgModule({
-  imports:      [ CommonModule, FormsModule , routing, HttpModule, NgbDropdownModule, DataTableModule,
+  imports:      [ CommonModule, FormsModule , routing, HttpModule, NgbDropdownModule, DataTableModule, NgaModule,
     NgbModalModule],
   declarations: [
     ReportComponent,

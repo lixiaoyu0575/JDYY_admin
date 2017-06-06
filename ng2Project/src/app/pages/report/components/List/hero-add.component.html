@@ -2,11 +2,10 @@
   <div class="row" *ngIf="hero">
     <div class="col-md-3"></div>
     <div class="col-md-6">
-
-     <div>
-  <h3>脑瘫儿童临床评估量表登记</h3>
+     <ba-card>
+  <h1>脑瘫儿童临床评估量表登记</h1>
        <hr style="background-color:whitesmoke">
-    <div class="form-group">
+    <div class="form-group" style="width:22%">
       <label >姓名：</label>
       <input type="text" class="form-control"  placeholder="输入真实姓名">
     </div>
@@ -69,7 +68,7 @@
             (click)="update();gotoHeroes();">
       创建报告
     </button>
-    </div>
+    </ba-card>
     </div>
     <div class="col-md-3"></div>
   </div>
