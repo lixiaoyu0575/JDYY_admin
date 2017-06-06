@@ -12,7 +12,6 @@ import { DefaultModal } from '../default-modal/default-modal.component';
   moduleId: module.id,
   selector: 'my-heroes',
   templateUrl: './heroes.component.html'
-  // Angular insists that we declare a target property to be an input property.
   ,
   styles: [`
     .selected {
