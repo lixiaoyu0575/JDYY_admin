@@ -41,6 +41,7 @@
         "../node_modules/bootstrap/dist/js/bootstrap.js",
         "../node_modules/handsontable/dist/handsontable.full.js",
         "../node_modules/chroma-js/chroma.js",
+        "../libs/imgViewer/image-picker.js",
         "../libs/imgViewer/cornerstone.min.js",
         "../libs/imgViewer/dicomParser.min.js",
         "../libs/imgViewer/cornerstoneMath.min.js",

@@ -7,6 +7,7 @@ import { DataTableModule } from "angular2-datatable";
 import { HttpModule } from "@angular/http";
 import { DataFilterPipe } from './components/dataTables/data-filter.pipe';
 import { IdFilterPipe, NameFilterPipe, AgeFilterPipe, ExamContentFilterPipe, TimeFilterPipe, StatusFilterPipe } from './components/image-table/image-table-filter.pipe';
+import { ImageNamePipe } from './components/image-gallery/image-gallery-filter.pipe';
 import { HotTable, HotTableModule } from 'ng2-handsontable';
 
 import { routing } from './tables.routing';
@@ -34,13 +35,15 @@ import { SportDemoComponent } from './components/hotTables/handsontable/sport-de
 import { AdvancedDemoComponent } from './components/hotTables/handsontable/advanced-demo';
 
 import { ImageTableComponent } from './components/image-table/image-table.component';
-import { ImgViewerComponent } from './components/img-viewer/img-viewer.component';
 import { ImageTableService } from './components/image-table/image-table.service';
 import { ImageGalleryComponent } from './components/image-gallery/image-gallery.component';
 import { SharedModule } from './../../shared/_module';
 
 import { TreeModule } from 'angular-tree-component';
-import { MdTabsModule } from '@angular/material';
+import { MdTabsModule, MdButtonModule } from '@angular/material';
+import { ImageService } from './img-viewer/img-viewer.service';
+
+import { ImgViewerModule } from './img-viewer/img-viewer.module';
 
 @NgModule({
   imports: [
@@ -55,6 +58,8 @@ import { MdTabsModule } from '@angular/material';
     TreeModule,
     MdTabsModule,
     SharedModule,
+    ImgViewerModule,
+    MdButtonModule,
   ],
   declarations: [
     Tables,
@@ -82,15 +87,16 @@ import { MdTabsModule } from '@angular/material';
     ScienceDemoComponent,
     SportDemoComponent,
     SheetDemoComponent,
-    ImgViewerComponent,
     ImageTableComponent,
     ImageGalleryComponent,
+    ImageNamePipe,
   ],
   providers: [
     BasicTablesService,
     SmartTablesService,
     DataTablesService,
     ImageTableService,
+    ImageService,
   ]
 })
 export class TablesModule {

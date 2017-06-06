@@ -36,7 +36,7 @@ export class ImageTableComponent implements OnInit {
 
   getDetails(item) {
     console.log(item);
-    this.router.navigate(['/pages/tables/imgViewer']);
+    this.router.navigate(['/pages/tables/imgViewer/imageDetail']);
   }
   remove(item) {
     console.log(item);

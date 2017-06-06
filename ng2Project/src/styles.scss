@@ -1,1 +1,4 @@
 /* You can add global styles to this file, and also import other style files */
+// Import all the tools needed to customize the theme and extract parts of it
+//@import '~@angular/material/theming';
+@import '~@angular/material/prebuilt-themes/pink-bluegrey.css';

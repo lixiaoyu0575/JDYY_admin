@@ -1,19 +1,20 @@
 import 'rxjs/add/operator/toPromise';
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, AfterViewInit} from '@angular/core';
 import { TreeNode, TREE_ACTIONS, KEYS, IActionMapping, ITreeOptions } from 'angular-tree-component';
 import { Http } from '@angular/http';
 import { Headers, RequestOptions } from '@angular/http';
 import * as _ from 'lodash'
 
+import { ImageService } from './../img-viewer.service';
+
 const localIp = 'localhost';
 
 @Component({
-  selector: 'img-viewer',
-  templateUrl: './img-viewer.component.html',
-  styleUrls: ['./img-viewer.component.scss']
+  selector: 'app-image-detail',
+  templateUrl: './image-detail.component.html',
+  styleUrls: ['./image-detail.component.scss']
 })
-
-export class ImgViewerComponent implements OnInit {
+export class ImageDetailComponent implements OnInit, AfterViewInit {
   @ViewChild('dicomDom') dicomDom;
   nodes: any[];
   element: object;
@@ -23,11 +24,9 @@ export class ImgViewerComponent implements OnInit {
   localUrlPrefix: string;
   imgUrl: string;
   imgUrlPrefix: string;
-
-  direction: string;
-  isReportShow: boolean;
-  isImageShow: boolean;
-
+  historyStates: object[];
+  currentHistoryIndex: number;
+  currentState: object;
   actionMapping: IActionMapping = {
     mouse: {
       // contextMenu: (tree, node, $event) => {
@@ -65,6 +64,8 @@ export class ImgViewerComponent implements OnInit {
           });
         }
         if (!node.data.children) {
+          $('.list-group-item').removeClass('active');
+          this.clear();
           this.currentNode = node;
           this.imgUrl = this.imgUrlPrefix + node.data.url;
           this.loadImg();
@@ -87,46 +88,89 @@ export class ImgViewerComponent implements OnInit {
     // animateSpeed: 30,
     // animateAcceleration: 1.2
   };
-  constructor(private http: Http) {
+  images: object[];
+  imageUrl;
+  constructor(
+    private http: Http,
+    private imageService: ImageService,
+  ) {
     this.isLabelDone = true;
     this.localUrlPrefix = 'http://' + localIp + ':8081';
     this.imgUrlPrefix = 'wadouri:http://' + localIp + ':8081';
+    this.historyStates = [];
+    this.currentHistoryIndex = -1;
+    this.imageUrl = [
+      {
+        id: 'test1',
+        url: 'example://1'
+      },
+      {
+        id: 'test2',
+        url: 'example://2'
+      },
+      {
+        id: 'test3',
+        url: 'example://3'
+      },
+      {
+        id: 'test4',
+        url: 'wadouri:https://raw.githubusercontent.com/chafey/cornerstoneWADOImageLoader/master/testImages/CT2_J2KR'
+      }
+    ];
     // this.localUrlPrefix = 'http://localhost:8081';
     // this.imgUrlPrefix = 'wadouri:http://localhost:8081';
-
-
-    this.direction = "row";
-    this.isReportShow = true;
-    this.isImageShow = true;
   }
   ngOnInit(): void {
     // Retrieve the DOM element itself
     this.element = this.dicomDom.nativeElement;
+    console.log(this.dicomDom.nativeElement);
     const element = this.element;
     this.imgUrl = 'example://1';
     // this.imgUrl = 'wadouri:http://localhost:8081/data/labelinfos/XNAT_E00002/1/51d7aac4bcb27b67bddbab6f13969b61.dcm';
+    // this.imgUrl = 'wadouri:https://raw.githubusercontent.com/chafey/cornerstoneWADOImageLoader/master/testImages/CT2_J2KR';
     // Enable the element with Cornerstone
     cornerstone.enable(element);
+    // let testEls = $('.cornerstone-test');
+    // console.log(testEls);
 
     // Listen for changes to the viewport so we can update the text overlays in the corner
+
+    $('#dicomDom').on('endFreehandDrawing', (e) => {
+      console.log("endFreehandDrawing");
+      this.recordHistory();
+    });
     $('#dicomDom').on('CornerstoneImageRendered', (e) => {
-      // console.log('dicomimage CornerstoneImageRendered');
+      console.log('dicomimage CornerstoneImageRendered');
       const viewport = cornerstone.getViewport(e.target);
       $('#mrbottomleft').text('WW/WC: ' + Math.round(viewport.voi.windowWidth) + '/' + Math.round(viewport.voi.windowCenter));
       $('#mrbottomright').text('Zoom: ' + viewport.scale.toFixed(2));
     });
-    // const config = {
-    //   webWorkerPath : './../../../../../../libs/imgViewer/cornerstoneWADOImageLoaderWebWorker.js',
-    //   taskConfiguration: {
-    //     'decodeTask' : {
-    //       codecsPath: './../../../../../../libs/imgViewer/cornerstoneWADOImageLoaderCodecs.js'
-    //     }
+    console.log(cornerstoneWADOImageLoader.webWorkerManager);
+    if (!cornerstoneWADOImageLoader.webWorkerManager.isInitialized) {
+      const config = {
+        webWorkerPath : '/libs/imgViewer/cornerstoneWADOImageLoaderWebWorker.js',
+        taskConfiguration: {
+          'decodeTask' : {
+            codecsPath: '/libs/imgViewer/cornerstoneWADOImageLoaderCodecs.js'
+          }
+        }
+      };
+      cornerstoneWADOImageLoader.webWorkerManager.initialize(config);
+      cornerstoneWADOImageLoader.webWorkerManager.isInitialized = true;
+    }
+    // cornerstoneWADOImageLoader.configure({
+    //   beforeSend: function(xhr) {
+    //     // Add custom headers here (e.g. auth tokens)
+    //     //xhr.setRequestHeader('APIKEY', 'my auth token');
     //   }
-    // };
-    // cornerstoneWADOImageLoader.webWorkerManager.initialize(config);
+    // });
     this.loadImg();
     $('.list-group-item').removeClass('active');
 
+    this.imageService.getSelectedImages().then(images => {
+      this.images = images;
+      console.log(this.images);
+    });
     const jsonUrl = this.localUrlPrefix + `/data/images`;
     // const jsonUrl = `./../../assets/testData/testApi1.json`;
     setTimeout(() => {
@@ -135,25 +179,29 @@ export class ImgViewerComponent implements OnInit {
     }, 1);
   }
 
-  toggleReport() {
-    this.isReportShow = !this.isReportShow;
-  }
-  toggleImage() {
-    this.isImageShow = !this.isImageShow;
-  }
-  toggleDirection() {
+  ngAfterViewInit() {
+    this.imageUrl.forEach(n => {
+      let testEl: HTMLElement = document.getElementById(n.id);
+      console.log(testEl);
+      cornerstone.enable(testEl);
+      cornerstone.loadImage(n.url).then(function(image) {
+        cornerstone.displayImage(testEl, image);
+      });
+    });
   }
 
-  loadImg() {
-    const imageId = this.imgUrl;
+  loadImg(url?: string) {
+    let imageId = url || this.imgUrl;
+    console.log(imageId);
     const element = this.element;
+    // './../../../../assets/img/dicom/1.dcm'
     // const canvas = $('canvas');
     // if (canvas) {
     //   console.log('canvas here');
     //   canvas.remove();
     // }
     // Load the image and enable tools
-    cornerstone.loadImage('example://1').then((image) => {
+    cornerstone.loadImage(imageId).then((image) => {
       cornerstone.displayImage(element, image);
       cornerstoneTools.mouseInput.enable(element);
       cornerstoneTools.mouseWheelInput.enable(element);
@@ -181,8 +229,12 @@ export class ImgViewerComponent implements OnInit {
       if (savedState) {
         this.disableAllTools();
         this.savedState = savedState;
-        cornerstoneTools.appState.restore(JSON.parse(this.savedState));
+        this.currentState = JSON.parse(this.savedState);
+        cornerstoneTools.appState.restore(this.currentState);
         cornerstone.updateImage(this.element);
+        this.historyStates = [];
+        this.historyStates.push($.extend(true, {}, this.currentState));
+        this.currentHistoryIndex = 0;
       }
     });
   }
@@ -272,25 +324,7 @@ export class ImgViewerComponent implements OnInit {
       cornerstoneTools.pan.deactivate(element, 4);
       cornerstoneTools.wwwc.activate(element, 4);
     }
-    // cornerstoneTools.freehand.activate(this.element, 1);
-    // cornerstoneTools.rectangleRoi.setLabel('type5');
   }
-
-  // chooseFreehand1() {
-  //   activate('#freehand1');
-  //   this.disableAllTools();
-  //   cornerstoneTools.toolColors.setToolColor('red');
-  //   cornerstoneTools.freehand.activate(this.element, 1);
-  //   // cornerstoneTools.rectangleRoi.setLabel('type1');
-  // }
-  //
-  // chooseFreehand2() {
-  //   activate('#freehand2');
-  //   this.disableAllTools();
-  //   cornerstoneTools.toolColors.setToolColor('yellow');
-  //   cornerstoneTools.freehand.activate(this.element, 1);
-  //   // cornerstoneTools.rectangleRoi.setLabel('type1');
-  // }
 
   submit() {
     const labelsState = cornerstoneTools.appState.save([this.element]);
@@ -316,13 +350,31 @@ export class ImgViewerComponent implements OnInit {
     const options = new RequestOptions({ headers: headers});
 
     this.http.post(url, labeledData, options).toPromise().then(() => console.log('sended labelData'));
+
   }
 
   clear() {
     const element = this.element;
     const toolStateManager = cornerstoneTools.getElementToolStateManager(element);
     toolStateManager.clear(element);
+    var configuration = {
+      mouseLocation: {
+        handles: {
+          start: {
+            highlight: true,
+            active: true,
+          }
+        }
+      },
+      freehand: false,
+      modifying: false,
+      currentHandle: 0,
+      currentTool: -1
+    };
+    cornerstoneTools.freehand.setConfiguration(configuration);
     cornerstone.updateImage(element);
+
+    this.recordHistory();
   }
 
   // restore() {
@@ -336,6 +388,35 @@ export class ImgViewerComponent implements OnInit {
   //   console.log(node);
   //   console.log(node.parent.children);
   // }
+  recordHistory() {
+    if (this.currentHistoryIndex !== this.historyStates.length - 1) {
+      this.historyStates.splice(this.currentHistoryIndex, this.historyStates.length - this.currentHistoryIndex - 1);
+    }
+    this.currentState = cornerstoneTools.appState.save([this.element]);
+    this.historyStates.push($.extend(true, {}, this.currentState));
+    this.currentHistoryIndex++;
+  }
+
+
+  historyBack() {
+    // this.historyStates.splice(this.currentHistoryIndex, 1);
+    // this.recordHistory();
+    if (this.currentHistoryIndex > 0) {
+      this.currentHistoryIndex--;
+    };
+    this.currentState = this.historyStates[this.currentHistoryIndex];
+    cornerstoneTools.appState.restore(this.currentState);
+    cornerstone.updateImage(this.element);
+  }
+  historyForward() {
+    // this.recordHistory();
+    if (this.currentHistoryIndex < this.historyStates.length - 1) {
+      this.currentHistoryIndex++;
+    };
+    this.currentState = this.historyStates[this.currentHistoryIndex];
+    cornerstoneTools.appState.restore(this.currentState);
+    cornerstone.updateImage(this.element);
+  }
 
 }
 

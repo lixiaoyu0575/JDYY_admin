@@ -1,11 +1,18 @@
 import 'rxjs/add/operator/toPromise';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {Http, RequestOptions, Headers} from '@angular/http';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { ImageService } from './../../img-viewer/img-viewer.service';
+
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-image-gallery',
   templateUrl: './image-gallery.component.html',
-  styleUrls: ['./image-gallery.component.scss']
+  styleUrls: ['./image-gallery.component.scss'],
+  host: {
+  },
 })
 export class ImageGalleryComponent implements OnInit {
   @ViewChild('testImagePicker') imagePicker;
@@ -15,10 +22,18 @@ export class ImageGalleryComponent implements OnInit {
   importance;
   comment;
   keywords;
+  imageNameFilterWord: string;
+
+  isSelectModeOn: boolean;
+  selectorArray: number[];
 
   constructor(
-    private http: Http
+    private http: Http,
+    private route: ActivatedRoute,
+    private router: Router,
+    private imageService: ImageService,
   ) {
+    this.isSelectModeOn = false;
   }
 
   ngOnInit() {
@@ -66,7 +81,10 @@ export class ImageGalleryComponent implements OnInit {
         const image = {
           url: n.contentUrl,
           thumbnailWidth: n.thumbnail.width,
-          thumbnailHeight: n.thumbnail.height
+          thumbnailHeight: n.thumbnail.height,
+          name: n.name,
+          isDeleted: false,
+          isChecked: false
         };
         images.push(image);
         console.log(i, n);
@@ -76,9 +94,8 @@ export class ImageGalleryComponent implements OnInit {
     });
   }
 
-  deleteImage(index) {
-    console.log(index);
-    this.images.splice(index, 1);
+  deleteImage(image) {
+    image.isDeleted = true;
   }
 
   highlightImage(image) {
@@ -94,4 +111,57 @@ export class ImageGalleryComponent implements OnInit {
     this.selectedImage.importance = str;
   }
 
+  go2ImageAndReport(item) {
+    console.log(item);
+    const selectedImages = this.images.filter(n => n.isChecked === true);
+    console.log(selectedImages);
+    this.imageService.setSelectedImages(selectedImages);
+    this.router.navigate(['/pages/tables/imgViewer/imageDetail']);
+  }
+
+  filterNameChanged(word) {
+    // let test = _.filter(this.images, row => row.name.indexOf(word) > -1);
+    this.images = this.images.filter(n => n.name.indexOf(word) > -1);
+    console.log('filterNameChanged');
+  }
+
+  filterNameInput(word) {
+    // let test = _.filter(this.images, row => row.name.indexOf(word) > -1);
+    this.images = this.images.filter(n => n.name.indexOf(word) > -1);
+    console.log('filterNameInput');
+  }
+
+  checked(index: number) {
+    console.log(this);
+    if (this.isSelectModeOn === true) {
+      this.selectorArray.push(index);
+      if (this.selectorArray.length > 1) {
+        let max = -1, min = this.selectorArray[0];
+        this.selectorArray.forEach( n => {
+          console.log(n);
+          max = n > max ? n : max;
+          min = n < min ? n : min;
+        });
+        for (let i = min;i <= max; i++) {
+          this.images[i].isChecked = true;
+        }
+      }
+    }
+  }
+
+  detectKeydown($event) {
+    if ($event.keyCode === 16 && $event.type === "keydown") {
+      this.isSelectModeOn = true;
+      this.selectorArray = [];
+      console.log($event);
+    }
+  }
+
+  detectKeyup($event) {
+    if ($event.keyCode === 16 && $event.type === "keyup") {
+      this.isSelectModeOn = false;
+      console.log($event);
+      console.log(this.selectorArray);
+    }
+  }
 }
