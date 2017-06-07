@@ -38,7 +38,7 @@ export class LoginComponent {
            localStorage.setItem('user_token', res.token);
            localStorage.setItem('user_name', res.username);
            console.log(localStorage['user_name']);
-           this.router.navigate(['../pages/dashboard'], { relativeTo: this.route } );
+           this.router.navigate(['../pages/report/list'], { relativeTo: this.route } );
            this.loginService.getuser().then((response) => {
              console.log(response);
            });
