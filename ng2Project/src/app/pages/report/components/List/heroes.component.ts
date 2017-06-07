@@ -145,7 +145,7 @@ export class HeroesComponent implements OnInit {
     this.selectedHero = hero;
   }
   gotoDetail(): void {
-    this.router.navigate(['../apply', this.selectedHero.name], { relativeTo: this.route } );
+    this.router.navigate(['../imgViewer' , this.selectedHero.name, 'applyDetail', this.selectedHero.name], { relativeTo: this.route } );
   }
 
   gotoAdd(): void {

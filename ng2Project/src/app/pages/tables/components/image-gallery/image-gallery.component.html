@@ -1,0 +1,74 @@
+<div (window:keydown)="detectKeydown($event)">
+  <div (window:keyup)="detectKeyup($event)">
+    <md-card>
+      <md-input-container>
+        <input mdInput placeholder="关键字" value="{{keywords}}" [(ngModel)]="keywords">
+      </md-input-container>
+      <button md-raised-button (click)="search(keywords)"> 搜索 </button>
+      <md-input-container>
+        <input mdInput placeholder="图片名过滤" value="{{imageNameFilterWord}}" [(ngModel)]="imageNameFilterWord" (change)="filterNameChanged(imageNameFilterWord)"
+               (input)="filterNameInput(imageNameFilterWord)">
+      </md-input-container>
+      <button md-raised-button (click)="go2ImageAndReport()"> go2ImageAndReport </button>
+
+
+      <div class="modal fade" id="selectedImageModal" >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close"
+                      data-dismiss="modal" aria-hidden="true">
+                &times;
+              </button>
+              <h5 style="color: black;text-align: center">Image Name</h5>
+            </div>
+            <div class="modal-body">
+              <img *ngIf="selectedImage" src="{{selectedImage.url}}" >
+              <br>
+              <section class="example-section" style="color: black;text-align: center">
+                <label class="example-margin">重要性:</label>
+                <div class="btn-group" data-toggle="buttons-radio">
+                  <button class="btn btn-primary" (click)="setImageImportance('important')">重要</button>
+                  <button class="btn btn-primary" (click)="setImageImportance('normal')">一般</button>
+                  <button class="btn btn-primary" (click)="setImageImportance('ignore')">不重要</button>
+                </div>
+              </section>
+              <br>
+              <md-input-container *ngIf="selectedImage" style="color: black;display: block;text-align: center">
+                <input mdInput placeholder="Comment" value="{{selectedImage.comment}}" [(ngModel)]="selectedImage.comment" style="text-align: center">
+              </md-input-container>
+            </div>
+            <!--<div class="modal-footer">-->
+            <!--<button type="button" class="btn btn-primary">-->
+            <!--关闭-->
+            <!--</button>-->
+            <!--<button type="button" class="btn btn-primary">-->
+            <!--提交-->
+            <!--</button>-->
+            <!--</div>-->
+          </div>
+        </div>
+      </div>
+      <ul id="thumbnailsList" class="thumbnails image_picker_selector">
+        <li *ngFor="let image of images;let i = index" (click)=setSelectedImage(image)>
+          <div class="thumbnail" [ngClass]="{'important': image.isHighlighted}" *ngIf="image.isDeleted === false">
+            <img src="{{image.url}}" class="tn" width="300" height="200">
+            <!--width="{{image.thumbnailWidth}}" height="{{image.thumbnailHeight}}">-->
+            <!--data-toggle="modal" data-target="#selectedImageModal">-->
+            <div class="btn-group">
+              <button md-mini-fab (click)="deleteImage(image)">X</button>
+              <button md-raised-button class="btn btn-sm" (click)="highlightImage(image)">重要</button>
+              <button md-raised-button class="btn btn-sm" (click)="setComment(image)">评论</button>
+            </div>
+            <md-checkbox [(ngModel)]="image.isChecked" (change)="checked(i, image.isChecked)">Check me!</md-checkbox>
+            <md-input-container *ngIf="image.isSettingComment" style="display: block">
+              <input mdInput placeholder="请评论" value="{{image.comment}}" [(ngModel)]="image.comment">
+            </md-input-container>
+          </div>
+        </li>
+      </ul>
+    </md-card>
+  </div>
+</div>
+
+

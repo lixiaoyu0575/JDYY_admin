@@ -2,9 +2,9 @@
  * Created by th3ee on 5/19/17.
  */
 import { Component, OnInit, Input } from '@angular/core';
-import { HeroService } from './hero.service';
+import { HeroService } from '../../components/List/hero.service';
 import { Router , ActivatedRoute , Params } from '@angular/router';
-import { Hero } from './hero';
+import { Hero } from '../../components/List/hero';
 import { Location } from '@angular/common';
 
 @Component({
@@ -32,7 +32,7 @@ export class AddHeroComponent implements OnInit {
      this.getHeroes();
   }
   gotoHeroes(): void {
-    this.router.navigate(['../../'], { relativeTo: this.route } ); // !
+    this.router.navigate(['../../../../list'], { relativeTo: this.route } ); // !
   }
 
   update(): void {

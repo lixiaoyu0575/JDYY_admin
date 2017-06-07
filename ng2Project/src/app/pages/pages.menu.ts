@@ -18,13 +18,85 @@ export const PAGES_MENU = [
         path: 'report',
         data: {
           menu: {
-            title: 'List',
+            title: 'report',
             icon: 'ion-android-home',
             selected: false,
             expanded: false,
             order: 0
           }
-        }
+        },
+        children: [
+          {
+            path: 'list',
+            data: {
+              menu: {
+                title: 'list',
+              }
+            }
+          }
+        ]
+      },
+      {
+        path: 'tables',
+        data: {
+          menu: {
+            title: 'general.menu.tables',
+            icon: 'ion-grid',
+            selected: false,
+            expanded: false,
+            order: 500,
+          }
+        },
+        children: [
+          {
+            path: 'basictables',
+            data: {
+              menu: {
+                title: 'general.menu.basic_tables',
+              }
+            }
+          },
+          {
+            path: 'smarttables',
+            data: {
+              menu: {
+                title: 'general.menu.smart_tables',
+              }
+            }
+          },
+          {
+            path: 'datatables',
+            data: {
+              menu: {
+                title: 'Data Tables',
+              }
+            }
+          },
+          {
+            path: 'hottables',
+            data: {
+              menu: {
+                title: 'Hot Tables',
+              }
+            }
+          },
+          {
+            path: 'imageTable',
+            data: {
+              menu: {
+                title: 'Image Table',
+              }
+            }
+          },
+          {
+            path: 'imageGallery',
+            data: {
+              menu: {
+                title: 'Image Gallery',
+              }
+            }
+          }
+        ]
       },
       /*{
         path: 'new',

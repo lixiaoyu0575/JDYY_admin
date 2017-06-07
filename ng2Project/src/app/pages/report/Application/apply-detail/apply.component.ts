@@ -4,9 +4,9 @@
 import { Component , OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
-import { HeroService } from '../List/hero.service';
+import { HeroService } from '../../components/List/hero.service';
 import 'rxjs/add/operator/switchMap'; // make the parameters Observable
-import { Hero , User } from '../List/hero';
+import { Hero , User } from '../../components/List/hero';
 import { LocalDataSource } from 'ng2-smart-table';
 @Component({
   selector: 'application',
@@ -39,7 +39,7 @@ export class ApplyComponent implements OnInit {
     this.getHeroes();
   }
   gotoAdd(): void {
-    this.router.navigate(['../../diagnose', this.hero.name], { relativeTo: this.route } );
+    this.router.navigate(['../../diagnosisReport', this.hero.name], { relativeTo: this.route } );
   }
   getHeroes(): void {
     this.heroService.getHeroes().then((heroes) => {
@@ -58,7 +58,8 @@ export class ApplyComponent implements OnInit {
     });
   }*/
   goBack(): void {
-    this.location.back(); // !
+    // this.location.back(); // !
+    this.router.navigate(['../../../../list'], { relativeTo: this.route } );
   }
   doVerify(): void {
     this.hero.status = '已审核';

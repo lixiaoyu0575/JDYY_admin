@@ -13,7 +13,11 @@ export const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
       { path: 'report', loadChildren: './report/report.module#ReportModule' },
-
+      { path: 'tables', loadChildren: './tables/tables.module#TablesModule',
+        data: {
+          breadcrumb: 'Tables',
+        },
+      },
     ],
   },
 ];
