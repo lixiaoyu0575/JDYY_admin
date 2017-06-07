@@ -3,11 +3,12 @@ import {Component, OnInit, ViewChild, AfterViewInit} from '@angular/core';
 import { TreeNode, TREE_ACTIONS, KEYS, IActionMapping, ITreeOptions } from 'angular-tree-component';
 import { Http } from '@angular/http';
 import { Headers, RequestOptions } from '@angular/http';
+
 import * as _ from 'lodash'
 
 import { ImageService } from './../img-viewer.service';
 
-const localIp = 'localhost';
+const localIp = '59.110.52.133';
 
 @Component({
   selector: 'app-image-detail',
@@ -114,8 +115,32 @@ export class ImageDetailComponent implements OnInit, AfterViewInit {
       },
       {
         id: 'test4',
-        url: 'wadouri:https://raw.githubusercontent.com/chafey/cornerstoneWADOImageLoader/master/testImages/CT2_J2KR'
+        url: 'example://1'
+      },
+      {
+        id: 'test5',
+        url: 'example://2'
+      },
+      {
+        id: 'test6',
+        url: 'example://3'
+      },
+      {
+        id: 'test7',
+        url: 'example://1'
+      },
+      {
+        id: 'test8',
+        url: 'example://2'
+      },
+      {
+        id: 'test9',
+        url: 'example://3'
       }
+      // {
+      //   id: 'test4',
+      //   url: 'wadouri:https://raw.githubusercontent.com/chafey/cornerstoneWADOImageLoader/master/testImages/CT2_J2KR'
+      // }
     ];
     // this.localUrlPrefix = 'http://localhost:8081';
     // this.imgUrlPrefix = 'wadouri:http://localhost:8081';
@@ -171,17 +196,30 @@ export class ImageDetailComponent implements OnInit, AfterViewInit {
       this.images = images;
       console.log(this.images);
     });
-    const jsonUrl = this.localUrlPrefix + `/data/images`;
+    const jsonUrl = this.localUrlPrefix + `/data/images?format=json`;
     // const jsonUrl = `./../../assets/testData/testApi1.json`;
     setTimeout(() => {
       this.nodes = [];
-      this.http.get(jsonUrl).toPromise().then((data) => this.nodes = getNodesFormat(data.json()));
+      this.http.get(jsonUrl).toPromise().then((data) => {
+        console.log(data);
+        this.nodes = getNodesFormat(data.json());
+      });
     }, 1);
   }
 
   ngAfterViewInit() {
+    let carousel = $("#scrolling ul");
+    console.log(carousel);
+    carousel.itemslide(
+      {
+        swipe_out: true
+      }
+    );
+    $(window).resize(function () {
+      carousel.reload();
+    }); //Recalculate width and center positions and sizes when window is resized
     this.imageUrl.forEach(n => {
-      let testEl: HTMLElement = document.getElementById(n.id);
+      let testEl = document.getElementById(n.id);
       console.log(testEl);
       cornerstone.enable(testEl);
       cornerstone.loadImage(n.url).then(function(image) {
@@ -201,10 +239,26 @@ export class ImageDetailComponent implements OnInit, AfterViewInit {
     //   canvas.remove();
     // }
     // Load the image and enable tools
+
+    let magnificationConfig = {
+      magnifySize: 225,
+      magnificationLevel: 2
+    };
+    cornerstoneTools.magnify.setConfiguration(magnificationConfig);
+
     cornerstone.loadImage(imageId).then((image) => {
       cornerstone.displayImage(element, image);
       cornerstoneTools.mouseInput.enable(element);
+      cornerstoneTools.magnify.enable(element);
       cornerstoneTools.mouseWheelInput.enable(element);
+      cornerstoneTools.probe.enable(element);
+      cornerstoneTools.length.enable(element);
+      cornerstoneTools.ellipticalRoi.enable(element);
+      cornerstoneTools.rectangleRoi.enable(element);
+      cornerstoneTools.angle.enable(element);
+      cornerstoneTools.highlight.enable(element);
+      cornerstoneTools.simpleAngle.enable(element);
+
       cornerstoneTools.pan.activate(element, 4);
 
       // cornerstoneTools.freehand.activate(element, 1);
@@ -272,6 +326,9 @@ export class ImageDetailComponent implements OnInit, AfterViewInit {
     cornerstoneTools.angle.deactivate(element, 1);
     cornerstoneTools.highlight.deactivate(element, 1);
     cornerstoneTools.freehand.deactivate(element, 1);
+    cornerstoneTools.magnify.deactivate(element, 1);
+    cornerstoneTools.simpleAngle.deactivate(element, 1);
+    cornerstoneTools.wwwc.deactivate(element, 1);
   }
 
   chooseType1() {
@@ -312,6 +369,45 @@ export class ImageDetailComponent implements OnInit, AfterViewInit {
     cornerstoneTools.toolColors.setToolColor('orange');
     cornerstoneTools.freehand.activate(this.element, 1);
     // cornerstoneTools.rectangleRoi.setLabel('type5');
+  }
+
+  activateMagnification() {
+    this.disableAllTools();
+    cornerstoneTools.magnify.activate(this.element, 1);
+  }
+
+  activateSimpleAngle() {
+    this.disableAllTools();
+    cornerstoneTools.simpleAngle.activate(this.element, 1);
+  }
+
+  activateLength() {
+    this.disableAllTools();
+    cornerstoneTools.length.activate(this.element, 1);
+  }
+
+  activateProbe() {
+    this.disableAllTools();
+    cornerstoneTools.probe.activate(this.element, 1);
+  }
+
+  activateEllipticalROI() {
+    this.disableAllTools();
+    cornerstoneTools.ellipticalRoi.activate(this.element, 1);
+  }
+
+  activateRectangle() {
+    this.disableAllTools();
+    cornerstoneTools.rectangleRoi.activate(this.element, 1);
+  }
+
+  activateHighlight() {
+    this.disableAllTools();
+    cornerstoneTools.highlight.activate(this.element, 1);
+  }
+  activateWWWC() {
+    this.disableAllTools();
+    cornerstoneTools.wwwc.activate(this.element, 1);
   }
 
   activateTool(id: string) {
@@ -479,12 +575,12 @@ function getNodesFormat(data: any): any {
 }
 
 function activate(id: string): void {
-  $('.list-group-item').removeClass('active');
-  $(id).addClass('active');
+  // $('.list-group-item').removeClass('active');
+  // $(id).addClass('active');
 }
 function activateTool(id: string): void {
-  $('.active-tool').removeClass('active');
-  $(id).addClass('active');
+  // $('.active-tool').removeClass('active');
+  // $(id).addClass('active');
 }
 function updateNodeState(node: TreeNode): void {
   if (!node.data.children) {

@@ -52,5 +52,5 @@ declare const chroma: any;
 declare let cornerstone: any,
   cornerstoneTools: any,
   cornerstoneWADOImageLoader: any,
-  testDeclare: any;
+  HorizontalScroll: any;
 

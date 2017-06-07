@@ -3,3 +3,23 @@
   box-shadow:#999 1px 1px 3px 1px;
   cursor: pointer
 }
+/* These are some good CSS settings for a circular magnifying glass
+           Try removing the border-radius to make a square magnifying glass */
+/* prevents selection when left click dragging */
+.disable-selection {
+  -moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;
+}
+/* prevents cursor from changing to the i bar on the overlays*/
+.noIbar {
+  cursor:default;
+}
+
+.test-block{
+  width: 400px;
+  height: 200px;
+  margin: 50px;
+}
+
+.test-container{
+  margin-top: 200px;
+}

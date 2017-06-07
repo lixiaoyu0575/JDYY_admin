@@ -1,17 +1,16 @@
-<p>
-  image-detail works!
-</p>
 <ba-card>
   <div class="row">
-    <div class="col-xs-3">
-      <div *ngFor="let item of imageUrl">
-        <div id="{{item.id}}" class="cornerstone-enabled-image cornerstone-test tn" style="width:256px;height:256px;"
-          oncontextmenu="return false"
-             unselectable="on"
-             onselectstart="return false;"
-             onmousedown="return false;"
-        (click)="loadImg(item.url)">
-        </div>
+    <!--<div class="col-xs-3">
+      <div style="height: 500px">
+        &lt;!&ndash;<div *ngFor="let item of imageUrl">&ndash;&gt;
+          &lt;!&ndash;<div id="{{item.id}}" class="cornerstone-enabled-image cornerstone-test tn" style="width:256px;height:256px;"&ndash;&gt;
+               &lt;!&ndash;oncontextmenu="return false"&ndash;&gt;
+               &lt;!&ndash;unselectable="on"&ndash;&gt;
+               &lt;!&ndash;onselectstart="return false;"&ndash;&gt;
+               &lt;!&ndash;onmousedown="return false;"&ndash;&gt;
+               &lt;!&ndash;(click)="loadImg(item.url)">&ndash;&gt;
+          &lt;!&ndash;</div>&ndash;&gt;
+        &lt;!&ndash;</div>&ndash;&gt;
       </div>
       <form>
         <input #filter (keyup)="filterNodes(filter.value, tree)" placeholder="过滤"/>
@@ -32,33 +31,8 @@
           <ng-template #loadingTemplate>载入中, 请稍候.... TEST</ng-template>
         </tree-root>
       </div>
-    </div>
-    <div class="col-xs-2">
-      <ul class="list-group">
-        <a id="rectangleroi1" class="list-group-item" (click)="chooseType1()">肿瘤瘤体
-          <svg width="10px" height="10px"><rect stroke="black" width="10px" height="10px" fill="red"></rect></svg></a>
-        <a id="rectangleroi2" class="list-group-item" (click)="chooseType2()">中心坏死
-          <svg width="10px" height="10px"><rect stroke="black" width="10px" height="10px" fill="yellow"></rect></svg></a>
-        <a id="rectangleroi3" class="list-group-item" (click)="chooseType3()">周围水肿
-          <svg width="10px" height="10px"><rect stroke="black" width="10px" height="10px" fill="pink"></rect></svg></a>
-      </ul>
-      <ul class="list-group">
-        <a id="historyBack" class="list-group-item" (click)="historyBack()">历史回退</a>
-        <a id="historyForward" class="list-group-item" (click)="historyForward()">历史前进</a>
-        <a id="submit" class="list-group-item" (click)="submit()">保存</a>
-        <a id="clear" class="list-group-item" (click)="clear()">清空</a>
-      </ul>
-      <br>
-    </div>
-    <div class="col-xs-7">
-      <div class="row">
-        <div class="col-xs-2">
-          <button id="rightDrag" class="btn btn-sm-default active-tool" (click)="activateTool('rightDrag')">右键拖拽</button>
-        </div>
-        <div class="col-xs-2">
-          <button id="rightWwwc" class="btn btn-sm-default active-tool" (click)="activateTool('rightWwwc')">右键对比度</button>
-        </div>
-      </div>
+    </div>-->
+    <div class="col-xs-7" style="margin: auto;">
       <div #dicomDom id="dicomDom"
            style="width:768px;height:768px;position:relative;display:inline-block;color:white;"
            oncontextmenu="return false"
@@ -78,6 +52,130 @@
           WW/WC:
         </div>
       </div>
+      <div id="scrolling">
+        <ul>
+          <li *ngFor="let item of imageUrl">
+            <div id="{{item.id}}" class="cornerstone-enabled-image cornerstone-test tn" style="width:256px;height:256px;"
+                 oncontextmenu="return false"
+                 unselectable="on"
+                 onselectstart="return false;"
+                 onmousedown="return false;"
+                 (click)="loadImg(item.url)">
+            </div>
+          </li>
+
+          <!--<li>-->
+            <!--<div id="test2" class="cornerstone-enabled-image cornerstone-test tn" style="width:256px;height:256px;"-->
+                 <!--oncontextmenu="return false"-->
+                 <!--unselectable="on"-->
+                 <!--onselectstart="return false;"-->
+                 <!--onmousedown="return false;"-->
+                 <!--(click)="loadImg(item.url)">-->
+            <!--</div>-->
+          <!--</li>-->
+          <!--<li>-->
+            <!--<div id="test3" class="cornerstone-enabled-image cornerstone-test tn" style="width:256px;height:256px;"-->
+                 <!--oncontextmenu="return false"-->
+                 <!--unselectable="on"-->
+                 <!--onselectstart="return false;"-->
+                 <!--onmousedown="return false;"-->
+                 <!--(click)="loadImg(item.url)">-->
+            <!--</div>-->
+          <!--</li>-->
+          <!--<li>-->
+            <!--<div id="test4" class="cornerstone-enabled-image cornerstone-test tn" style="width:256px;height:256px;"-->
+                 <!--oncontextmenu="return false"-->
+                 <!--unselectable="on"-->
+                 <!--onselectstart="return false;"-->
+                 <!--onmousedown="return false;"-->
+                 <!--(click)="loadImg(item.url)">-->
+            <!--</div>-->
+          <!--</li>-->
+          <!--<li>-->
+            <!--<div id="test5" class="cornerstone-enabled-image cornerstone-test tn" style="width:256px;height:256px;"-->
+                 <!--oncontextmenu="return false"-->
+                 <!--unselectable="on"-->
+                 <!--onselectstart="return false;"-->
+                 <!--onmousedown="return false;"-->
+                 <!--(click)="loadImg(item.url)">-->
+            <!--</div>-->
+          <!--</li>-->
+          <!--<li>-->
+            <!--<div id="test6" class="cornerstone-enabled-image cornerstone-test tn" style="width:256px;height:256px;"-->
+                 <!--oncontextmenu="return false"-->
+                 <!--unselectable="on"-->
+                 <!--onselectstart="return false;"-->
+                 <!--onmousedown="return false;"-->
+                 <!--(click)="loadImg(item.url)">-->
+            <!--</div>-->
+          <!--</li>-->
+          <!--<li>-->
+            <!--<div id="test7" class="cornerstone-enabled-image cornerstone-test tn" style="width:256px;height:256px;"-->
+                 <!--oncontextmenu="return false"-->
+                 <!--unselectable="on"-->
+                 <!--onselectstart="return false;"-->
+                 <!--onmousedown="return false;"-->
+                 <!--(click)="loadImg(item.url)">-->
+            <!--</div>-->
+          <!--</li>-->
+          <!--<li>-->
+            <!--<div id="test8" class="cornerstone-enabled-image cornerstone-test tn" style="width:256px;height:256px;"-->
+                 <!--oncontextmenu="return false"-->
+                 <!--unselectable="on"-->
+                 <!--onselectstart="return false;"-->
+                 <!--onmousedown="return false;"-->
+                 <!--(click)="loadImg(item.url)">-->
+            <!--</div>-->
+          <!--</li>-->
+          <!--<div *ngFor="let item of imageUrl">-->
+          <!--<li>-->
+          <!--<button>{{item.id}}</button>-->
+          <!--</li>-->
+          <!--</div>-->
+        </ul>
+      </div>
+    </div>
+    <div class="col-xs-2">
+      <ul class="list-group">
+        <!--<button md-raised-button id="rectangleroi1" class="list-group-item" (click)="chooseType1()">肿瘤瘤体-->
+          <!--<svg width="10px" height="10px"><rect stroke="black" width="10px" height="10px" fill="red"></rect></svg></button>-->
+        <!--<button md-raised-button id="rectangleroi2" class="list-group-item" (click)="chooseType2()">中心坏死-->
+          <!--<svg width="10px" height="10px"><rect stroke="black" width="10px" height="10px" fill="yellow"></rect></svg></button>-->
+        <!--<button md-raised-button id="rectangleroi3" class="list-group-item" (click)="chooseType3()">周围水肿-->
+          <!--<svg width="10px" height="10px"><rect stroke="black" width="10px" height="10px" fill="pink"></rect></svg></button>-->
+        <!--<button md-raised-button id="rightDrag" class="list-group-item" (click)="activateTool('rightDrag')">右键拖拽</button>-->
+        <!--<button md-raised-button id="rightWwwc" class="list-group-item" (click)="activateTool('rightWwwc')">右键对比度</button>-->
+        <button md-raised-button  class="list-group-item" (click)="activateWWWC()">对比度</button>
+        <button md-raised-button  class="list-group-item" (click)="activateMagnification()">放大镜</button>
+        <button md-raised-button  class="list-group-item" (click)="activateSimpleAngle()">量角器</button>
+        <!--<button md-raised-button  class="list-group-item" (click)="activateLength()">直线</button>-->
+        <!--<button md-raised-button  class="list-group-item" (click)="activateProbe()">画点</button>-->
+        <!--<button md-raised-button  class="list-group-item" (click)="activateEllipticalROI()">椭圆</button>-->
+        <!--<button md-raised-button  class="list-group-item" (click)="activateRectangle()">矩形</button>-->
+        <button md-raised-button  class="list-group-item" (click)="activateHighlight()">高亮</button>
+      </ul>
+      <ul class="list-group">
+        <!--<button md-raised-button id="historyBack" class="list-group-item" (click)="historyBack()">历史回退</button>-->
+        <!--<button md-raised-button id="historyForward" class="list-group-item" (click)="historyForward()">历史前进</button>-->
+        <button md-raised-button id="submit" class="list-group-item" (click)="submit()">保存</button>
+        <button md-raised-button id="clear" class="list-group-item" (click)="clear()">清空</button>
+      </ul>
+      <br>
     </div>
   </div>
 </ba-card>
+
+
+<!--<div *ngFor="let item of imageUrl">-->
+  <!--<div id="{{item.id}}" class="cornerstone-enabled-image cornerstone-test tn" style="width:256px;height:256px;"-->
+       <!--oncontextmenu="return false"-->
+       <!--unselectable="on"-->
+       <!--onselectstart="return false;"-->
+       <!--onmousedown="return false;"-->
+       <!--(click)="loadImg(item.url)">-->
+  <!--</div>-->
+<!--</div>-->
+<!--<virtual-scroll [items]="items" (update)="viewPortItems = $event">-->
+  <!--<list-item *ngFor="let item of viewPortItems" [item]="item">-->
+  <!--</list-item>-->
+<!--</virtual-scroll>-->
