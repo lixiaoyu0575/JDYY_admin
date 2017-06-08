@@ -151,6 +151,9 @@ export class ImageDetailComponent implements OnInit, AfterViewInit {
     console.log(this.dicomDom.nativeElement);
     const element = this.element;
     this.imgUrl = 'example://1';
+    // this.imgUrl = 'wadouri:http://localhost:8081/data/labelinfos/XNAT_E00002/1/51d7aac4bcb27b67bddbab6f13969b61.dcm';
+    // this.imgUrl = 'wadouri:https://raw.githubusercontent.com/chafey/cornerstoneWADOImageLoader/master/testImages/CT2_J2KR';
+    // Enable the element with Cornerstone
     cornerstone.enable(element);
     // let testEls = $('.cornerstone-test');
     // console.log(testEls);
@@ -164,8 +167,11 @@ export class ImageDetailComponent implements OnInit, AfterViewInit {
     $('#dicomDom').on('CornerstoneImageRendered', (e) => {
       console.log('dicomimage CornerstoneImageRendered');
       const viewport = cornerstone.getViewport(e.target);
-      $('#mrbottomleft').text('WW/WC: ' + Math.round(viewport.voi.windowWidth) + '/' + Math.round(viewport.voi.windowCenter));
-      $('#mrbottomright').text('Zoom: ' + viewport.scale.toFixed(2));
+      $('#mrbottomleft').
+      text('WW/WC: ' + Math.round(viewport.voi.windowWidth) + '/' + Math.round(viewport.voi.windowCenter));
+
+      $('#mrbottomright').
+      text('Zoom: ' + viewport.scale.toFixed(2));
     });
     console.log(cornerstoneWADOImageLoader.webWorkerManager);
     if (!cornerstoneWADOImageLoader.webWorkerManager.isInitialized) {
@@ -205,7 +211,7 @@ export class ImageDetailComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    let carousel = $("#scrolling ul");
+    let carousel = $('#scrolling ul');
     console.log(carousel);
     carousel.itemslide(
       {

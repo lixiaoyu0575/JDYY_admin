@@ -25,6 +25,10 @@ export class ImgViewerComponent implements OnInit {
           'label': '申请详情',
         });
         this.navLinks.push({
+          'url': 'imageDetail',
+          'label': '影像详情',
+        });
+        this.navLinks.push({
           'url': 'diagnosisReport/' + this.hero.name,
           'label': '填写诊断报告',
         });

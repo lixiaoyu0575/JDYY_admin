@@ -6,7 +6,7 @@ export const PAGES_MENU = [
         path: 'report',
         data: {
           menu: {
-            title: 'report',
+            title: '报告',
             icon: 'ion-android-home',
             selected: false,
             expanded: false,
@@ -18,7 +18,7 @@ export const PAGES_MENU = [
             path: 'list',
             data: {
               menu: {
-                title: 'list',
+                title: '阅片申请与诊断',
               }
             }
           }
@@ -28,7 +28,7 @@ export const PAGES_MENU = [
         path: 'tables',
         data: {
           menu: {
-            title: 'general.menu.tables',
+            title: '影像',
             icon: 'ion-grid',
             selected: false,
             expanded: false,
@@ -36,7 +36,7 @@ export const PAGES_MENU = [
           }
         },
         children: [
-          {
+/*          {
             path: 'basictables',
             data: {
               menu: {
@@ -67,12 +67,12 @@ export const PAGES_MENU = [
                 title: 'Hot Tables',
               }
             }
-          },
+          },*/
           {
             path: 'imageTable',
             data: {
               menu: {
-                title: 'Image Table',
+                title: '影像记录列表',
               }
             }
           },
@@ -80,7 +80,7 @@ export const PAGES_MENU = [
             path: 'imageGallery',
             data: {
               menu: {
-                title: 'Image Gallery',
+                title: '影像中心',
               }
             }
           }

@@ -9,6 +9,7 @@ import { MdSelectModule } from '@angular/material';
 import { ImgViewerComponent } from './img-viewer.component';
 import { ApplyComponent } from './apply-detail/apply.component';
 import { AddHeroComponent } from './apply-diagnosis/hero-add.component';
+import { ImageDetailComponent } from './apply-image/image-detail.component';
 import { HeroService } from '../components/List/hero.service';
 
 import { routing } from './img-viewer.routing';
@@ -28,9 +29,11 @@ import { routing } from './img-viewer.routing';
     ImgViewerComponent,
     ApplyComponent,
     AddHeroComponent,
+    ImageDetailComponent,
   ],
   providers: [
     HeroService,
+
   ],
 })
 export class ImgViewerModule { }

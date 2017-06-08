@@ -12,7 +12,8 @@ import { ImageReportComponent } from './image-report/image-report.component';
 import { SendApplyComponent } from './sendapp/sendapp.component';
 
 import { HeroService } from './sendapp/hero.service';
-import { UserService } from './sendapp/user.service';
+import { LoginService } from '../../login/login.service';
+// import { UserService } from './sendapp/user.service';
 
 import { routing } from './img-viewer.routing';
 
@@ -35,7 +36,7 @@ import { routing } from './img-viewer.routing';
   ],
   providers: [
     HeroService,
-    UserService,
+    LoginService,
   ],
 })
 export class ImgViewerModule { }

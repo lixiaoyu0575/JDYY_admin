@@ -13,6 +13,7 @@ import { HeroesComponent } from './components/List/heroes.component';
 import { ApplyComponent } from './Application/apply-detail/apply.component';
 // import { HeroDetailComponent } from './components/Application/apply.component';
 import { HeroService } from './components/List/hero.service';
+import { ImageService } from './Application/img-viewer.service';
 // import { DashboardComponent } from './components/List/dashboard.component';
 import { AddHeroComponent } from './Application/apply-diagnosis/hero-add.component';
 import { DefaultModal } from './components/default-modal/default-modal.component';
@@ -43,7 +44,7 @@ import { ImgViewerModule } from './Application/img-viewer.module';
     TimeFilterPipe,
     StatusFilterPipe,
     AgeFilterPipe],
-  providers:    [ HeroService , LoginService],
+  providers:    [ HeroService , LoginService, ImageService],
   entryComponents: [DefaultModal],
   bootstrap:    [ ReportComponent ],
 })

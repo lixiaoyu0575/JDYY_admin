@@ -34,22 +34,23 @@ export class HeroService {
   }
 
   update(hero: Hero): Promise<Hero> {
-    const url = `${this.heroesUrl}/${hero.id}`;
-    return this.http.put(url, JSON.stringify(hero), {headers: this.headers})
+    return this.http.post('http://202.117.54.45:3333/updatehero', JSON.stringify(hero), {headers: this.headers})
       .toPromise()
       .then(() => hero)
       .catch(this.handleError);
   }
 
-  create(name: string, age: string, reason: string,
-         originaldiagnosis: string, status: number,
+  create(name: string, age: string, scantype: string , reason: string,
+         originaldiagnosis: string, status: string, time: string,
          user: string[]): Promise<Hero> {
     return this.http.post('http://202.117.54.45:3333/addhero', JSON.stringify({
       name: name,
       age: age,
+      scantype: scantype,
       reason: reason,
       originaldiagnosis: originaldiagnosis,
       status: status,
+      time: time,
       user: user,
     }), { headers: this.headers })
       .toPromise()

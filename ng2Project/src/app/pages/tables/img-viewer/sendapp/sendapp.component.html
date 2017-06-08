@@ -1,42 +1,53 @@
+<div class="row">
+<div class="col-md-3"></div>
+<div class="col-md-6">
+<ba-card>
 <div class="widget" >
   <div>
     <h1>新建发送申请</h1>
+    <hr style="background-color: whitesmoke">
 
     <div class="form-group">
-      <input #heroName type="text"  class="form-control" placeholder="患者姓名">
+      <label>患者姓名</label>
+      <input style="width: 20%" #heroName type="text"  class="form-control" >
     </div>
     <div class="form-group">
-      <input #heroAge type="text"  class="form-control" placeholder="年龄">
+      <label>年龄</label>
+      <input style="width: 20%" #heroAge type="text"  class="form-control">
     </div>
     <div class="form-group">
-      <input #heroReason type="text" class="form-control" placeholder="申请阅片原因">
+      <label>扫描类型</label>
+      <input style="width: 20%" #heroScantype type="text" class="form-control" >
     </div>
     <div class="form-group">
-      <input #heroDiagnosis type="text" class="form-control" placeholder="初步诊断">
+      <label>申请阅片原因</label>
+      <input #heroReason type="text" class="form-control" >
     </div>
-    <div class="row" >
-      <div class="col-md-1">
-        <md-select placeholder="Send To" [(ngModel)]="applyTo">
-          <md-option *ngFor="let item of users" [value]="item.name">
-            {{ item.name }}
-          </md-option>
-        </md-select>
-        <!--<div  class="form-group" >-->
-          <!--<select  class="form-control" [(ngModel)]="applyTo">-->
-            <!--<option *ngFor="let item of users">{{item.name}}</option>-->
-          <!--</select>-->
-        <!--</div>-->
-      </div>
-      <div class="col-md-1">
-        <button  class="btn btn-success" (click)="add(heroName.value, heroAge.value , heroReason.value,
+    <div class="form-group">
+      <label>初步诊断</label>
+      <textarea #heroDiagnosis type="text" class="form-control" ></textarea>
+    </div>
+
+    <div  class="form-group" >
+      <label>发送至</label>
+      <select style="width: 20%" class="form-control" [(ngModel)]="applyTo">
+        <option *ngFor="let item of users">{{item.name}}</option>
+      </select>
+    </div>
+
+  <div class="row" >
+    <div class="col-md-8"></div>
+    <div class="col-md-2">
+      <button  class="btn btn-success" (click)="add(heroName.value, heroAge.value , heroScantype.value ,heroReason.value,
          heroDiagnosis.value);gotoHeroes(); heroName.value=''; heroAge.value=''; sendMail()" >发送申请</button>
-      </div>
-      <div class="col-md-1">
-        <button type="submit" class="btn btn-success" (click)="goBack()">返回</button>
-      </div>
     </div>
-
-
+    <div class="col-md-2">
+      <button type="submit" class="btn btn-default" (click)="goBack()">返回</button>
+    </div>
+  </div>
   </div>
 </div>
-
+</ba-card>
+</div>
+<div class="col-md-3"></div>
+</div>

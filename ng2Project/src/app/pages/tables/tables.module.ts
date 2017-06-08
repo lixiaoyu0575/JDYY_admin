@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgaModule } from '../../theme/nga.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { DataTableModule } from "angular2-datatable";
-import { HttpModule } from "@angular/http";
+import { DataTableModule } from 'angular2-datatable';
+import { HttpModule } from '@angular/http';
 import { DataFilterPipe } from './components/dataTables/data-filter.pipe';
-import { IdFilterPipe, NameFilterPipe, AgeFilterPipe, ExamContentFilterPipe, TimeFilterPipe, StatusFilterPipe } from './components/image-table/image-table-filter.pipe';
+import { IdFilterPipe, NameFilterPipe, AgeFilterPipe,
+  ExamContentFilterPipe, TimeFilterPipe, StatusFilterPipe } from './components/image-table/image-table-filter.pipe';
 import { ImageNamePipe } from './components/image-gallery/image-gallery-filter.pipe';
 import { HotTable, HotTableModule } from 'ng2-handsontable';
 
@@ -37,7 +38,7 @@ import { AdvancedDemoComponent } from './components/hotTables/handsontable/advan
 import { ImageTableComponent } from './components/image-table/image-table.component';
 import { ImageTableService } from './components/image-table/image-table.service';
 import { ImageGalleryComponent } from './components/image-gallery/image-gallery.component';
-import { SharedModule } from './../../shared/_module';
+import { SharedModule } from '../../shared/_module';
 
 import { TreeModule } from 'angular-tree-component';
 import { MdTabsModule, MdButtonModule } from '@angular/material';
