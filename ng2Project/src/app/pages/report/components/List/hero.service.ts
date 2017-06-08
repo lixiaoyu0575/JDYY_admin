@@ -8,7 +8,7 @@ import { Hero, Usercreds } from './hero';
 @Injectable()
 export class HeroService {
   private heroesUrl = 'api/heroes';
-  private emailUrl = 'http://202.117.54.45:3333/sendmail';
+  private emailUrl = 'http://localhost:3333/sendmail';
   private headers = new Headers({'Content-Type': 'application/json'});
   private emailheaders = new Headers({'Content-Type': 'application/json'});
 
@@ -16,7 +16,7 @@ export class HeroService {
   }
 
   getHeroes(): Promise<Hero[]> { // return an array of Hero[] data type
-    return this.http.get('http://202.117.54.45:3333/gethero')
+    return this.http.get('http://localhost:3333/gethero')
       .toPromise().then(response => response.json() as Hero[]);
   }
 
@@ -26,7 +26,7 @@ export class HeroService {
   }
 
   getHero(name: string): Promise<Hero> {
-    return this.http.post('http://202.117.54.45:3333/getherodetail', JSON.stringify({
+    return this.http.post('http://localhost:3333/getherodetail', JSON.stringify({
       name: name,
     }), { headers: this.headers })
       .toPromise().then(response => response.json() as Hero)
@@ -34,7 +34,7 @@ export class HeroService {
   }
 
   update(hero: Hero): Promise<Hero> {
-    return this.http.post('http://202.117.54.45:3333/updatehero', JSON.stringify(hero), {headers: this.headers})
+    return this.http.post('http://localhost:3333/updatehero', JSON.stringify(hero), {headers: this.headers})
       .toPromise()
       .then(() => hero)
       .catch(this.handleError);
@@ -43,7 +43,7 @@ export class HeroService {
   create(name: string, age: string, scantype: string , reason: string,
          originaldiagnosis: string, status: string, time: string,
          user: string[]): Promise<Hero> {
-    return this.http.post('http://202.117.54.45:3333/addhero', JSON.stringify({
+    return this.http.post('http://localhost:3333/addhero', JSON.stringify({
       name: name,
       age: age,
       scantype: scantype,

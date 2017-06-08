@@ -28,7 +28,7 @@ import { ObservableMedia } from '@angular/flex-layout/media-query/observable-med
   ],
 })
 export class MediaQueryStatus implements OnDestroy {
-  private _watcher: Subscription;
+  private _watcher;
   activeMediaQuery: string;
 
   constructor(media$: ObservableMedia) { this.watchMediaQueries(media$); }
