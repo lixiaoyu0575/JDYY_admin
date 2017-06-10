@@ -5,6 +5,7 @@ import { TreeModule } from 'angular-tree-component';
 import { NgaModule } from '../../../theme/nga.module';
 import { FormsModule } from '@angular/forms';
 import { MdSelectModule } from '@angular/material';
+import { MdSnackBarModule } from '@angular/material';
 
 import { ImgViewerComponent } from './img-viewer.component';
 import { ApplyComponent } from './apply-detail/apply.component';
@@ -24,6 +25,7 @@ import { routing } from './img-viewer.routing';
     NgaModule,
     FormsModule,
     MdSelectModule,
+    MdSnackBarModule,
   ],
   declarations: [
     ImgViewerComponent,

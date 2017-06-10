@@ -8,6 +8,7 @@ import { Location } from '@angular/common';
 import { Hero , User } from '../List/hero';
 import { LocalDataSource } from 'ng2-smart-table';
 import { LoginService } from '../../../login/login.service';
+import { MdSnackBar } from '@angular/material';
 
 @Component({
   moduleId: module.id,
@@ -28,11 +29,14 @@ export class SendApplyComponent implements OnInit {
     message: '',
   };
   source: LocalDataSource = new LocalDataSource();
-  constructor(private router: Router,
-              private route: ActivatedRoute,
-              private heroService: HeroService,
-              private loginService: LoginService,
-              private location: Location) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private heroService: HeroService,
+    private loginService: LoginService,
+    private location: Location,
+    public snackBar: MdSnackBar
+  ) {}
   getHeroes(): void {
     this.heroService.getHeroes().then(heroes => this.heroes = heroes);
   }
@@ -74,6 +78,9 @@ export class SendApplyComponent implements OnInit {
       console.log(hero);
       this.heroes.push(hero);
       this.selectedHero = null;
+    });
+    this.snackBar.open('创建成功', '', {
+      duration: 2000,
     });
   }
   sendMail() {
