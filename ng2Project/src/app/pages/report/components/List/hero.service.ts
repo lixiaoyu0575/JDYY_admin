@@ -61,12 +61,9 @@ export class HeroService {
   sendMail(usercreds: Usercreds) {
     let emailid = 'name=' + usercreds.recipients + '&text=' + usercreds.message + '&title=' + usercreds.subject;
     console.log(emailid);
-    this.http.post(this.emailUrl, usercreds, { headers: this.emailheaders }).subscribe(
-     err => console.log(err),
-    );
+    this.http.post(this.emailUrl, usercreds, { headers: this.emailheaders }).toPromise()
+      .then((res) => console.log(res));
   }
-
-
 }
 
 
