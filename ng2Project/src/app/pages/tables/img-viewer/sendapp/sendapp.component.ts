@@ -20,7 +20,7 @@ export class SendApplyComponent implements OnInit {
   selectedHero: Hero;
   users: User[];
   nowuser: User;
-  currentUrl = 'http://localhost:4200';
+  currentUrl = 'http://59.110.52.133:8084';
   applyTo: string;
   emailContent = {
     recipients: '',
