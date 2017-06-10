@@ -6,7 +6,7 @@ import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class LoginService {
-  private url = 'http://202.117.54.45:3333/authenticate';
+  private url = 'http://59.110.52.133:3333/authenticate';
   private headers = new Headers({'Content-Type': 'application/json'});
   private emailheaders = new Headers({'Content-Type': 'application/json'});
 
@@ -25,6 +25,6 @@ export class LoginService {
   }
 
   getuser(): Promise <any> {
-    return this.http.get('http://202.117.54.45:3333/getusers').toPromise().then((res) => res.json() as any);
+    return this.http.get('http://59.110.52.133:3333/getusers').toPromise().then((res) => res.json() as any);
   }
 }
