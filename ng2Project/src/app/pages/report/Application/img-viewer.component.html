@@ -4,7 +4,7 @@
      *ngFor="let link of navLinks"
      [routerLink]="link.url"
      routerLinkActive #rla="routerLinkActive"
-     [active]="rla.isActive">
+     [active]="rla.isActive" style="color: whitesmoke">
     {{link.label}}
   </a>
 </nav>

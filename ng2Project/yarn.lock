@@ -91,7 +91,7 @@
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/@angular/core/-/core-4.1.0.tgz#72ec173316879571880c9c483ed6dfc0caab94b0"
 
-"@angular/flex-layout@^2.0.0-beta.8":
+"@angular/flex-layout@^2.0.0-beta.5":
   version "2.0.0-rc.1"
   resolved "https://registry.yarnpkg.com/@angular/flex-layout/-/flex-layout-2.0.0-rc.1.tgz#96fa7f85b2c4bacf2784913a2d607e2ed23dc7f1"
 

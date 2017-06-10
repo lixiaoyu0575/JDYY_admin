@@ -77,7 +77,11 @@ export class SendApplyComponent implements OnInit {
     });
   }
   sendMail() {
-    this.emailContent.recipients = 'th3eepop@163.com';
+    if (this.applyTo === 'Billy') {
+      this.emailContent.recipients = 'th3eepop@163.com';
+    } else if (this.applyTo === 'Jishang') {
+      this.emailContent.recipients = 'jishang@gmail.com';
+    }
     this.emailContent.message = '' + this.nowuser.name + '发来了报告诊断申请,点击' + this.currentUrl + '查看';
     console.log(this.emailContent);
     this.heroService.sendMail(this.emailContent);

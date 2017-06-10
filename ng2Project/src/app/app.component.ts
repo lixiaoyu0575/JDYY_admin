@@ -49,7 +49,7 @@ export class App {
 
   private _loadImages(): void {
     // register some loaders
-    BaThemePreloader.registerLoader(this._imageLoader.load('/assets/img/sky-bg.jpg'));
+    BaThemePreloader.registerLoader(this._imageLoader.load('/assets/img/blur-bg.jpg'));
   }
 
 }
