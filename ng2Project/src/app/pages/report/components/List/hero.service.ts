@@ -8,8 +8,8 @@ import { Hero, Usercreds } from './hero';
 @Injectable()
 export class HeroService {
   private heroesUrl = 'api/heroes';
-  private localUrl = 'http://202.117.54.45:3333/';
-  private emailUrl = 'http://localhost:3333/sendmail';
+  private localUrl = 'http://59.110.52.133:3333/';
+  private emailUrl = 'http://59.110.52.133:3333/sendmail';
   private headers = new Headers({'Content-Type': 'application/json'});
   private emailheaders = new Headers({'Content-Type': 'application/json'});
 
