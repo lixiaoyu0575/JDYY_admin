@@ -21,6 +21,13 @@ export class ImageTableComponent implements OnInit {
   sortBy = "email";
   sortOrder = "asc";
 
+  private _opened: boolean = true;
+  private _mode: string = 'push';
+  private _position: string = 'right';
+  private _toggleSidebar() {
+    this._opened = !this._opened;
+  }
+
   constructor(
     private service: ImageTableService,
     private route: ActivatedRoute,

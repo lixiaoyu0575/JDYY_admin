@@ -52,5 +52,6 @@ declare const chroma: any;
 declare let cornerstone: any,
   cornerstoneTools: any,
   cornerstoneWADOImageLoader: any,
-  HorizontalScroll: any;
+  HorizontalScroll: any,
+  dialogPolyfill: any;
 

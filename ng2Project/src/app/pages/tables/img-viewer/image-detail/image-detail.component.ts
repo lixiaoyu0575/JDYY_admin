@@ -91,6 +91,12 @@ export class ImageDetailComponent implements OnInit, AfterViewInit {
   };
   images: object[];
   imageUrl;
+  private _opened: boolean = false;
+  private _mode: string = 'push';
+  private _position: string = 'right';
+  private _toggleSidebar() {
+    this._opened = !this._opened;
+  }
   constructor(
     private http: Http,
     private imageService: ImageService,
@@ -229,6 +235,103 @@ export class ImageDetailComponent implements OnInit, AfterViewInit {
   }
 
   loadImg(url?: string) {
+
+    // ----------------------------- Annotation func start------------------------------------- //
+    // Register the dialogs using the HTML5 Dialog Polyfill
+    var annotationDialog = document.querySelector('#annotationDialog');
+    var relabelDialog = document.querySelector('#relabelDialog');
+    dialogPolyfill.registerDialog(annotationDialog);
+    dialogPolyfill.registerDialog(relabelDialog);
+    // Define a callback to get your text annotation
+    // This could be used, e.g. to open a modal
+    function getTextCallback(doneChangingTextCallback) {
+      var annotationDialog  = $('#annotationDialog');
+      var getTextInput = annotationDialog .find('.annotationTextInput');
+      var confirm = annotationDialog .find('.annotationDialogConfirm');
+console.log(annotationDialog);
+      annotationDialog.showModal = function () {
+        this[0].showModal();
+      };
+      annotationDialog.close = function () {
+        this[0].close();
+      };
+      annotationDialog.showModal();
+console.log(confirm);
+      // confirm.off('click');
+      confirm.on('click', function() {
+        closeHandler();
+      });
+
+      annotationDialog.off("keydown");
+      annotationDialog.on('keydown', keyPressHandler);
+
+      function keyPressHandler(e) {
+        // If Enter is pressed, close the dialog
+        if (e.which === 13) {
+          closeHandler();
+        }
+      }
+
+      function closeHandler() {
+        annotationDialog.close();
+        doneChangingTextCallback(getTextInput.val());
+        // Reset the text value
+        getTextInput.val("");
+      }
+    }
+
+    // Define a callback to edit your text annotation
+    // This could be used, e.g. to open a modal
+    function changeTextCallback(data, eventData, doneChangingTextCallback) {
+      let relabelDialog = $('#relabelDialog');
+      let getTextInput = relabelDialog.find('.annotationTextInput');
+      let confirm = relabelDialog.find('.relabelConfirm');
+      let remove = relabelDialog.find('.relabelRemove');
+
+      relabelDialog.showModal = function () {
+        this[0].showModal();
+      };
+      relabelDialog.close = function () {
+        this[0].close();
+      };
+
+      getTextInput.val(data.annotationText);
+      relabelDialog.showModal();
+
+      // confirm.off('click');
+      confirm.on('click', function() {
+        relabelDialog.close();
+        doneChangingTextCallback(data, getTextInput.val());
+      });
+
+      // If the remove button is clicked, delete this marker
+      // remove.off('click');
+      remove.on('click', function() {
+        relabelDialog.close();
+        doneChangingTextCallback(data, undefined, true);
+      });
+
+      relabelDialog.off("keydown");
+      relabelDialog.on('keydown', keyPressHandler);
+
+      function keyPressHandler(e) {
+        // If Enter is pressed, close the dialog
+        if (e.which === 13) {
+          closeHandler();
+        }
+      }
+
+      function closeHandler() {
+        relabelDialog.close();
+        doneChangingTextCallback(data, getTextInput.val());
+        // Reset the text value
+        getTextInput.val("");
+      }
+
+    }
+    // ----------------------------- Annotation func end------------------------------------- //
+
+
     let imageId = url || this.imgUrl;
     console.log(imageId);
     const element = this.element;
@@ -244,10 +347,19 @@ export class ImageDetailComponent implements OnInit, AfterViewInit {
       magnifySize: 225,
       magnificationLevel: 2
     };
-    cornerstoneTools.magnify.setConfiguration(magnificationConfig);
+    let annotationConfig = {
+      getTextCallback : getTextCallback,
+      changeTextCallback : changeTextCallback,
+      drawHandles : false,
+      drawHandlesOnHover : true,
+      arrowFirst : true
+    };
+
 
     cornerstone.loadImage(imageId).then((image) => {
       cornerstone.displayImage(element, image);
+      cornerstoneTools.magnify.setConfiguration(magnificationConfig);
+      cornerstoneTools.arrowAnnotate.setConfiguration(annotationConfig);
       cornerstoneTools.mouseInput.enable(element);
       cornerstoneTools.magnify.enable(element);
       cornerstoneTools.mouseWheelInput.enable(element);
@@ -259,7 +371,7 @@ export class ImageDetailComponent implements OnInit, AfterViewInit {
       cornerstoneTools.highlight.enable(element);
       cornerstoneTools.simpleAngle.enable(element);
 
-      cornerstoneTools.pan.activate(element, 4);
+      // cornerstoneTools.pan.activate(element, 4);
 
       // cornerstoneTools.freehand.activate(element, 1);
       cornerstoneTools.zoomWheel.activate(element, 3); // zoom is the default tool for middle mouse wheel
@@ -317,8 +429,8 @@ export class ImageDetailComponent implements OnInit, AfterViewInit {
   disableAllTools() {
     const element = this.element;
     // cornerstoneTools.wwwc.disable(element);
-    // cornerstoneTools.pan.activate(element, 2); // 2 is middle mouse button
-    // cornerstoneTools.zoom.activate(element, 4); // 4 is right mouse button
+    cornerstoneTools.pan.deactivate(element, 1); // 2 is middle mouse button
+    cornerstoneTools.zoom.deactivate(element, 1); // 4 is right mouse button
     cornerstoneTools.probe.deactivate(element, 1);
     cornerstoneTools.length.deactivate(element, 1);
     cornerstoneTools.ellipticalRoi.deactivate(element, 1);
@@ -329,6 +441,7 @@ export class ImageDetailComponent implements OnInit, AfterViewInit {
     cornerstoneTools.magnify.deactivate(element, 1);
     cornerstoneTools.simpleAngle.deactivate(element, 1);
     cornerstoneTools.wwwc.deactivate(element, 1);
+    cornerstoneTools.arrowAnnotate.deactivate(this.element, 1);
   }
 
   chooseType1() {
@@ -371,6 +484,16 @@ export class ImageDetailComponent implements OnInit, AfterViewInit {
     // cornerstoneTools.rectangleRoi.setLabel('type5');
   }
 
+  activatePan() {
+    this.disableAllTools();
+    cornerstoneTools.pan.activate(this.element, 1);
+  }
+
+  activateZoom() {
+    this.disableAllTools();
+    cornerstoneTools.zoom.activate(this.element, 1);
+  }
+
   activateMagnification() {
     this.disableAllTools();
     cornerstoneTools.magnify.activate(this.element, 1);
@@ -408,6 +531,10 @@ export class ImageDetailComponent implements OnInit, AfterViewInit {
   activateWWWC() {
     this.disableAllTools();
     cornerstoneTools.wwwc.activate(this.element, 1);
+  }
+  activateAnnotation() {
+    this.disableAllTools();
+    cornerstoneTools.arrowAnnotate.activate(this.element, 1);
   }
 
   activateTool(id: string) {

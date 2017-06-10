@@ -28,6 +28,13 @@ export class SendApplyComponent implements OnInit {
     message: '',
   };
   source: LocalDataSource = new LocalDataSource();
+  private _opened: boolean = false;
+  private _mode: string = 'push';
+  private _position: string = 'right';
+
+  private _toggleSidebar() {
+    this._opened = !this._opened;
+  }
   constructor(private router: Router,
               private route: ActivatedRoute,
               private heroService: HeroService,

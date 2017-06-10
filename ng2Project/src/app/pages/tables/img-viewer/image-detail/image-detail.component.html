@@ -1,4 +1,7 @@
 <ba-card>
+
+  <!-- Container for sidebar(s) + page content -->
+  <ng-sidebar-container>
   <div class="row">
     <!--<div class="col-xs-3">
       <div style="height: 500px">
@@ -52,6 +55,25 @@
           WW/WC:
         </div>
       </div>
+      <dialog id="annotationDialog">
+        <h5>Enter your annotation</h5>
+        <div class="annotationTextInputOptions">
+          <label>New label</label>
+          <input name="annotationTextInput" class="annotationTextInput" type="text"/>
+        </div>
+        <a class="annotationDialogConfirm btn btn-sm btn-primary">OK</a>
+      </dialog>
+      <dialog id="relabelDialog" oncontextmenu="return false">
+        <h5>Edit your annotation</h5>
+        <div class="annotationTextInputOptions">
+          <label>New label</label>
+          <input name="annotationTextInput" class="annotationTextInput" type="text"/>
+        </div>
+        <div>
+          <a class="relabelRemove btn btn-sm btn-secondary">Remove marker</a>
+          <a class="relabelConfirm btn btn-sm btn-primary">OK</a>
+        </div>
+      </dialog>
       <div id="scrolling">
         <ul>
           <li *ngFor="let item of imageUrl">
@@ -63,96 +85,30 @@
                  (click)="loadImg(item.url)">
             </div>
           </li>
-
-          <!--<li>-->
-            <!--<div id="test2" class="cornerstone-enabled-image cornerstone-test tn" style="width:256px;height:256px;"-->
-                 <!--oncontextmenu="return false"-->
-                 <!--unselectable="on"-->
-                 <!--onselectstart="return false;"-->
-                 <!--onmousedown="return false;"-->
-                 <!--(click)="loadImg(item.url)">-->
-            <!--</div>-->
-          <!--</li>-->
-          <!--<li>-->
-            <!--<div id="test3" class="cornerstone-enabled-image cornerstone-test tn" style="width:256px;height:256px;"-->
-                 <!--oncontextmenu="return false"-->
-                 <!--unselectable="on"-->
-                 <!--onselectstart="return false;"-->
-                 <!--onmousedown="return false;"-->
-                 <!--(click)="loadImg(item.url)">-->
-            <!--</div>-->
-          <!--</li>-->
-          <!--<li>-->
-            <!--<div id="test4" class="cornerstone-enabled-image cornerstone-test tn" style="width:256px;height:256px;"-->
-                 <!--oncontextmenu="return false"-->
-                 <!--unselectable="on"-->
-                 <!--onselectstart="return false;"-->
-                 <!--onmousedown="return false;"-->
-                 <!--(click)="loadImg(item.url)">-->
-            <!--</div>-->
-          <!--</li>-->
-          <!--<li>-->
-            <!--<div id="test5" class="cornerstone-enabled-image cornerstone-test tn" style="width:256px;height:256px;"-->
-                 <!--oncontextmenu="return false"-->
-                 <!--unselectable="on"-->
-                 <!--onselectstart="return false;"-->
-                 <!--onmousedown="return false;"-->
-                 <!--(click)="loadImg(item.url)">-->
-            <!--</div>-->
-          <!--</li>-->
-          <!--<li>-->
-            <!--<div id="test6" class="cornerstone-enabled-image cornerstone-test tn" style="width:256px;height:256px;"-->
-                 <!--oncontextmenu="return false"-->
-                 <!--unselectable="on"-->
-                 <!--onselectstart="return false;"-->
-                 <!--onmousedown="return false;"-->
-                 <!--(click)="loadImg(item.url)">-->
-            <!--</div>-->
-          <!--</li>-->
-          <!--<li>-->
-            <!--<div id="test7" class="cornerstone-enabled-image cornerstone-test tn" style="width:256px;height:256px;"-->
-                 <!--oncontextmenu="return false"-->
-                 <!--unselectable="on"-->
-                 <!--onselectstart="return false;"-->
-                 <!--onmousedown="return false;"-->
-                 <!--(click)="loadImg(item.url)">-->
-            <!--</div>-->
-          <!--</li>-->
-          <!--<li>-->
-            <!--<div id="test8" class="cornerstone-enabled-image cornerstone-test tn" style="width:256px;height:256px;"-->
-                 <!--oncontextmenu="return false"-->
-                 <!--unselectable="on"-->
-                 <!--onselectstart="return false;"-->
-                 <!--onmousedown="return false;"-->
-                 <!--(click)="loadImg(item.url)">-->
-            <!--</div>-->
-          <!--</li>-->
-          <!--<div *ngFor="let item of imageUrl">-->
-          <!--<li>-->
-          <!--<button>{{item.id}}</button>-->
-          <!--</li>-->
-          <!--</div>-->
         </ul>
       </div>
     </div>
     <div class="col-xs-2">
       <ul class="list-group">
         <!--<button md-raised-button id="rectangleroi1" class="list-group-item" (click)="chooseType1()">肿瘤瘤体-->
-          <!--<svg width="10px" height="10px"><rect stroke="black" width="10px" height="10px" fill="red"></rect></svg></button>-->
+        <!--<svg width="10px" height="10px"><rect stroke="black" width="10px" height="10px" fill="red"></rect></svg></button>-->
         <!--<button md-raised-button id="rectangleroi2" class="list-group-item" (click)="chooseType2()">中心坏死-->
-          <!--<svg width="10px" height="10px"><rect stroke="black" width="10px" height="10px" fill="yellow"></rect></svg></button>-->
+        <!--<svg width="10px" height="10px"><rect stroke="black" width="10px" height="10px" fill="yellow"></rect></svg></button>-->
         <!--<button md-raised-button id="rectangleroi3" class="list-group-item" (click)="chooseType3()">周围水肿-->
-          <!--<svg width="10px" height="10px"><rect stroke="black" width="10px" height="10px" fill="pink"></rect></svg></button>-->
+        <!--<svg width="10px" height="10px"><rect stroke="black" width="10px" height="10px" fill="pink"></rect></svg></button>-->
         <!--<button md-raised-button id="rightDrag" class="list-group-item" (click)="activateTool('rightDrag')">右键拖拽</button>-->
         <!--<button md-raised-button id="rightWwwc" class="list-group-item" (click)="activateTool('rightWwwc')">右键对比度</button>-->
+        <button md-raised-button  class="list-group-item" (click)="activatePan()">拖拽</button>
+        <button md-raised-button  class="list-group-item" (click)="activateZoom()">缩放</button>
         <button md-raised-button  class="list-group-item" (click)="activateWWWC()">对比度</button>
         <button md-raised-button  class="list-group-item" (click)="activateMagnification()">放大镜</button>
         <button md-raised-button  class="list-group-item" (click)="activateSimpleAngle()">量角器</button>
-        <!--<button md-raised-button  class="list-group-item" (click)="activateLength()">直线</button>-->
+        <button md-raised-button  class="list-group-item" (click)="activateAnnotation()">注释</button>
+        <button md-raised-button  class="list-group-item" (click)="activateLength()">直线</button>
         <!--<button md-raised-button  class="list-group-item" (click)="activateProbe()">画点</button>-->
         <!--<button md-raised-button  class="list-group-item" (click)="activateEllipticalROI()">椭圆</button>-->
         <!--<button md-raised-button  class="list-group-item" (click)="activateRectangle()">矩形</button>-->
-        <button md-raised-button  class="list-group-item" (click)="activateHighlight()">高亮</button>
+        <!--<button md-raised-button  class="list-group-item" (click)="activateHighlight()">高亮</button>-->
       </ul>
       <ul class="list-group">
         <!--<button md-raised-button id="historyBack" class="list-group-item" (click)="historyBack()">历史回退</button>-->
@@ -163,7 +119,71 @@
       <br>
     </div>
   </div>
+
+
+    <!-- A sidebar -->
+    <ng-sidebar [(opened)]="_opened" [mode]="_mode" [position]="_position">
+      <p>Sidebar contents</p>
+    </ng-sidebar>
+    <!--[mode]="_mode" [position]="_position"-->
+    <!-- Page content -->
+    <button (click)="_toggleSidebar()">Toggle sidebar</button>
+
+  </ng-sidebar-container>
 </ba-card>
+
+<!--<md-card class="card-demo">-->
+  <!--<md-card-title>-->
+    <!--<a href="https://github.com/angular/flex-layout/issues/181" target="_blank">Issue #266</a>-->
+  <!--</md-card-title>-->
+  <!--<md-card-subtitle>Using ngxSplit with Flex-Layout:</md-card-subtitle>-->
+  <!--<md-card-content>-->
+    <!--<div class="night-theme">-->
+      <!--<div fxLayout="row" style="height:500px" ngxSplit="row">-->
+        <!--<div fxFlex="30%" ngxSplitArea class="c1r1" >-->
+          <!--<div class="c1r1_header" >Column #1 - Row #1</div>-->
+          <!--<ul>-->
+            <!--<li>2 Columns: 30% + 70%</li>-->
+            <!--<li>2nd Column: 2 rows</li>-->
+            <!--<li>2nd Column: 50% + 50%</li>-->
+          <!--</ul>-->
+        <!--</div>-->
+        <!--<div class="handle handle-row" ngxSplitHandle>-->
+          <!--<i class="material-icons">&#xE25D;</i>-->
+        <!--</div>-->
+        <!--<div fxFlex="70%" ngxSplitArea>-->
+          <!--<div fxLayout="column" fxFlexFill ngxSplit="column">-->
+            <!--<div fxFlex="50%" ngxSplitArea class="c2r1_body" >-->
+              <!--<div class="c2r1_header" >Column #2 - Row #1</div>-->
+              <!--<h1>Layout Dashboard</h1>-->
+              <!--<p>-->
+                <!--Demonstrate use of ngxSplit with the Flex-Layout API-->
+                <!--and flexbox css layouts.-->
+                <!--<br/><br/>-->
+                <!--Haxx0r ipsum cd ctl-c Starcraft concurrently salt unix baz class bar linux-->
+                <!--January 1, 1970 syn for mutex daemon todo mountain dew recursively. Mainframe-->
+                <!--wannabee machine code hack the mainframe do void python bin big-endian break-->
+                <!--tcp ddos emacs public frack.Over clock headers data private *.* pwned-->
+                <!--fork script kiddies.-->
+              <!--</p>-->
+            <!--</div>-->
+            <!--<div class="handle handle-column" ngxSplitHandle>-->
+              <!--<i class="material-icons">&#xE25D;</i>-->
+            <!--</div>-->
+            <!--<div fxFlex="50%" ngxSplitArea class="c2r2" >-->
+              <!--<div class="c2r2_header" >Column #2 - Row #2</div>-->
+              <!--<ul>-->
+                <!--<li>List Item #1</li>-->
+                <!--<li>List Item #2</li>-->
+                <!--<li>List Item #3</li>-->
+              <!--</ul>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</md-card-content>-->
+<!--</md-card>-->
 
 
 <!--<div *ngFor="let item of imageUrl">-->

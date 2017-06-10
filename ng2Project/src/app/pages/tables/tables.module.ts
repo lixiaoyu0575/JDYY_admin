@@ -9,6 +9,7 @@ import { DataFilterPipe } from './components/dataTables/data-filter.pipe';
 import { IdFilterPipe, NameFilterPipe, AgeFilterPipe, ExamContentFilterPipe, TimeFilterPipe, StatusFilterPipe } from './components/image-table/image-table-filter.pipe';
 import { ImageNamePipe } from './components/image-gallery/image-gallery-filter.pipe';
 import { HotTable, HotTableModule } from 'ng2-handsontable';
+import { SidebarModule } from 'ng-sidebar';
 
 import { routing } from './tables.routing';
 import { Tables } from './tables.component';
@@ -60,6 +61,7 @@ import { ImgViewerModule } from './img-viewer/img-viewer.module';
     SharedModule,
     ImgViewerModule,
     MdButtonModule,
+    SidebarModule.forRoot(),
   ],
   declarations: [
     Tables,

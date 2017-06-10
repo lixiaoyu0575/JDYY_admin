@@ -6,6 +6,7 @@ import { NgaModule } from '../../../theme/nga.module';
 import { FormsModule } from '@angular/forms';
 import {MdSelectModule} from '@angular/material';
 import { SharedModule } from '../../../shared/_module';
+import { SidebarModule } from 'ng-sidebar';
 
 import { ImgViewerComponent } from './img-viewer.component';
 import { ImageDetailComponent } from './image-detail/image-detail.component';
@@ -31,6 +32,7 @@ import { routing } from './img-viewer.routing';
     MdSelectModule,
     // VirtualScrollModule,
     SharedModule,
+    SidebarModule.forRoot(),
   ],
   declarations: [
     ImgViewerComponent,
