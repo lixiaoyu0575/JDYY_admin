@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {FormGroup, AbstractControl, FormBuilder, Validators} from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { LoginService } from './login.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -31,16 +31,17 @@ export class LoginComponent {
   onSubmit(values: Object): void {
     this.submitted = true;
     if (this.form.valid) {
-       console.log(values);
        this.loginService.authenticate(values).then((res) => {
-         if (res.token) {
-           console.log(res);
+         if (this.loginService.isLoggedIn) {
+           console.log(this.loginService.isLoggedIn);
            localStorage.setItem('user_token', res.token);
            localStorage.setItem('user_name', res.username);
-           console.log(localStorage['user_name']);
-           this.router.navigate(['../pages/report/list'], { relativeTo: this.route } );
+           if (this.loginService.userLevel === 'II') {
+             this.router.navigate(['../pages/report/list'], { relativeTo: this.route } );
+           }else {
+             this.router.navigate(['../pages/tables/imageTable'], { relativeTo: this.route } );
+           }
            this.loginService.getuser().then((response) => {
-             console.log(response);
            });
          }
        });

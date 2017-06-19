@@ -9,18 +9,24 @@ export class LoginService {
   private url = 'http://202.117.54.45:3333/authenticate';
   private headers = new Headers({'Content-Type': 'application/json'});
   private emailheaders = new Headers({'Content-Type': 'application/json'});
-
+  isLoggedIn: boolean = false;
+  userLevel: string;
   constructor(private http: Http) {
   }
 
-  private handleError(error: any): Promise<any> {
+  private handleError(error: any): Promise <any> {
     console.error('An error occured', error);
     return Promise.reject(error.message || error); // ?
   }
 
   authenticate(values: Object): Promise <any> {
-    return this.http.post(this.url, values, { headers: this.emailheaders }).toPromise().then((res) =>
-      res.json() as any,
+    return this.http.post(this.url, values, { headers: this.emailheaders }).toPromise().then((res) => {
+      console.log(res.json());
+      this.isLoggedIn = true;
+      this.userLevel = res.json().userlevel;
+      console.log(this.userLevel);
+      return res.json();
+    },
     );
   }
 
