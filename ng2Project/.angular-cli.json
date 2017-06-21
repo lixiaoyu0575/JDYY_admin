@@ -50,8 +50,6 @@
         "../libs/imgViewer/cornerstoneMath.min.js",
         "../libs/imgViewer/cornerstoneTools.js",
         "../libs/imgViewer/cornerstoneWADOImageLoader.js",
-        "../libs/imgViewer/cornerstoneWADOImageLoaderCodecs.js",
-        "../libs/imgViewer/cornerstoneWADOImageLoaderWebWorker.js",
         "../libs/imgViewer/exampleImageLoader.js"
       ],
       "environmentSource": "environments/environment.ts",

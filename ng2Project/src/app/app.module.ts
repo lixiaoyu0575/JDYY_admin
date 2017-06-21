@@ -1,4 +1,4 @@
-import { NgModule, ApplicationRef } from '@angular/core';
+import { NgModule, ApplicationRef, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -8,6 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {  MaterialModule } from '@angular/material';
 import { SharedModule} from './shared/_module';
+import { PolymerModule } from '@codebakery/origami';
 
 /*
  * Platform and Environment providers/directives/pipes
@@ -55,10 +56,12 @@ export type StoreType = {
     BrowserAnimationsModule,
     MaterialModule,
     SharedModule,
+    PolymerModule.forRoot(),
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     APP_PROVIDERS
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 
 export class AppModule {

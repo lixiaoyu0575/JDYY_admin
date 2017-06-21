@@ -2,124 +2,18 @@
 
   <!-- Container for sidebar(s) + page content -->
   <ng-sidebar-container>
-  <div class="row">
-    <!--<div class="col-xs-3">
-      <div style="height: 500px">
-        &lt;!&ndash;<div *ngFor="let item of imageUrl">&ndash;&gt;
-          &lt;!&ndash;<div id="{{item.id}}" class="cornerstone-enabled-image cornerstone-test tn" style="width:256px;height:256px;"&ndash;&gt;
-               &lt;!&ndash;oncontextmenu="return false"&ndash;&gt;
-               &lt;!&ndash;unselectable="on"&ndash;&gt;
-               &lt;!&ndash;onselectstart="return false;"&ndash;&gt;
-               &lt;!&ndash;onmousedown="return false;"&ndash;&gt;
-               &lt;!&ndash;(click)="loadImg(item.url)">&ndash;&gt;
-          &lt;!&ndash;</div>&ndash;&gt;
-        &lt;!&ndash;</div>&ndash;&gt;
-      </div>
-      <form>
-        <input #filter (keyup)="filterNodes(filter.value, tree)" placeholder="过滤"/>
-      </form>
-      <div style="height: 400px; width: 100%">
-        <tree-root
-          #tree
-          [nodes]="nodes"
-          [options]="customTemplateStringOptions"
-          [focused]="true"
-          (onEvent)="onEvent($event)"
-        >
-          <ng-template #treeNodeTemplate let-node >
-                <span title="{{node.data.subTitle}}"  [class.labelDone]="node.data.isLabelDone"
-                      [class.labelNotDone]="!node.data.isLabelDone">{{ node.data.name }}</span>
-            <span class="pull-right">{{ childrenCount(node) }}</span>
-          </ng-template>
-          <ng-template #loadingTemplate>载入中, 请稍候.... TEST</ng-template>
-        </tree-root>
-      </div>
-    </div>-->
-    <div class="col-xs-7" style="margin: auto;">
-      <div #dicomDom id="dicomDom"
-           style="width:768px;height:768px;position:relative;display:inline-block;color:white;"
-           oncontextmenu="return false"
-           class='cornerstone-enabled-image'
-           unselectable='on'
-           onselectstart='return false;'
-           onmousedown='return false;'>
-        <div id="dicomImage"
-             style="width:512px;height:512px;top:0px;left:0px; position:absolute;">
-        </div>
-        <div id="mrbottomright" style="position: absolute;bottom:6px; right:3px">
-          <div id="frameRate"></div>
-          <div id="zoomText">Zoom: </div>
-          <div id="sliceText">Image: </div>
-        </div>
-        <div id="mrbottomleft" style="position: absolute;bottom:3px; left:3px">
-          WW/WC:
-        </div>
-      </div>
-      <dialog id="annotationDialog">
-        <h5>Enter your annotation</h5>
-        <div class="annotationTextInputOptions">
-          <label>New label</label>
-          <input name="annotationTextInput" class="annotationTextInput" type="text"/>
-        </div>
-        <a class="annotationDialogConfirm btn btn-sm btn-primary">OK</a>
-      </dialog>
-      <dialog id="relabelDialog" oncontextmenu="return false">
-        <h5>Edit your annotation</h5>
-        <div class="annotationTextInputOptions">
-          <label>New label</label>
-          <input name="annotationTextInput" class="annotationTextInput" type="text"/>
-        </div>
-        <div>
-          <a class="relabelRemove btn btn-sm btn-secondary">Remove marker</a>
-          <a class="relabelConfirm btn btn-sm btn-primary">OK</a>
-        </div>
-      </dialog>
-      <div id="scrolling">
-        <ul>
-          <li *ngFor="let item of imageUrl">
-            <div id="{{item.id}}" class="cornerstone-enabled-image cornerstone-test tn" style="width:256px;height:256px;"
-                 oncontextmenu="return false"
-                 unselectable="on"
-                 onselectstart="return false;"
-                 onmousedown="return false;"
-                 (click)="loadImg(item.url)">
-            </div>
-          </li>
-        </ul>
-      </div>
+    <section class="example-section">
+      <md-slide-toggle (change)="changeViewMode($event)">
+        多视图
+      </md-slide-toggle>
+    </section>
+    <!--<button (click)="changeViewMode()">Change ViewMode</button>-->
+    <div *ngIf="viewMode==='singleView'">
+      <app-single-view></app-single-view>
     </div>
-    <div class="col-xs-2">
-      <ul class="list-group">
-        <!--<button md-raised-button id="rectangleroi1" class="list-group-item" (click)="chooseType1()">肿瘤瘤体-->
-        <!--<svg width="10px" height="10px"><rect stroke="black" width="10px" height="10px" fill="red"></rect></svg></button>-->
-        <!--<button md-raised-button id="rectangleroi2" class="list-group-item" (click)="chooseType2()">中心坏死-->
-        <!--<svg width="10px" height="10px"><rect stroke="black" width="10px" height="10px" fill="yellow"></rect></svg></button>-->
-        <!--<button md-raised-button id="rectangleroi3" class="list-group-item" (click)="chooseType3()">周围水肿-->
-        <!--<svg width="10px" height="10px"><rect stroke="black" width="10px" height="10px" fill="pink"></rect></svg></button>-->
-        <!--<button md-raised-button id="rightDrag" class="list-group-item" (click)="activateTool('rightDrag')">右键拖拽</button>-->
-        <!--<button md-raised-button id="rightWwwc" class="list-group-item" (click)="activateTool('rightWwwc')">右键对比度</button>-->
-        <button md-raised-button  class="list-group-item" (click)="activatePan()">拖拽</button>
-        <button md-raised-button  class="list-group-item" (click)="activateZoom()">缩放</button>
-        <button md-raised-button  class="list-group-item" (click)="activateWWWC()">对比度</button>
-        <button md-raised-button  class="list-group-item" (click)="activateMagnification()">放大镜</button>
-        <button md-raised-button  class="list-group-item" (click)="activateSimpleAngle()">量角器</button>
-        <button md-raised-button  class="list-group-item" (click)="activateAnnotation()">注释</button>
-        <button md-raised-button  class="list-group-item" (click)="activateLength()">直线</button>
-        <!--<button md-raised-button  class="list-group-item" (click)="activateProbe()">画点</button>-->
-        <!--<button md-raised-button  class="list-group-item" (click)="activateEllipticalROI()">椭圆</button>-->
-        <!--<button md-raised-button  class="list-group-item" (click)="activateRectangle()">矩形</button>-->
-        <!--<button md-raised-button  class="list-group-item" (click)="activateHighlight()">高亮</button>-->
-      </ul>
-      <ul class="list-group">
-        <!--<button md-raised-button id="historyBack" class="list-group-item" (click)="historyBack()">历史回退</button>-->
-        <!--<button md-raised-button id="historyForward" class="list-group-item" (click)="historyForward()">历史前进</button>-->
-        <button md-raised-button id="submit" class="list-group-item" (click)="submit()">保存</button>
-        <button md-raised-button id="clear" class="list-group-item" (click)="clear()">清空</button>
-      </ul>
-      <br>
+    <div *ngIf="viewMode==='splitView'">
+      <app-split-view></app-split-view>
     </div>
-  </div>
-
 
     <!-- A sidebar -->
     <ng-sidebar [(opened)]="_opened" [mode]="_mode" [position]="_position">
@@ -131,6 +25,163 @@
 
   </ng-sidebar-container>
 </ba-card>
+<split direction="vertical">
+  <split-area [size]="25">
+    <p>Lorem ipsum dolor sit amet...</p>
+  </split-area>
+  <split-area [size]="75">
+    <p>Sed ut perspiciatis unde omnis iste natus erro...</p>
+  </split-area>
+</split>
+<split direction="horizontal">
+  <split-area [size]="40">
+    <split direction="vertical">
+      <split-area>
+        <p>Lorem ipsum dolor sit amet...</p>
+      </split-area>
+      <split-area>
+        <p>Sed ut perspiciatis unde omnis iste natus erro...</p>
+      </split-area>
+      <split-area>
+        <p>Lorem ipsum dolor sit amet...</p>
+      </split-area>
+    </split>
+  </split-area>
+  <split-area [size]="60">
+    <split direction="vertical">
+      <split-area [size]="25">
+        <p>Lorem ipsum dolor sit amet...</p>
+      </split-area>
+      <split-area [size]="75">
+        <p>Sed ut perspiciatis unde omnis iste natus erro...</p>
+      </split-area>
+    </split>
+  </split-area>
+</split>
+<!--<iron-list [items]="items" as="item">-->
+  <!--<template ngNonBindable>-->
+    <!--<div>[[item]]</div>-->
+  <!--</template>-->
+<!--</iron-list>-->
+<vaadin-split-layout>
+  <div>
+    <div id="mr0" style="width:256px;height:256px;display:inline-block;"
+         class="cornerstone-enabled-image"
+         oncontextmenu="return false"
+         unselectable='on'
+         onselectstart='return false;'
+         onmousedown='return false;'>
+    </div>
+    Elit laborum pariatur cumque accusamus ad Cum vel nobis molestiae esse est, reprehenderit? Excepturi soluta magnam voluptates totam rem porro. Cupiditate tempora nobis aspernatur reiciendis molestias. Perspiciatis delectus esse hic</div>
+  <div>Ipsum esse quam placeat architecto accusamus! Velit sed hic voluptas officiis minima? Tempore perspiciatis rerum exercitationem qui ipsam, dolore. Id officia autem porro impedit quae Praesentium atque eos libero illo?</div>
+</vaadin-split-layout>
+
+
+<custom-style>
+  <style is="custom-style">
+    .custom-7-1,
+    .custom-7-2,
+    .custom-7-3 {
+      --vaadin-split-layout-splitter: {
+        min-width: 1px;
+        min-height: 1px;
+        background: var(--dark-theme-divider-color);
+        border: solid 5px transparent;
+        background-clip: content-box;
+        fill: none;
+      };
+
+      background: var(--dark-theme-background-color);
+      color: var(--dark-theme-text-color);
+    }
+  </style>
+</custom-style>
+<vaadin-split-layout id="my-element" class="custom-7-1">
+  <vaadin-split-layout vertical class="custom-7-2">
+    <div #testDom id="mr1" myCornerstoneElement="example://1" style="width:256px;height:256px;display:inline-block;"
+         oncontextmenu="return false"
+         unselectable="on"
+         onselectstart="return false;"
+         onmousedown="return false;"></div>
+    <div>
+      <div id="mr2" myCornerstoneElement="example://1" style="width:256px;height:256px;display:inline-block;"
+           oncontextmenu="return false"
+           unselectable="on"
+           onselectstart="return false;"
+           onmousedown="return false;"></div>
+      Second content element</div>
+  </vaadin-split-layout>
+  <vaadin-split-layout vertical class="custom-7-3">
+    <div>
+      <div id="mr3" style="width:256px;height:256px;display:inline-block;"
+           class="cornerstone-enabled-image"
+           oncontextmenu="return false"
+           unselectable='on'
+           onselectstart='return false;'
+           onmousedown='return false;'></div>
+      Third content element</div>
+    <div>
+      <div id="mr4" style="width:256px;height:256px;display:inline-block;"
+           class="cornerstone-enabled-image"
+           oncontextmenu="return false"
+           unselectable='on'
+           onselectstart='return false;'
+           onmousedown='return false;'>
+      </div>
+      Fourth content element</div>
+  </vaadin-split-layout>
+</vaadin-split-layout>
+  <button id="changeLayout" (click)="changeLayout()">Change Layout</button>
+  <!--<div *ngIf="!isFourImageShown">-->
+    <!--<div id="mr0" style="width:512px;height:512px;display:inline-block;"-->
+         <!--class="cornerstone-enabled-image"-->
+         <!--oncontextmenu="return false"-->
+         <!--unselectable='on'-->
+         <!--onselectstart='return false;'-->
+         <!--onmousedown='return false;'>-->
+    <!--</div>-->
+  <!--</div>-->
+  <!--<div *ngIf="isFourImageShown">-->
+  <div style="width: 552px">
+
+  </div>
+
+  <!--<split direction="horizontal">-->
+    <!--<split-area size="40">-->
+      <!--<split direction="vertical">-->
+        <!--<split-area size="30">-->
+          <!--<p>Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...</p>-->
+          <!--<p>Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...</p>-->
+          <!--<p>Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...</p>-->
+        <!--</split-area>-->
+        <!--<split-area size="40">-->
+          <!--<p>Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...</p>-->
+          <!--<p>Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...</p>-->
+          <!--<p>Sed ut perspiciatis unde omnis iste natus erro...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...</p>-->
+        <!--</split-area>-->
+        <!--<split-area size="30">-->
+          <!--<p>Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...</p>-->
+          <!--<p>Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...</p>-->
+          <!--<p>Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...</p>-->
+        <!--</split-area>-->
+      <!--</split>-->
+    <!--</split-area>-->
+    <!--<split-area size="60">-->
+      <!--<split direction="vertical">-->
+        <!--<split-area size="50">-->
+          <!--<p>Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...</p>-->
+          <!--<p>Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...</p>-->
+          <!--<p>Lorem ipsum dolor sit amet..Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet....</p>-->
+        <!--</split-area>-->
+        <!--<split-area size="50">-->
+          <!--<p>Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...</p>-->
+          <!--<p>Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...</p>-->
+          <!--<p>Sed ut perspiciatis unde omnis iste natus erro...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...Lorem ipsum dolor sit amet...</p>-->
+        <!--</split-area>-->
+      <!--</split>-->
+    <!--</split-area>-->
+  <!--</split>-->
+<!--</ba-card>-->
 
 <!--<md-card class="card-demo">-->
   <!--<md-card-title>-->

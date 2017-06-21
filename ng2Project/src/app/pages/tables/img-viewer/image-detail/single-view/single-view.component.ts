@@ -1,108 +1,34 @@
 import 'rxjs/add/operator/toPromise';
 import {Component, OnInit, ViewChild, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef} from '@angular/core';
-import { TreeNode, TREE_ACTIONS, KEYS, IActionMapping, ITreeOptions } from 'angular-tree-component';
+// import { TreeNode, TREE_ACTIONS, KEYS, IActionMapping, ITreeOptions } from 'angular-tree-component';
 import { Http } from '@angular/http';
 import { Headers, RequestOptions } from '@angular/http';
 import { PolymerChanges, OnPolymerChange } from '@codebakery/origami';
 
 import * as _ from 'lodash'
 
-import { ImageService } from './../img-viewer.service';
+import { ImageService } from './../../img-viewer.service';
 
 const localIp = '59.110.52.133';
-
 @Component({
-  selector: 'app-image-detail',
-  templateUrl: './image-detail.component.html',
-  styleUrls: ['./image-detail.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'app-single-view',
+  templateUrl: './single-view.component.html',
+  styleUrls: ['./single-view.component.scss']
 })
-export class ImageDetailComponent implements OnInit, AfterViewInit, OnPolymerChange {
+export class SingleViewComponent implements OnInit, AfterViewInit {
   @ViewChild('dicomDom') dicomDom: ElementRef;
   nodes: any[];
   element: object;
   savedState: string;
   isLabelDone: boolean;
-  currentNode: TreeNode;
   localUrlPrefix: string;
   imgUrl: string;
   imgUrlPrefix: string;
   historyStates: object[];
   currentHistoryIndex: number;
   currentState: object;
-  actionMapping: IActionMapping = {
-    mouse: {
-      // contextMenu: (tree, node, $event) => {
-      //   $event.preventDefault();
-      //   alert(`context menu for ${node.data.name}`);
-      // },
-      dblClick: (tree, node, $event) => {
-        if (node.hasChildren) {TREE_ACTIONS.TOGGLE_EXPANDED(tree, node, $event);}
-      },
-      click: (tree, node, $event) => {
-        $event.shiftKey
-          ? TREE_ACTIONS.TOGGLE_SELECTED_MULTI(tree, node, $event)
-          : TREE_ACTIONS.TOGGLE_SELECTED(tree, node, $event);
-        if (node.data.children && node.data.children.length === 0) {
-          // console.log(node);
-          // console.log(tree);
-          const leafNodesUrl = this.localUrlPrefix + '/data/imginfos/' +
-            node.parent.data.name + '/' + node.data.scanId;
-          this.http.get(leafNodesUrl).toPromise().then(res => {
-            const data = res.json();
-            const imgs = data.ResultSet.content.images;
-            for (let j = 0; j < imgs.length; j++) {
-              const imgNode = {
-                name: imgs[j].img_name,
-                labelState: imgs[j].img_label,
-                url: imgs[j].img_uri,
-                isLabelDone: true
-              }
-              if (imgs[j].img_label === 0) {
-                imgNode.isLabelDone = false;
-              }
-              node.data.children.push(imgNode);
-            }
-            node.treeModel.update();
-          });
-        }
-        if (!node.data.children) {
-          $('.list-group-item').removeClass('active');
-          this.clear();
-          this.currentNode = node;
-          this.imgUrl = this.imgUrlPrefix + node.data.url;
-          this.loadImg();
-        }
-      }
-    },
-    keys: {
-      [KEYS.ENTER]: (tree, node, $event) => alert(`This is ${node.data.name}`)
-    }
-  };
-  customTemplateStringOptions: ITreeOptions = {
-    displayField: 'subTitle',
-    isExpandedField: 'expanded',
-    idField: 'uuid',
-    actionMapping: this.actionMapping,
-    nodeHeight: 23,
-    allowDrag: false,
-    useVirtualScroll: true,
-    // animateExpand: true,
-    // animateSpeed: 30,
-    // animateAcceleration: 1.2
-  };
   images: object[];
   imageUrl;
-  viewMode: string = 'singleView';
-  @PolymerChanges() isDisabled: boolean;
-  private isFourImageShown: boolean = false;
-  private _opened: boolean = false;
-  private _mode: string = 'push';
-  private _position: string = 'right';
-  private _toggleSidebar() {
-    this._opened = !this._opened;
-  }
-  isMultiView: boolean= false;
   constructor(
     private http: Http,
     private imageService: ImageService,
@@ -159,22 +85,11 @@ export class ImageDetailComponent implements OnInit, AfterViewInit, OnPolymerCha
     // this.imgUrlPrefix = 'wadouri:http://localhost:8081';
   }
   ngOnInit(): void {
-    if (!cornerstoneWADOImageLoader.webWorkerManager.isInitialized) {
-      const config = {
-        webWorkerPath : '/cornerstoneWADOImageLoaderWebWorker.js',
-        taskConfiguration: {
-          'decodeTask' : {
-            codecsPath: '/cornerstoneWADOImageLoaderCodecs.js'
-          }
-        }
-      };
-      cornerstoneWADOImageLoader.webWorkerManager.initialize(config);
-      cornerstoneWADOImageLoader.webWorkerManager.isInitialized = true;
-    }
   }
 
   ngAfterViewInit() {
-   /* // Retrieve the DOM element itself
+
+    // Retrieve the DOM element itself
     console.log($('#dicomDom'));
     console.log(this.dicomDom.nativeElement);
     this.element = this.dicomDom.nativeElement;
@@ -189,16 +104,16 @@ export class ImageDetailComponent implements OnInit, AfterViewInit, OnPolymerCha
 
     // Listen for changes to the viewport so we can update the text overlays in the corner
 
-    // $('#dicomDom').on('endFreehandDrawing', (e) => {
-    //   console.log("endFreehandDrawing");
-    //   this.recordHistory();
-    // });
-    // $('#dicomDom').on('CornerstoneImageRendered', (e) => {
-    //   console.log('dicomimage CornerstoneImageRendered');
-    //   const viewport = cornerstone.getViewport(e.target);
-    //   $('#mrbottomleft').text('WW/WC: ' + Math.round(viewport.voi.windowWidth) + '/' + Math.round(viewport.voi.windowCenter));
-    //   $('#mrbottomright').text('Zoom: ' + viewport.scale.toFixed(2));
-    // });
+    $('#dicomDom').on('endFreehandDrawing', (e) => {
+      console.log("endFreehandDrawing");
+      this.recordHistory();
+    });
+    $('#dicomDom').on('CornerstoneImageRendered', (e) => {
+      console.log('dicomimage CornerstoneImageRendered');
+      const viewport = cornerstone.getViewport(e.target);
+      $('#mrbottomleft').text('WW/WC: ' + Math.round(viewport.voi.windowWidth) + '/' + Math.round(viewport.voi.windowCenter));
+      $('#mrbottomright').text('Zoom: ' + viewport.scale.toFixed(2));
+    });
     console.log(cornerstoneWADOImageLoader.webWorkerManager);
     if (!cornerstoneWADOImageLoader.webWorkerManager.isInitialized) {
       const config = {
@@ -212,12 +127,6 @@ export class ImageDetailComponent implements OnInit, AfterViewInit, OnPolymerCha
       cornerstoneWADOImageLoader.webWorkerManager.initialize(config);
       cornerstoneWADOImageLoader.webWorkerManager.isInitialized = true;
     }
-    // cornerstoneWADOImageLoader.configure({
-    //   beforeSend: function(xhr) {
-    //     // Add custom headers here (e.g. auth tokens)
-    //     //xhr.setRequestHeader('APIKEY', 'my auth token');
-    //   }
-    // });
     this.loadImg();
     $('.list-group-item').removeClass('active');
 
@@ -234,7 +143,6 @@ export class ImageDetailComponent implements OnInit, AfterViewInit, OnPolymerCha
         this.nodes = getNodesFormat(data.json());
       });
     }, 1);
-
     let carousel = $("#scrolling ul");
     console.log(carousel);
     carousel.itemslide(
@@ -253,77 +161,6 @@ export class ImageDetailComponent implements OnInit, AfterViewInit, OnPolymerCha
         cornerstone.displayImage(testEl, image);
       });
     });
-    console.log(Polymer);
-    // Polymer({
-    //   'is': 'my-element',
-    //   'ready': function () {
-    //     console.log("ready");
-    //   }
-    // })
-    console.log();
-    // let ele = $('#my-element');
-    // var listdivs = Polymer.dom (ele).children;
-    // console.log(ele);
-    // let testDom = this.testDom.nativeElement;
-    // Polymer({
-    //   is: 'my-element',
-    //   ready: function () {
-    //     console.log(this);
-    //   }
-    // })
-    // image enable the elements
-    // var mr0 = cornerstone.enable(document.getElementById('mr0'));
-    // cornerstone.loadAndCacheImage('example://1').then(function(image) {
-    //   cornerstone.displayImage(testDom, image);
-    // });
-
-    // var mr1 = cornerstone.enable(document.getElementById('mr1'));
-    // var mr2 = cornerstone.enable(document.getElementById('mr2'));
-    // var mr3 = cornerstone.enable(document.getElementById('mr3'));
-    // var mr4 = cornerstone.enable(document.getElementById('mr4'));
-    // console.log(document.getElementById('mr0'),$('#mr1'),document.getElementById('mr2'));
-    // console.log(mr0,mr1,mr2);
-    // load and display the images
-    // cornerstone.loadAndCacheImage('example://1').then(function(image) {
-    //   cornerstone.displayImage(mr1, image);
-    // });
-    // cornerstone.loadAndCacheImage('example://2').then(function(image) {
-    //   cornerstone.displayImage(mr2, image);
-    // });
-    // cornerstone.loadAndCacheImage('example://1').then(function(image) {
-    //   cornerstone.displayImage(mr3, image);
-    // });
-    // cornerstone.loadAndCacheImage('example://2').then(function(image) {
-    //   cornerstone.displayImage(mr4, image);
-    // });*/
-  }
-
-  onPolymerChange() {
-    console.log("onPolymerChange");
-    this.changeRef.detectChanges();
-  }
-
-  changeLayout(){
-    this.isFourImageShown = !this.isFourImageShown;
-    if (this.isFourImageShown === true) {
-      var mr1 = cornerstone.enable(document.getElementById('mr1'));
-      var mr2 = cornerstone.enable(document.getElementById('mr2'));
-      var mr3 = cornerstone.enable(document.getElementById('mr3'));
-      var mr4 = cornerstone.enable(document.getElementById('mr4'));
-      // load and display the images
-      cornerstone.loadAndCacheImage('example://1').then(function(image) {
-        cornerstone.displayImage(mr1, image);
-      });
-      cornerstone.loadAndCacheImage('example://2').then(function(image) {
-        cornerstone.displayImage(mr2, image);
-      });
-      cornerstone.loadAndCacheImage('example://1').then(function(image) {
-        cornerstone.displayImage(mr3, image);
-      });
-      cornerstone.loadAndCacheImage('example://2').then(function(image) {
-        cornerstone.displayImage(mr4, image);
-      });
-    }
   }
 
   loadImg(url?: string) {
@@ -340,7 +177,7 @@ export class ImageDetailComponent implements OnInit, AfterViewInit, OnPolymerCha
       var annotationDialog  = $('#annotationDialog');
       var getTextInput = annotationDialog .find('.annotationTextInput');
       var confirm = annotationDialog .find('.annotationDialogConfirm');
-console.log(annotationDialog);
+      console.log(annotationDialog);
       annotationDialog.showModal = function () {
         this[0].showModal();
       };
@@ -348,7 +185,7 @@ console.log(annotationDialog);
         this[0].close();
       };
       annotationDialog.showModal();
-console.log(confirm);
+      console.log(confirm);
       // confirm.off('click');
       confirm.on('click', function() {
         closeHandler();
@@ -467,55 +304,7 @@ console.log(confirm);
 
       // cornerstoneTools.freehand.activate(element, 1);
       cornerstoneTools.zoomWheel.activate(element, 3); // zoom is the default tool for middle mouse wheel
-      if (this.currentNode && this.localUrlPrefix) {
-        this.loadLabelsState();
-      }
     });
-  }
-
-  loadLabelsState() {
-    const node = this.currentNode;
-    const url = this.localUrlPrefix + '/data/labelinfos/' + node.parent.parent.data.name + '/' +
-      node.parent.data.scanId + '/' + node.data.name;
-    this.http.get(url).toPromise().then((res) => {
-      const data = res.json();
-      // data.then(function (d) {
-      //   console.log(d);
-      // })
-      console.log(data);
-      const savedState = data["ResultSet"]["content"]["label_info"];
-      if (savedState) {
-        this.disableAllTools();
-        this.savedState = savedState;
-        this.currentState = JSON.parse(this.savedState);
-        cornerstoneTools.appState.restore(this.currentState);
-        cornerstone.updateImage(this.element);
-        this.historyStates = [];
-        this.historyStates.push($.extend(true, {}, this.currentState));
-        this.currentHistoryIndex = 0;
-      }
-    });
-  }
-
-  childrenCount(node: TreeNode): string {
-    return node && node.children && node.children.length !== 0 ? `(${node.children.length})` : '';
-  }
-
-  filterNodes(text, tree) {
-    tree.treeModel.filterNodes(text);
-  }
-
-  onEvent(event) {
-    // console.log(event);
-  }
-
-  go($event) {
-    $event.stopPropagation();
-    alert('this method is on the app component');
-  }
-
-  activeNodes(treeModel) {
-    console.log(treeModel.activeNodes);
   }
 
   disableAllTools() {
@@ -641,33 +430,6 @@ console.log(confirm);
     }
   }
 
-  submit() {
-    const labelsState = cornerstoneTools.appState.save([this.element]);
-    const savedState = JSON.stringify(labelsState);
-
-    console.log(this.currentNode);
-    this.currentNode.data.isLabelDone = true;
-    updateNodeState(this.currentNode.parent);
-    updateNodeState(this.currentNode.parent.parent);
-    updateNodeState(this.currentNode.parent.parent.parent);
-    const node = this.currentNode;
-    const labeledData = {
-      exp_id: node.parent.parent.data.name,
-      scan_id: node.parent.data.scanId,
-      img_name: node.data.name,
-      label_info: savedState,
-      label_type: 'test_label_type'
-    };
-
-    const url = this.localUrlPrefix + '/data/labelinsert';
-
-    const headers = new Headers({'Content-Type': 'application/json'});
-    const options = new RequestOptions({ headers: headers});
-
-    this.http.post(url, labeledData, options).toPromise().then(() => console.log('sended labelData'));
-
-  }
-
   clear() {
     const element = this.element;
     const toolStateManager = cornerstoneTools.getElementToolStateManager(element);
@@ -731,16 +493,6 @@ console.log(confirm);
     this.currentState = this.historyStates[this.currentHistoryIndex];
     cornerstoneTools.appState.restore(this.currentState);
     cornerstone.updateImage(this.element);
-  }
-
-  switch(mode: String) {
-    this.isMultiView = !this.isMultiView;
-    if (this.isMultiView === false) {
-      this.ngAfterViewInit();
-    }
-  }
-  changeViewMode(event) {
-    this.viewMode = this.viewMode === 'singleView' ? 'splitView' : 'singleView';
   }
 
 }
@@ -810,17 +562,4 @@ function activate(id: string): void {
 function activateTool(id: string): void {
   // $('.active-tool').removeClass('active');
   // $(id).addClass('active');
-}
-function updateNodeState(node: TreeNode): void {
-  if (!node.data.children) {
-    return;
-  }
-  const nodeChildren = node.data.children;
-  let isLabelDone = true;
-  for (let i = 0; i < nodeChildren.length; i++) {
-    if (nodeChildren[i].isLabelDone === false) {
-      isLabelDone = false;
-    }
-  }
-  node.data.isLabelDone = isLabelDone;
 }

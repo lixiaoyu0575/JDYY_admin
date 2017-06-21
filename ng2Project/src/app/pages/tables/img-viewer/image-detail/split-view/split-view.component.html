@@ -1,0 +1,96 @@
+<div fxLayout="colomn wrap">
+  <div class="toolbarSelection">
+    <button md-raised-button  class="list-group-item" (click)="sidenav.toggle()">Series</button>
+    <button md-raised-button  class="list-group-item" (click)="activatePan()">拖拽</button>
+    <button md-raised-button  class="list-group-item" (click)="activateZoom()">缩放</button>
+    <button md-raised-button  class="list-group-item" (click)="activateWWWC()">对比度</button>
+    <button md-raised-button  class="list-group-item" (click)="activateMagnification()">放大镜</button>
+    <button md-raised-button  class="list-group-item" disabled>智能分析</button>
+    <button md-raised-button  class="list-group-item" style="background-color: #666666" (click)="activateSimpleAngle()">量角器</button>
+    <button md-raised-button  class="list-group-item" style="background-color: #666666" (click)="activateAnnotation()">注释</button>
+    <button md-raised-button  class="list-group-item" style="background-color: #666666" (click)="activateLength()">直线</button>
+    <button md-raised-button  class="list-group-item" style="background-color: #666666" (click)="submit()">保存</button>
+    <button md-raised-button  class="list-group-item" style="background-color: #666666" (click)="clear()">清空</button>
+  </div>
+  <div fxLayout="row wrap" style="width: 100%;height: 900px;">
+    <md-sidenav-container class="example-sidenav-fab-container">
+      <md-sidenav #sidenav mode="side" opened="false">
+        <!--<div fxFlex="22">-->
+          <div fxLayout="colomn wrap" style="height: 800px;overflow: auto">
+            <button md-raised-button  class="list-group-item" (click)="shouldShowDetail = !shouldShowDetail">显示统计</button>
+            <ul>
+              <li draggable *ngFor="let item of dragItems" [dragData]="item">
+                <img src="/assets/img/test.bmp" style="height: 300px;width: 100%">
+                <p *ngIf="shouldShowDetail">切片数量： XXX</p>
+              </li>
+            </ul>
+          </div>
+        <!--</div>-->
+      </md-sidenav>
+      <button md-mini-fab class="example-fab" (click)="sidenav.toggle()">
+        <md-icon>add</md-icon>
+      </button>
+      <div fxFlex="">
+        <div fxLayout="row wrap">
+          <!--<div fxFlex="50">-->
+          <!--<div myCornerstoneElement="wadouri:http://59.110.52.133:8081/data/experiments/XNAT_E00229/scans/302/files/1.2.392.200036.9125.2.138612190166.20160301003289-302-2-r9fzxi.dcm"-->
+          <!--style="width:100%;height:512px;position:relative;display:inline-block;color:white;"-->
+          <!--oncontextmenu="return false"-->
+          <!--unselectable="on"-->
+          <!--onselectstart="return false;"-->
+          <!--onmousedown="return false;"></div>-->
+          <!--</div>-->
+          <div fxFlex="1"></div>
+          <div fxFlex="48.5" droppable (onDrop)="onItemDrop($event)">
+            <div #dicom myCornerstoneElement="example://2"
+                 style="width:100%;height:512px;position:relative;display:inline-block;color:white;"
+                 oncontextmenu="return false"
+                 unselectable="on"
+                 onselectstart="return false;"
+                 onmousedown="return false;">
+              <md-slider style="display: table-row" class="example-mdslider-margin" [max]="3" [step]="1" [vertical]="true" [invert]="true" [showTicks]="true" [value]="sliderValue"
+                         (change)="sliderChanged($event)"></md-slider>
+            </div>
+          </div>
+          <div fxFlex="1"></div>
+          <div fxFlex="48.5" droppable (onDrop)="onItemDrop($event)">
+            <div #dicom myCornerstoneElement="example://2"
+                 style="width:100%;height:512px;position:relative;display:inline-block;color:white;"
+                 oncontextmenu="return false"
+                 unselectable="on"
+                 onselectstart="return false;"
+                 onmousedown="return false;"></div>
+          </div>
+          <div fxFlex="1"></div>
+          <div fxFlex="1"></div>
+          <div fxFlex="48.5" droppable (onDrop)="onItemDrop($event)">
+            <div #dicom myCornerstoneElement="example://2"
+                 style="width:100%;height:512px;position:relative;display:inline-block;color:white;"
+                 oncontextmenu="return false"
+                 unselectable="on"
+                 onselectstart="return false;"
+                 onmousedown="return false;"></div>
+          </div>
+          <div fxFlex="1"></div>
+          <div fxFlex="48.5" droppable (onDrop)="onItemDrop($event)">
+            <div #dicom myCornerstoneElement="example://1"
+                 style="width:100%;height:512px;position:relative;display:inline-block;color:white;"
+                 oncontextmenu="return false"
+                 unselectable="on"
+                 onselectstart="return false;"
+                 onmousedown="return false;"></div>
+          </div>
+          <div fxFlex="1"></div>
+          <!--<div fxFlex="50">-->
+          <!--<div myCornerstoneElement="wadouri:https://raw.githubusercontent.com/chafey/cornerstoneWADOImageLoader/master/testImages/CT2_J2KR"-->
+          <!--style="width:100%;height:512px;position:relative;display:inline-block;color:white;"-->
+          <!--oncontextmenu="return false"-->
+          <!--unselectable="on"-->
+          <!--onselectstart="return false;"-->
+          <!--onmousedown="return false;"></div>-->
+          <!--</div>-->
+        </div>
+      </div>
+    </md-sidenav-container>
+  </div>
+</div>

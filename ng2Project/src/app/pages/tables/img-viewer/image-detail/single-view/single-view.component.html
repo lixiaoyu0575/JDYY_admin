@@ -1,0 +1,196 @@
+<p>
+  single-view works!
+</p>
+<div class="row">
+  <!--<div class="col-xs-3">
+    <div style="height: 500px">
+      &lt;!&ndash;<div *ngFor="let item of imageUrl">&ndash;&gt;
+        &lt;!&ndash;<div id="{{item.id}}" class="cornerstone-enabled-image cornerstone-test tn" style="width:256px;height:256px;"&ndash;&gt;
+             &lt;!&ndash;oncontextmenu="return false"&ndash;&gt;
+             &lt;!&ndash;unselectable="on"&ndash;&gt;
+             &lt;!&ndash;onselectstart="return false;"&ndash;&gt;
+             &lt;!&ndash;onmousedown="return false;"&ndash;&gt;
+             &lt;!&ndash;(click)="loadImg(item.url)">&ndash;&gt;
+        &lt;!&ndash;</div>&ndash;&gt;
+      &lt;!&ndash;</div>&ndash;&gt;
+    </div>
+    <form>
+      <input #filter (keyup)="filterNodes(filter.value, tree)" placeholder="过滤"/>
+    </form>
+    <div style="height: 400px; width: 100%">
+      <tree-root
+        #tree
+        [nodes]="nodes"
+        [options]="customTemplateStringOptions"
+        [focused]="true"
+        (onEvent)="onEvent($event)"
+      >
+        <ng-template #treeNodeTemplate let-node >
+              <span title="{{node.data.subTitle}}"  [class.labelDone]="node.data.isLabelDone"
+                    [class.labelNotDone]="!node.data.isLabelDone">{{ node.data.name }}</span>
+          <span class="pull-right">{{ childrenCount(node) }}</span>
+        </ng-template>
+        <ng-template #loadingTemplate>载入中, 请稍候.... TEST</ng-template>
+      </tree-root>
+    </div>
+  </div>-->
+  <div class="col-xs-7" style="margin: auto;" *ngIf="isMultiView">
+    <div style="width: 800px">
+      <div myCornerstoneElement="example://1"
+           style="width:384px;height:384px;position:relative;display:inline-block;color:white;"
+           oncontextmenu="return false"
+           unselectable="on"
+           onselectstart="return false;"
+           onmousedown="return false;"></div>
+      <div myCornerstoneElement="example://1"
+           style="width:384px;height:384px;position:relative;display:inline-block;color:white;"
+           oncontextmenu="return false"
+           unselectable="on"
+           onselectstart="return false;"
+           onmousedown="return false;"></div>
+      <div myCornerstoneElement="example://1"
+           style="width:384px;height:384px;position:relative;display:inline-block;color:white;"
+           oncontextmenu="return false"
+           unselectable="on"
+           onselectstart="return false;"
+           onmousedown="return false;"></div>
+      <div myCornerstoneElement="example://1"
+           style="width:384px;height:384px;position:relative;display:inline-block;color:white;"
+           oncontextmenu="return false"
+           unselectable="on"
+           onselectstart="return false;"
+           onmousedown="return false;"></div>
+    </div>
+  </div>
+  <div class="col-xs-7" style="margin: auto;" *ngIf="!isMultiView">
+    <div #dicomDom id="dicomDom"
+         style="width:768px;height:768px;position:relative;display:inline-block;color:white;"
+         oncontextmenu="return false"
+         class='cornerstone-enabled-image'
+         unselectable='on'
+         onselectstart='return false;'
+         onmousedown='return false;'>
+      <div id="dicomImage"
+           style="width:512px;height:512px;top:0px;left:0px; position:absolute;">
+      </div>
+      <div id="mrbottomright" style="position: absolute;bottom:6px; right:3px">
+        <div id="frameRate"></div>
+        <div id="zoomText">Zoom: </div>
+        <div id="sliceText">Image: </div>
+      </div>
+      <div id="mrbottomleft" style="position: absolute;bottom:3px; left:3px">
+        WW/WC:
+      </div>
+    </div>
+    <dialog id="annotationDialog">
+      <h5>Enter your annotation</h5>
+      <div class="annotationTextInputOptions">
+        <label>New label</label>
+        <input name="annotationTextInput" class="annotationTextInput" type="text"/>
+      </div>
+      <a class="annotationDialogConfirm btn btn-sm btn-primary">OK</a>
+    </dialog>
+    <dialog id="relabelDialog" oncontextmenu="return false">
+      <h5>Edit your annotation</h5>
+      <div class="annotationTextInputOptions">
+        <label>New label</label>
+        <input name="annotationTextInput" class="annotationTextInput" type="text"/>
+      </div>
+      <div>
+        <a class="relabelRemove btn btn-sm btn-secondary">Remove marker</a>
+        <a class="relabelConfirm btn btn-sm btn-primary">OK</a>
+      </div>
+    </dialog>
+    <div id="scrolling">
+      <ul>
+        <li *ngFor="let item of imageUrl">
+          <div id="{{item.id}}" class="cornerstone-enabled-image cornerstone-test tn" style="width:256px;height:256px;"
+               oncontextmenu="return false"
+               unselectable="on"
+               onselectstart="return false;"
+               onmousedown="return false;"
+               (click)="loadImg(item.url)">
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-xs-2">
+    <ul class="list-group">
+      <!--<button md-raised-button id="rectangleroi1" class="list-group-item" (click)="chooseType1()">肿瘤瘤体-->
+      <!--<svg width="10px" height="10px"><rect stroke="black" width="10px" height="10px" fill="red"></rect></svg></button>-->
+      <!--<button md-raised-button id="rectangleroi2" class="list-group-item" (click)="chooseType2()">中心坏死-->
+      <!--<svg width="10px" height="10px"><rect stroke="black" width="10px" height="10px" fill="yellow"></rect></svg></button>-->
+      <!--<button md-raised-button id="rectangleroi3" class="list-group-item" (click)="chooseType3()">周围水肿-->
+      <!--<svg width="10px" height="10px"><rect stroke="black" width="10px" height="10px" fill="pink"></rect></svg></button>-->
+      <!--<button md-raised-button id="rightDrag" class="list-group-item" (click)="activateTool('rightDrag')">右键拖拽</button>-->
+      <!--<button md-raised-button id="rightWwwc" class="list-group-item" (click)="activateTool('rightWwwc')">右键对比度</button>-->
+      <button md-raised-button  class="list-group-item" (click)="switch('multiView')">Switch View</button>
+      <button md-raised-button  class="list-group-item" (click)="activatePan()">拖拽</button>
+      <button md-raised-button  class="list-group-item" (click)="activateZoom()">缩放</button>
+      <button md-raised-button  class="list-group-item" (click)="activateWWWC()">对比度</button>
+      <button md-raised-button  class="list-group-item" (click)="activateMagnification()">放大镜</button>
+      <button md-raised-button  class="list-group-item" (click)="activateSimpleAngle()">量角器</button>
+      <button md-raised-button  class="list-group-item" (click)="activateAnnotation()">注释</button>
+      <button md-raised-button  class="list-group-item" (click)="activateLength()">直线</button>
+      <!--<button md-raised-button  class="list-group-item" (click)="activateProbe()">画点</button>-->
+      <!--<button md-raised-button  class="list-group-item" (click)="activateEllipticalROI()">椭圆</button>-->
+      <!--<button md-raised-button  class="list-group-item" (click)="activateRectangle()">矩形</button>-->
+      <!--<button md-raised-button  class="list-group-item" (click)="activateHighlight()">高亮</button>-->
+    </ul>
+    <ul class="list-group">
+      <!--<button md-raised-button id="historyBack" class="list-group-item" (click)="historyBack()">历史回退</button>-->
+      <!--<button md-raised-button id="historyForward" class="list-group-item" (click)="historyForward()">历史前进</button>-->
+      <button md-raised-button id="submit" class="list-group-item" (click)="submit()">保存</button>
+      <button md-raised-button id="clear" class="list-group-item" (click)="clear()">清空</button>
+    </ul>
+    <br>
+  </div>
+</div>
+<!--
+<div fxLayout="row wrap">
+  <div fxFlex="1"></div>
+  <div fxFlex="48.5" droppable (onDrop)="onItemDrop($event)">
+    <div style="width:100%;height:512px;position:relative;display:inline-block;color:white;"
+         oncontextmenu="return false"
+         unselectable="on"
+         onselectstart="return false;"
+         onmousedown="return false;">
+      <div #dicom style="width:100%;height:512px;top:0px;left:0px; position:absolute;"></div>
+      <md-slider style="display: table-row" class="example-mdslider-margin" [max]="3" [step]="1" [vertical]="true" [invert]="true" [showTicks]="true" [value]="sliderValue"
+                 (change)="sliderChanged($event)"></md-slider>
+    </div>
+  </div>
+  <div fxFlex="1"></div>
+  <div fxFlex="48.5" droppable (onDrop)="onItemDrop($event)">
+    <div style="width:100%;height:512px;position:relative;display:inline-block;color:white;"
+         oncontextmenu="return false"
+         unselectable="on"
+         onselectstart="return false;"
+         onmousedown="return false;">
+      <div #dicom style="width:100%;height:512px;top:0px;left:0px; position:absolute;"></div>
+    </div>
+  </div>
+  <div fxFlex="1"></div>
+  <div fxFlex="1"></div>
+  <div fxFlex="48.5" droppable (onDrop)="onItemDrop($event)">
+    <div style="width:100%;height:512px;position:relative;display:inline-block;color:white;"
+         oncontextmenu="return false"
+         unselectable="on"
+         onselectstart="return false;"
+         onmousedown="return false;">
+      <div #dicom style="width:100%;height:512px;top:0px;left:0px; position:absolute;"></div>
+    </div>
+  </div>
+  <div fxFlex="1"></div>
+  <div fxFlex="48.5" droppable (onDrop)="onItemDrop($event)">
+    <div style="width:100%;height:512px;position:relative;display:inline-block;color:white;"
+         oncontextmenu="return false"
+         unselectable="on"
+         onselectstart="return false;"
+         onmousedown="return false;">
+      <div #dicom style="width:100%;height:512px;top:0px;left:0px; position:absolute;"></div>
+    </div>
+  </div>
+  <div fxFlex="1"></div>
+</div>-->
