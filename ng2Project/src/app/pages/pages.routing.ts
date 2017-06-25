@@ -17,6 +17,7 @@ export const routes: Routes = [
           breadcrumb: 'Tables',
         },
       },
+      { path: 'profile',  loadChildren: './profile/profile.module#profileModule' }
     ],
   },
 ];
