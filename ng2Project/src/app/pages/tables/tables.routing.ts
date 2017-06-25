@@ -19,7 +19,7 @@ const routes: Routes = [
       { path: 'datatables', component: DataTables },
       { path: 'hottables', component: HotTablesComponent },
       { path: 'imageTable', component: ImageTableComponent },
-      { path: 'imgViewer', loadChildren: './img-viewer/img-viewer.module#ImgViewerModule' },
+      { path: 'imgViewer/:ID', loadChildren: './img-viewer/img-viewer.module#ImgViewerModule' },
       { path: 'imageGallery', component: ImageGalleryComponent },
     ]
   }

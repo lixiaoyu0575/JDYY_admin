@@ -21,6 +21,14 @@ export const PAGES_MENU = [
                 title: '阅片申请与诊断',
               }
             }
+          },
+          {
+            path: 'reportlist',
+            data: {
+              menu: {
+                title: '诊断报告列表',
+              }
+            }
           }
         ]
       },

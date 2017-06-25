@@ -24,8 +24,9 @@ export class AuthPageI implements CanActivate {
     if (this.loginService.isLoggedIn && this.loginService.userLevel === 'I') {
       return true;
     } else {
-      this.router.navigate(['../../login'], { relativeTo: this.route } );
-      console.log('false');
+      if (!this.loginService.isLoggedIn) {
+        this.router.navigate(['../../login'], { relativeTo: this.route } );
+      }
       return false;
     }
   }

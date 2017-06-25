@@ -3,69 +3,58 @@
     <div class="col-md-3"></div>
     <div class="col-md-6">
      <ba-card>
-  <h1>影像诊断报告</h1>
+  <h3>影像诊断报告</h3>
        <hr style="background-color:whitesmoke">
-    <div class="form-group" style="width:22%">
-      <label >姓名：</label>
-      <input type="text" class="form-control"  placeholder="输入真实姓名">
-    </div>
+       <div class="row">
+         <div class="col-md-4" >
+            <label >姓名：</label>{{hero.name}}
+         </div>
+         <br>
+         <div class="col-md-4" style="padding-left: 0">
+         <div class="form-group">
+            <label >性别：</label>
+         </div>
+       </div>
+       <br>
+       <div class="col-md-4" >
+         <label >年龄：</label>
+         {{hero.age}}
+       </div>
+       </div>
     <br>
-    <div class="col-md-3" style="padding-left: 0">
+       <div class="row">
+         <div class="col-md-4" >
+           <label >设备名称：</label>{{hero.scantype}}
+         </div>
+         <br>
+         <div class="col-md-4" style="padding-left: 0">
+           <div class="form-group">
+             <label >申请科室：</label>
+           </div>
+         </div>
+         <br>
+         <div class="col-md-4" >
+           <label >检查时间：</label>{{hero.time}}
+         </div>
+       </div>
+       <div class="row">
+         <div class="col-md-12" >
+           <label >检查部位：</label>
+         </div>
+       </div>
     <div class="form-group">
-      <label >性别：</label>
-      <select class="form-control">
-        <option>男</option>
-        <option>女</option>
-        <option>未知</option>
-      </select>
+      <label >影像描述：</label>
+      <textarea  type="text" class="form-control" [(ngModel)]="description" placeholder="填写影像描述"></textarea>
     </div>
-    </div>
-    <br>
-    <div class="col-md-3" style="padding-left: 0">
-    <div class="form-group">
-      <label >年龄：</label>
-      <input class="form-control"  placeholder="输入真实年龄">
-    </div>
-    </div>
-    <br>
-    <div class="form-group">
-      <label >临床主诉：</label>
-      <textarea  type="text" class="form-control"  placeholder="填写临床主诉"></textarea>
-    </div>
-    <br>
-    <div class="form-group">
-      <label>临床分型：</label>
-      <div class="col-md-6" style="display: inline">
-        <label class="radio-inline custom-radio nowrap">
-          <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-          <span >痉挛型四肢瘫</span>
-        </label>
-      </div>
-      <div class="col-md-6" style="display: inline">
-        <label class="radio-inline custom-radio nowrap">
-          <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-          <span>痉挛型右侧偏瘫</span>
-        </label>
-      </div>
-      <div class="col-md-6" style="display: inline">
-        <label class="radio-inline custom-radio nowrap">
-          <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
-          <span>痉挛型双瘫</span>
-        </label>
-      </div>
-      <div class="col-md-6" style="display: inline">
-        <label class="radio-inline custom-radio nowrap">
-          <input type="radio" name="inlineRadioOptions" id="inlineRadio4" value="option4">
-          <span>痉挛型左侧偏瘫</span>
-        </label>
-      </div>
-    </div>
-    <!--<div class="checkbox">
-      <ba-checkbox [(ngModel)]="isChecked" [label]="'Check me out'" [ngModelOptions]="{standalone: true}"></ba-checkbox>
-    </div>-->
       <br>
+       <div class="form-group">
+         <label >影像诊断：</label>
+         <textarea  type="text" class="form-control" [(ngModel)]="diagnosis" placeholder="填写影像诊断"></textarea>
+       </div>
+       <br>
+
     <button type="submit" class="btn btn-danger"
-            (click)="update();gotoHeroes();">
+            (click)="update();gotoHeroes();addReport(report)">
       创建报告
     </button>
     </ba-card>

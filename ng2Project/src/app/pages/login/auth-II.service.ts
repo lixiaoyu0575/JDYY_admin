@@ -12,8 +12,6 @@ export class AuthPageII implements CanActivate {
   }
 
   canActivate() {
-    console.log('AuthGuard#canActivate called');
-    console.log(this.checkLogin());
     return this.checkLogin();
   }
 
@@ -21,8 +19,9 @@ export class AuthPageII implements CanActivate {
     if (this.loginService.isLoggedIn && this.loginService.userLevel === 'II') {
       return true;
     } else {
-      this.router.navigate(['../../login'], { relativeTo: this.route } );
-      console.log('false');
+      if (!this.loginService.isLoggedIn) {
+        this.router.navigate(['../../login'], { relativeTo: this.route } );
+      }
       return false;
     }
   }

@@ -2,7 +2,7 @@
  * Created by th3ee on 5/17/17.
  */
 export class Hero {
-  id: number;
+  id: string;
   name: string;
   age: string;
   scantype: string;

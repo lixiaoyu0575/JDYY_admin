@@ -8,7 +8,7 @@ import { AuthPageI } from './auth-I.service';
 import { LoginService } from './login.service';
 import { LoginComponent } from './login.component';
 const loginRoutes: Routes = [
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
 ];
 @NgModule({
   imports: [

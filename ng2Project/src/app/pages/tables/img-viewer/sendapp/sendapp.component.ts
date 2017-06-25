@@ -1,11 +1,11 @@
 /**
  * Created by th3ee on 5/19/17.
  */
-import { Component, OnInit, Input } from '@angular/core';
-import { HeroService } from './hero.service';
-import { Router , ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { HeroService } from '../../../report/components/List/hero.service';
+import { Router , ActivatedRoute , Params } from '@angular/router';
 import { Location } from '@angular/common';
-import { Hero , User } from './hero';
+import { Hero , User } from '../../../report/components/List/hero';
 import { LocalDataSource } from 'ng2-smart-table';
 import { LoginService } from '../../../login/login.service';
 
@@ -16,6 +16,7 @@ import { LoginService } from '../../../login/login.service';
 })
 
 export class SendApplyComponent implements OnInit {
+  item;
   heroes: Hero[];
   selectedHero: Hero;
   users: User[];
@@ -33,21 +34,20 @@ export class SendApplyComponent implements OnInit {
               private heroService: HeroService,
               private loginService: LoginService,
               private location: Location) {}
-  getHeroes(): void {
-    this.heroService.getHeroes().then(heroes => this.heroes = heroes);
-  }
+
   getUser(): void {
     this.loginService.getuser().then((data) => {
-      // this.source.load(data);
-      // console.log(data);
       this.users = data;
       this.nowuser = localStorage['user_name'];
-      // console.log(this.users);
       this.applyTo = data[1].name;
     });
   }
   ngOnInit(): void {
-    this.getHeroes();
+    this.route.params.switchMap((params: Params) => this.heroService.getItem(params['ID']))
+      .subscribe(item => {
+        this.item = item;
+        console.log(this.item);
+      });
     this.getUser();
   }
   gotoHeroes(): void {
@@ -56,25 +56,26 @@ export class SendApplyComponent implements OnInit {
   goBack(): void {
     this.location.back(); // !
   }
-  add(name: string, age: string, scantype: string ,
-      reason: string, originaldiagnosis: string, status: string, time: string , user: any[]): void {
-    const date = new Date();
-    name = name.trim();
-    age = age.trim();
-    scantype = scantype.trim();
+  add(reason: string, originaldiagnosis: string, time: string , user: any[]): void {
+    let id = this.item.ID;
+    let date = new Date();
+    let name = this.item.name;
+    let age = this.item.age;
+    let scantype = this.item.examContent;
     reason = reason.trim();
     originaldiagnosis = originaldiagnosis.trim();
-    status = '未审核';
+    status = '已发送申请，待填写报告';
     time = date.toDateString();
     user = [this.applyTo];
     if (!name) {
       return;
     }
-    this.heroService.create(name, age, scantype , reason, originaldiagnosis, status, time , user).then( hero => {
+    this.heroService.create(id, name, age, scantype , reason, originaldiagnosis, status, time , user).then( hero => {
       console.log(hero);
       this.heroes.push(hero);
       this.selectedHero = null;
     });
+    // this.heroService.updateItem(this.item.name);
   }
   sendMail() {
     if (this.applyTo === 'Billy') {

@@ -14,7 +14,7 @@ const routes: Routes = [
     component: ImgViewerComponent,
     children: [
       { path: 'imageDetail', component: ImageDetailComponent },
-      { path: 'imageReport', component: ImageReportComponent },
+      { path: 'applyDetail/:ID', component: ImageReportComponent },
     ]
   }
 ];

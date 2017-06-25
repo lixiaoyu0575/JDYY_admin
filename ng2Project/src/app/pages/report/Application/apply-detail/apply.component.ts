@@ -30,7 +30,7 @@ export class ApplyComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.params.switchMap((params: Params) => this.heroService.getHero(params['name']))
+    this.route.params.switchMap((params: Params) => this.heroService.getHero(params['id']))
       .subscribe(hero => {
         console.log(hero);
         this.hero = hero[0];
@@ -39,7 +39,7 @@ export class ApplyComponent implements OnInit {
     this.getHeroes();
   }
   gotoAdd(): void {
-    this.router.navigate(['../../diagnosisReport', this.hero.name], { relativeTo: this.route } );
+    this.router.navigate(['../../diagnosisReport', this.hero.id], { relativeTo: this.route } );
   }
   getHeroes(): void {
     this.heroService.getHeroes().then((heroes) => {
@@ -47,16 +47,7 @@ export class ApplyComponent implements OnInit {
       console.log(this.heroes);
     });
   }
-/*  getUser(): void {
-    this.userService.getData().then((data) => {
-      this.source.load(data);
-      console.log(data);
-      this.users = data;
-      console.log(this.users);
-      this.nowuser = data[0];
-      this.applyTo = data[1].name;
-    });
-  }*/
+
   goBack(): void {
     // this.location.back(); // !
     this.router.navigate(['../../../../list'], { relativeTo: this.route } );
@@ -68,15 +59,4 @@ export class ApplyComponent implements OnInit {
     this.heroService.update(this.hero)
       .then(() => this.goBack());
   }
-  /*add(name: string, age: string, status: number): void {
-    name = name.trim();
-    age = age.trim();
-    status = 0;
-    if (!name) {return; }
-    this.heroService.create(name, age, status).then( hero => {
-      console.log(hero);
-      this.heroes.push(hero);
-    });
-  }*/
-
 }

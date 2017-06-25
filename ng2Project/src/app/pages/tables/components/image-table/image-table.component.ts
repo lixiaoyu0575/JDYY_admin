@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { ImageTableService } from './image-table.service';
+import { HeroService } from '../../../report/components/List/hero.service';
 
 @Component({
   selector: 'app-image-table',
@@ -11,6 +11,7 @@ import { ImageTableService } from './image-table.service';
 export class ImageTableComponent implements OnInit {
 
   data;
+  selectedItem;
   idFilterQuery = "";
   nameFilterQuery = "";
   ageFilterQuery = "";
@@ -22,12 +23,13 @@ export class ImageTableComponent implements OnInit {
   sortOrder = "asc";
 
   constructor(
-    private service: ImageTableService,
+    private service: HeroService,
     private route: ActivatedRoute,
     private router: Router
   ) {
-    this.service.getData().then((data) => {
+    this.service.getAllItems().then((data) => {
       this.data = data;
+      console.log(this.data);
     });
   }
 
@@ -36,7 +38,7 @@ export class ImageTableComponent implements OnInit {
 
   getDetails(item) {
     console.log(item);
-    this.router.navigate(['/pages/tables/imgViewer/imageDetail']);
+    this.router.navigate(['/pages/tables/imgViewer', this.selectedItem.ID, 'imageDetail']);
   }
   remove(item) {
     console.log(item);
@@ -44,6 +46,10 @@ export class ImageTableComponent implements OnInit {
 
   toInt(num: string) {
     return +num;
+  }
+
+  onSelect(item): void {
+    this.selectedItem = item;
   }
 
   sortByWordLength = (a: any) => {

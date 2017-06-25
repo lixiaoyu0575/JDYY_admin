@@ -3,31 +3,30 @@
 <div class="col-md-6">
 <ba-card>
 <div class="widget" >
-  <div>
+  <div *ngIf="item">
     <h1>新建发送申请</h1>
     <hr style="background-color: whitesmoke">
 
     <div class="form-group">
-      <label>患者姓名</label>
-      <input style="width: 20%" #heroName type="text"  class="form-control" >
+      <label>患者姓名：</label>{{item.name}}
     </div>
     <div class="form-group">
-      <label>年龄</label>
-      <input style="width: 20%" #heroAge type="text"  class="form-control">
+      <label>年龄：</label>{{item.age}}
     </div>
     <div class="form-group">
-      <label>扫描类型</label>
-      <input style="width: 20%" #heroScantype type="text" class="form-control" >
+      <label>扫描类型：</label>{{item.examContent}}
     </div>
     <div class="form-group">
-      <label>申请阅片原因</label>
+      <label>检查时间：</label> {{item.time}}
+    </div>
+    <div class="form-group">
+      <label>临床信息：</label>
       <input #heroReason type="text" class="form-control" >
     </div>
     <div class="form-group">
-      <label>初步诊断</label>
+      <label>病史描述：</label>
       <textarea #heroDiagnosis type="text" class="form-control" ></textarea>
     </div>
-
     <div  class="form-group" >
       <label>发送至</label>
       <select style="width: 20%" class="form-control" [(ngModel)]="applyTo">
@@ -38,8 +37,7 @@
   <div class="row" >
     <div class="col-md-8"></div>
     <div class="col-md-2">
-      <button  class="btn btn-success" (click)="add(heroName.value, heroAge.value , heroScantype.value ,heroReason.value,
-         heroDiagnosis.value);gotoHeroes(); heroName.value=''; heroAge.value=''; sendMail()" >发送申请</button>
+      <button  class="btn btn-success" (click)="add(heroReason.value,heroDiagnosis.value);gotoHeroes();sendMail()" >发送申请</button>
     </div>
     <div class="col-md-2">
       <button type="submit" class="btn btn-default" (click)="goBack()">返回</button>

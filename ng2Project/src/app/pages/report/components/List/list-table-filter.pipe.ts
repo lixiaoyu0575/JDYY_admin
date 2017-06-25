@@ -8,7 +8,7 @@ export class IdFilterPipe implements PipeTransform {
 
     transform(array: any[], query: string): any {
         if (query) {
-            return _.filter(array, row => row.ID.indexOf(query) > -1);
+            return _.filter(array, row => row._id.indexOf(query) > -1);
         }
         return array;
     }
@@ -21,6 +21,7 @@ export class NameFilterPipe implements PipeTransform {
 
   transform(array: any[], query: string): any {
     if (query) {
+      console.log(query);
       return _.filter(array, row => row.name.indexOf(query) > -1);
     }
     return array;
@@ -34,20 +35,20 @@ export class AgeFilterPipe implements PipeTransform {
 
   transform(array: any[], query: string): any {
     if (query) {
-      return _.filter(array, row => row.age.indexOf(query) > -1);
+      return _.filter(array, row => row.age === query);
     }
     return array;
   }
 }
 
 @Pipe({
-  name: 'examContentFilter',
+  name: 'scantypeFilter',
 })
-export class ExamContentFilterPipe implements PipeTransform {
+export class ScanTypeFilterPipe implements PipeTransform {
 
   transform(array: any[], query: string): any {
     if (query) {
-      return _.filter(array, row => row.examContent.indexOf(query) > -1);
+      return _.filter(array, row => row.scan.indexOf(query) > -1);
     }
     return array;
   }
