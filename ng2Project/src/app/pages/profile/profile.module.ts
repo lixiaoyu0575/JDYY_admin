@@ -17,6 +17,10 @@ import { profile } from './profile.component';
 import { DataTables } from './dataTables/dataTables.component';
 import { DataTablesService } from './dataTables/dataTables.service';
 import { DataFilterPipe } from './dataTables/data-filter.pipe';
+import {Feed} from './feed/feed.component';
+import { FeedService } from './feed/feed.service';
+import {personalInform} from './personalInform/personalInform.component';
+import {personalInformService } from './personalInform/personalInform.service';
 
 @NgModule({
   imports: [
@@ -33,10 +37,14 @@ import { DataFilterPipe } from './dataTables/data-filter.pipe';
   declarations: [
     profile,
     DataTables,
-    DataFilterPipe
+    DataFilterPipe,
+    Feed,
+    personalInform
   ],
   providers: [
-    DataTablesService
+    DataTablesService,
+    FeedService,
+    personalInformService
   ]
 })
 export class profileModule {}

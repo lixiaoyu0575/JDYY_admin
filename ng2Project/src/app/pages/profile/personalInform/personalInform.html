@@ -1,0 +1,70 @@
+<div class="widgets">
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-9">
+      <ba-card>
+        <h1>个人信息管理</h1>
+        <hr style="background-color:whitesmoke">
+        <div class="form-group" style="width:22%">
+          <label >姓名：</label>
+          <input type="text" class="form-control"  placeholder="输入姓名">
+        </div>
+        <br>
+        <div class="col-md-3" style="padding-left: 0">
+          <div class="form-group">
+            <label >性别：</label>
+            <select class="form-control">
+              <option>男</option>
+              <option>女</option>
+              <option>未知</option>
+            </select>
+          </div>
+        </div>
+        <br>
+        <div class="col-md-3" style="padding-left: 0">
+          <div class="form-group">
+            <label >年龄：</label>
+            <input class="form-control"  placeholder="输入年龄">
+          </div>
+        </div>
+        <br>
+        <div class="col-md-3" style="padding-left: 0">
+          <div class="form-group">
+            <label >手机：</label>
+            <input class="form-control"  placeholder="输入手机">
+          </div>
+        </div>
+        <br>
+        <div class="col-md-3" style="padding-left: 0">
+          <div class="form-group">
+            <label >邮箱：</label>
+            <input class="form-control"  placeholder="输入邮箱">
+          </div>
+        </div>
+        <br>
+        <div class="col-md-6" style="padding-right: 0">
+          <ba-card title="个人信息" baCardClass="with-scroll">
+            <ba-picture-uploader [picture]="profile.picture" [defaultPicture]="defaultPicture" [uploaderOptions]="uploaderOptions"></ba-picture-uploader>
+            <!--<div>picture</div>-->
+          </ba-card>
+        </div>
+        <br>
+        <div class="form-group">
+          <label >所在地区：</label>
+          <textarea  type="text" class="form-control"  placeholder="填写详细地址"></textarea>
+        </div>
+        <br>
+        <!--<div class="checkbox">
+          <ba-checkbox [(ngModel)]="isChecked" [label]="'Check me out'" [ngModelOptions]="{standalone: true}"></ba-checkbox>
+        </div>-->
+        <br>
+        <button type="submit" class="btn btn-danger"
+                (click)="update();gotoHeroes();">
+          保存修改
+        </button>
+      </ba-card>
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+</div>
+

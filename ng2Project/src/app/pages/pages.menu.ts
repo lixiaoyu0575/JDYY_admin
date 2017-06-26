@@ -98,6 +98,32 @@ export const PAGES_MENU = [
             order: 0,
           },
         },
+        children:[
+          {
+            path:'dataTables',
+            data:{
+              menu:{
+                title:'我的报告'
+              }
+            }
+          },
+          {
+            path: 'feed',
+            data: {
+              menu: {
+                title: '我的消息'
+              }
+            }
+          },
+          {
+            path:'personalInform',
+            data:{
+              menu:{
+                title:'个人信息管理'
+              }
+            }
+          },
+        ]
       }
     ]
   }
