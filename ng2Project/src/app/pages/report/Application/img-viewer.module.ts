@@ -14,6 +14,7 @@ import { ImageDetailComponent } from './apply-image/image-detail.component';
 import { HeroService } from '../components/List/hero.service';
 
 import { routing } from './img-viewer.routing';
+import { DiagnosisReport } from './apply-diagnosis/hero-add';
 
 
 @NgModule({
@@ -35,7 +36,7 @@ import { routing } from './img-viewer.routing';
   ],
   providers: [
     HeroService,
-
+    DiagnosisReport,
   ],
 })
 export class ImgViewerModule { }

@@ -5,6 +5,8 @@ import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import { Hero, Usercreds } from './hero';
+import { DiagnosisReport } from '../../Application/apply-diagnosis/hero-add';
+
 @Injectable()
 export class HeroService {
   private heroesUrl = 'api/heroes';
@@ -26,11 +28,22 @@ export class HeroService {
     return Promise.reject(error.message || error); // ?
   }
 
-  getHero(name: string): Promise<Hero> {
-    return this.http.post(this.localUrl + 'getherodetail', JSON.stringify({
+  deleteHero(name: string): Promise<any> {
+    return this.http.post(this.localUrl + 'deletehero', JSON.stringify({
       name: name,
     }), { headers: this.headers })
-      .toPromise().then(response => response.json() as Hero)
+      .toPromise().then((res) => res.json())
+      .catch(this.handleError);
+  }
+
+  getHero(id: string): Promise<Hero> {
+    return this.http.post(this.localUrl + 'getherodetail', JSON.stringify({
+      id: id,
+    }), { headers: this.headers })
+      .toPromise().then(response => {
+        console.log(response.json());
+       return response.json();
+      })
       .catch(this.handleError);
   }
 
@@ -41,10 +54,29 @@ export class HeroService {
       .catch(this.handleError);
   }
 
-  create(name: string, age: string, scantype: string , reason: string,
+
+  createReport(report: DiagnosisReport): Promise<DiagnosisReport> {
+    return this.http.post(this.localUrl + 'addreport', JSON.stringify(report), { headers: this.headers })
+      .toPromise()
+      .then((res) => res.json().data)
+      .catch(this.handleError);
+  }
+
+  getReport(): Promise<DiagnosisReport[]> {
+    return this.http.get(this.localUrl + 'getallreport')
+      .toPromise()
+      .then((res) => {
+      console.log(res.json());
+       return res.json();
+      })
+      .catch(this.handleError);
+  }
+
+  create( id: string, name: string, age: string, scantype: string , reason: string,
          originaldiagnosis: string, status: string, time: string,
-         user: string[]): Promise<Hero> {
+         user: string[]): Promise<any> {
     return this.http.post(this.localUrl + 'addhero', JSON.stringify({
+      id: id,
       name: name,
       age: age,
       scantype: scantype,
@@ -67,6 +99,20 @@ export class HeroService {
       res.json();
       console.log(res.status);
       });
+  }
+
+  getAllItems(): Promise<any> {
+    return this.http.get(this.localUrl + 'getallitems')
+      .toPromise()
+      .then((res) => res.json())
+      .catch(this.handleError);
+  }
+
+  getItem(ID: string): Promise <any> {
+    return this.http.post(this.localUrl + 'getitem', JSON.stringify({ ID: ID }), { headers: this.headers })
+      .toPromise()
+      .then((res) => res.json())
+      .catch(this.handleError);
   }
 }
 

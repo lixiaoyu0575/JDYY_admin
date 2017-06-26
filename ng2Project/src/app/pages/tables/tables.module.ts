@@ -45,6 +45,7 @@ import { MdTabsModule, MdButtonModule } from '@angular/material';
 import { ImageService } from './img-viewer/img-viewer.service';
 
 import { ImgViewerModule } from './img-viewer/img-viewer.module';
+import { HeroService } from '../report/components/List/hero.service';
 
 @NgModule({
   imports: [
@@ -97,6 +98,7 @@ import { ImgViewerModule } from './img-viewer/img-viewer.module';
     SmartTablesService,
     DataTablesService,
     ImageTableService,
+    HeroService,
     ImageService,
   ]
 })

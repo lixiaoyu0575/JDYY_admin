@@ -3,51 +3,11 @@
   <div class="row">
     <div class="col-md-8" *ngIf="nowuser"><h2>{{nowuser}}的患者报告列表</h2></div>
   </div>
- <!-- <div class="row">
-    <div class="col-md-10">
-    <div class="col-md-1" style="float: left;padding-top: 1%">
-      <button  type="button" class="btn btn-default btn-raised" (click)="gotoAdd()">新建申请</button>
-    </div>
-    </div>
-
-    &lt;!&ndash;<div class="col-md-2">
-      <div  class="form-group">
-        <label for="exampleSelect1">切换用户</label>
-        <select *ngIf="nowuser" class="form-control" [ngModel]="selecteduser"
-                (ngModelChange)="selecteduser=$event;switchUser()"
-                id="exampleSelect1">
-          <option *ngFor="let user of users" [value]="user.name">{{user.name}}</option>
-        </select>
-      </div>
-    </div>&ndash;&gt;
-  </div>-->
   <br>
-<!--<div class="horizontal-scroll" *ngIf="heroes&&nowuser">
-  <table class="table table-hover">
-    <thead>
-    <tr class="black-muted-bg">
-      <th class="align-left">姓名</th>
-      <th class="nowrap">报告状态</th>
-    </tr>
-    </thead>
-    <tbody>
-
-
-    <tr  *ngFor="let item of heroes"   (click)="onSelect(item)"  class="no-top-border">
-      <ng-container *ngIf='item.user.indexOf(nowuser.name) > -1'>
-      <td class="align-left">{{item.name}}</td>
-      <td ngClass="nowrap">{{item.status}}</td>
-      </ng-container>
-    </tr>
-
-    </tbody>
-  </table>
-  <hr>
-</div>-->
   <div class="row" *ngIf="heroes&&nowuser">
       <div class="panel panel-default">
         <table class="table table-hover" [mfData]="heroes | idFilter : idFilterQuery |
-         nameFilter : nameFilterQuery | ageFilter : ageFilterQuery | examContentFilter : examContentFilterQuery |
+         nameFilter : nameFilterQuery | ageFilter : ageFilterQuery | scantypeFilter : scantypeFilterQuery |
          timeFilter : timeFilterQuery | statusFilter : statusFilterQuery "
                #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
           <thead>
@@ -63,13 +23,13 @@
               <mfDefaultSorter by="age">年龄</mfDefaultSorter>
             </th>
             <th style="width: 15%">
-              <mfDefaultSorter by="scantype">检查类型</mfDefaultSorter>
-            </th>
-            <th style="width: 20%">
-              <mfDefaultSorter [by]="time">时间</mfDefaultSorter>
+              <mfDefaultSorter by="scan">检查类型</mfDefaultSorter>
             </th>
             <th style="width: 10%">
-              <mfDefaultSorter [by]="status">申请状态</mfDefaultSorter>
+              <mfDefaultSorter by="time">时间</mfDefaultSorter>
+            </th>
+            <th style="width: 20%">
+              <mfDefaultSorter by="status">申请状态</mfDefaultSorter>
             </th>
           </tr>
           <tr>
@@ -85,7 +45,7 @@
               <input class="form-control" [(ngModel)]="ageFilterQuery" />
             </th>
             <th colspan="1">
-              <input class="form-control" [(ngModel)]="examContentFilterQuery" />
+              <input class="form-control" [(ngModel)]="scantypeFilterQuery" />
             </th>
             <th colspan="1">
               <input class="form-control" [(ngModel)]="timeFilterQuery" />
@@ -96,10 +56,10 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let item of heroes" (click)="onSelect(item)">
+          <tr *ngFor="let item of mf.data" (click)="onSelect(item)">
             <ng-container *ngIf='item.user.indexOf(nowuser) > -1'>
             <td>
-              <button (click)="remove(item)" class="btn btn-danger">x</button>
+              <button (click)="DeleteApply(item)" class="btn btn-danger">x</button>
             </td>
             <td>{{item._id}}</td>
             <td>{{item.name}}</td>
@@ -110,13 +70,13 @@
             </ng-container>
           </tr>
           </tbody>
-         <!-- <tfoot>
+          <tfoot>
           <tr>
             <td colspan="7">
               <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
             </td>
           </tr>
-          </tfoot>-->
+          </tfoot>
         </table>
       </div>
   </div>

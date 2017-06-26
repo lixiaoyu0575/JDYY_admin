@@ -1,6 +1,7 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
-import {GlobalState} from '../../../global.state';
+import { GlobalState } from '../../../global.state';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'ba-page-top',
@@ -12,7 +13,7 @@ export class BaPageTop {
   public isScrolled:boolean = false;
   public isMenuCollapsed:boolean = false;
 
-  constructor(private _state:GlobalState) {
+  constructor(private _state:GlobalState, private router: Router, private route: ActivatedRoute) {
     this._state.subscribe('menu.isCollapsed', (isCollapsed) => {
       this.isMenuCollapsed = isCollapsed;
     });
@@ -26,5 +27,11 @@ export class BaPageTop {
 
   public scrolledChanged(isScrolled) {
     this.isScrolled = isScrolled;
+  }
+
+  public gotoSettings(): void {
+    console.log('clicked');
+    this.router.navigate(['../../settings/doctors'], { relativeTo: this.route });
+
   }
 }

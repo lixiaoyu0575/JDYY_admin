@@ -1,5 +1,5 @@
-import { Component, OnInit} from '@angular/core';
-import {Hero, User} from './hero';
+import { Component, OnInit } from '@angular/core';
+import { Hero, User } from './hero';
 import { HeroService } from './hero.service';
 import { LoginService } from '../../../login/login.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -65,19 +65,17 @@ import { DefaultModal } from '../default-modal/default-modal.component';
 })
 export class HeroesComponent implements OnInit {
 
-
+  heroes: Hero[];
   idFilterQuery = '';
   nameFilterQuery = '';
   ageFilterQuery = '';
-  examContentFilterQuery = '';
+  scantypeFilterQuery = '';
   timeFilterQuery = '';
   statusFilterQuery = '';
   rowsOnPage = 10;
   sortBy = 'email';
   sortOrder = 'asc';
 
-
-  heroes: Hero[];
   users: User[];
   shareTo: string;
   selecteduser: string;
@@ -98,7 +96,6 @@ export class HeroesComponent implements OnInit {
 
   getUser(): void {
     this.loginService.getuser().then((data) => {
-      // this.source.load(data);
       this.users = data;
       this.nowuser = localStorage['user_name'];
       this.selecteduser = data[0].name;
@@ -142,12 +139,19 @@ export class HeroesComponent implements OnInit {
   }
 
   onSelect(hero: Hero): void {
+
     this.selectedHero = hero;
+    console.log(this.selectedHero);
   }
   gotoDetail(): void {
-    this.router.navigate(['../imgViewer' , this.selectedHero.name, 'applyDetail', this.selectedHero.name], { relativeTo: this.route } );
+    this.router.navigate
+    (['../imgViewer' , this.selectedHero.id, 'applyDetail', this.selectedHero.id], { relativeTo: this.route } );
+
   }
 
+  DeleteApply(item): void {
+    this.heroService.deleteHero(item.name);
+  }
   gotoAdd(): void {
     this.router.navigate(['../sendapply'], { relativeTo: this.route } );
   }
@@ -158,7 +162,6 @@ export class HeroesComponent implements OnInit {
     this.heroService.sendMail(this.emailContent);
 
   }
-
 }
 
 

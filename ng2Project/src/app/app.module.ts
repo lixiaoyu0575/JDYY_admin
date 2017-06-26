@@ -18,8 +18,6 @@ import { AppState, InternalStateType } from './app.service';
 import { GlobalState } from './global.state';
 import { NgaModule } from './theme/nga.module';
 import { PagesModule } from './pages/pages.module';
-
-
 // Application wide providers
 const APP_PROVIDERS = [
   AppState,
@@ -38,7 +36,8 @@ export type StoreType = {
 @NgModule({
   bootstrap: [App],
   declarations: [
-    App
+    App,
+    // LoginComponent,
   ],
   imports: [ // import Angular's modules
     BrowserModule,
@@ -53,7 +52,7 @@ export type StoreType = {
     BrowserAnimationsModule,
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
-    APP_PROVIDERS
+    APP_PROVIDERS,
   ]
 })
 

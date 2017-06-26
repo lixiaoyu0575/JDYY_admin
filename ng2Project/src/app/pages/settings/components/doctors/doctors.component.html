@@ -1,0 +1,115 @@
+
+<div class="widgets">
+  <div class="row">
+    <div class="col-md-8">
+      <ba-card title="机构简介">
+        <div class="row">
+          <div class="col-md-8" style="height: 80%">
+            <img src='assets/img/timg.jpg' width="100%">
+          </div>
+          <div class="col-md-4" style="text-align: left">
+            <h2>西安交通大学第一附属医院</h2>
+            <hr>
+            <p>西安交通大学第一附属医院的发展史与国家的发展、民族的命运一脉相承，1937年因抗日战争爆发，北平大学医学院部分师生西迁组建了西安临时大学医学院，附属医院随之诞生，存续了中国最早国立西医高等教育的薪火。1956年一分为二，搬迁现址者命名为西安医学院第一附属医院。数十载奋斗不息，医院现已发展为集医疗、教学、科研、康复、预防保健为一体的国家卫计委委管大型综合性三级甲等医院，是全国首批暨陕西省首家“三级甲等医院”、全国首批“百佳医院”，是国家卫计委国际紧急救援中心网络医院，陕西省涉外医疗单位，陕西省卫生应急救援队单位和省级保健基地，是首批新农合省级医疗定点机构、省市城镇职工、居民、商业医保定点机构。建院以来，医院坚持以精湛的医疗技术、严谨的治学态度、求实的科研作风和优秀的服务品质开展医疗、教学和科研工作，各项事业不断发展。医院占地面积 14.8万平方米，建筑面积20.5万平方米，实际开放床位2560张，医疗设施完善，设备先进，医疗技术和服务水平在西北地区居领先地位。</p>
+          </div>
+        </div>
+      </ba-card>
+    </div>
+    <div class="col-md-4">
+      <ba-card title="近期活动">
+
+      </ba-card>
+    </div>
+  </div>
+  <div class="row">
+    <div class=" col-md-12">
+    <ba-card title="机构医生管理" baCardClass="with-scroll" class="data-table-container">
+     <!-- <div class="row">
+        <div class="col-sm-2">
+          <label class="label-control">Rows on page</label>
+          <select class="form-control input-sm" [(ngModel)]="rowsOnPage">
+            <option [ngValue]="5">5</option>
+            <option [ngValue]="10">10</option>
+            <option [ngValue]="15">15</option>
+          </select>
+        </div>
+        <div class="col-sm-4">
+          <div class="row">
+            <label class="col-sm-12 label-control">Sort by</label>
+          </div>
+          <div class="row">
+            <div class="offset-sm-1 col-sm-5">
+              <div class="row">
+                <select class="form-control input-sm" [(ngModel)]="sortBy">
+                  <option ngValue="name">Name</option>
+                  <option ngValue="email">Email</option>
+                  <option ngValue="age">Age</option>
+                  <option [ngValue]="sortByWordLength">City</option>
+                </select>
+              </div>
+            </div>
+            <div class="offset-sm-1 col-sm-5">
+              <div class="row">
+                <select class="form-control input-sm" [(ngModel)]="sortOrder">
+                  <option ngValue="asc">Ascending</option>
+                  <option ngValue="desc">Descending</option>
+                  <option ngValue="badValue">Bad value</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>-->
+      <div class="panel panel-default">
+        <div class="panel-heading">医生列表</div>
+
+        <table class="table table-striped" [mfData]="data | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+          <thead>
+          <tr>
+            <th style="width: 10%"></th>
+            <th style="width: 20%">
+              <mfDefaultSorter by="name">姓名</mfDefaultSorter>
+            </th>
+            <th style="width: 40%">
+              <mfDefaultSorter by="phone">电话</mfDefaultSorter>
+            </th>
+            <th style="width: 10%">
+              <mfDefaultSorter by="level">岗位</mfDefaultSorter>
+            </th>
+            <th style="width: 20%">
+              <mfDefaultSorter [by]="sortByWordLength">操作</mfDefaultSorter>
+            </th>
+          </tr>
+          <!--<tr>
+            <th colspan="5">
+              Filter by name:
+              <input class="form-control" [(ngModel)]="filterQuery" />
+            </th>
+          </tr>-->
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of docters">
+            <td>
+              <button (click)="remove(item)" class="btn btn-danger">x</button>
+            </td>
+            <td>{{item.name}}</td>
+            <td>{{item.phone}}</td>
+            <td>{{item.level}}</td>
+            <td> <button  class="btn btn-default" (click)="onSelect(item); gotoDetail()">设置</button>
+            </td>
+          </tr>
+          </tbody>
+          <tfoot>
+          <tr>
+            <td colspan="5">
+              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+          </tfoot>
+        </table>
+      </div>
+    </ba-card>
+    </div>
+  </div>
+</div>
+
