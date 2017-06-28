@@ -1,66 +1,34 @@
-<div class="widgets">
-    <div class="row">
-        <ba-card title="我的报告" baCardClass="with-scroll" class="data-table-container">
-            <div class="row">
-                <div class="col-sm-2">
-                    <label class="label-control">每页记录数</label>
-                    <select class="form-control input-sm" [(ngModel)]="rowsOnPage">
-                    <option [ngValue]="5">5</option>
-                    <option [ngValue]="10">10</option>
-                    <option [ngValue]="15">15</option>
-                </select>
-                </div>
-                <div class="col-sm-4">
-                    <div class="row">
-                        <label class="col-sm-12 label-control">筛选</label>
-                    </div>
-                    <div class="row">
-                        <div class="offset-sm-1 col-sm-5">
-                            <div class="row">
-                                <select class="form-control input-sm" [(ngModel)]="sortBy">
-                            <option ngValue="name">责任医生</option>
-                            <option ngValue="email">邮箱</option>
-                            <option ngValue="age">年龄</option>
-                            <option [ngValue]="sortByWordLength">来源</option>
-                        </select>
-                            </div>
-                        </div>
-                        <div class="offset-sm-1 col-sm-5">
-                            <div class="row">
-                                <select class="form-control input-sm" [(ngModel)]="sortOrder">
-                            <option ngValue="asc">升序</option>
-                            <option ngValue="desc">降序</option>
-                            <option ngValue="badValue">Bad value</option>
-                        </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">报告列表</div>
 
-                <table class="table table-striped" [mfData]="data | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+        <ba-card>
+          <div class="widget" >
+            <div class="row">
+              <div class="col-md-8"><h2>我的报告列表</h2></div>
+            </div>
+            <br>
+            <div class="panel panel-default">
+
+                <table class="table table-hover" [mfData]="data | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
                     <thead>
                         <tr>
-                            <th style="width: 10%">
-                              <mfDefaultSorter>编号</mfDefaultSorter>
+                          <th style="width: 10%"></th>
+                            <th style="width: 15%">
+                              <mfDefaultSorter>ID</mfDefaultSorter>
                             </th>
-                            <th style="width: 20%">
-                                <mfDefaultSorter by="name">责任医生</mfDefaultSorter>
+                            <th style="width: 15%">
+                                <mfDefaultSorter by="name">姓名</mfDefaultSorter>
                             </th>
-                            <th style="width: 20%">
-                                <mfDefaultSorter by="email">邮箱</mfDefaultSorter>
-                            </th>
-                            <th style="width: 10%">
+                            <th style="width: 15%">
                                 <mfDefaultSorter by="age">年龄</mfDefaultSorter>
                             </th>
-                            <th style="width: 20%">
-                                <mfDefaultSorter [by]="sortByWordLength">来源</mfDefaultSorter>
-                            </th>
-                          <th style="width: 20%">
-                            <mfDefaultSorter [by]="sortByWordLength">检查时间</mfDefaultSorter>
+                          <th style="width: 15%">
+                            <mfDefaultSorter by="type">检查类型</mfDefaultSorter>
                           </th>
+                          <th style="width: 10%">
+                            <mfDefaultSorter [by]="sortByWordLength">时间</mfDefaultSorter>
+                          </th>
+                            <th style="width: 20%">
+                                <mfDefaultSorter [by]="sortByWordLength">申请状态</mfDefaultSorter>
+                            </th>
                         </tr>
                         <!--<tr>-->
                             <!--<th colspan="5">-->
@@ -79,6 +47,7 @@
                             <td>{{item.age}}</td>
                             <td>{{item.city | uppercase}}</td>
                           <td>{{item.regDate}}</td>
+                          <td>未审核</td>
                         </tr>
                     </tbody>
                     <tfoot>
@@ -90,6 +59,5 @@
                     </tfoot>
                 </table>
             </div>
+          </div>
         </ba-card>
-    </div>
-</div>

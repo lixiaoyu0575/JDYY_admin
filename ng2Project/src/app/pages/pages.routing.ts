@@ -20,7 +20,7 @@ export const routes: Routes = [
           breadcrumb: 'Tables',
           },
       },
-      { path: 'profile',  loadChildren: './profile/profile.module#profileModule' }
+      { path: 'profile',  loadChildren: './profile/profile.module#profileModule' },
       { path: 'settings', loadChildren: './settings/settings.module#SettingsModule' },
     ],
   },
