@@ -12,17 +12,19 @@ import { Hero } from '../components/List/hero';
 
 export class ImgViewerComponent implements OnInit {
   navLinks: object[];
+  item;
   hero;
   constructor(private http: Http, private route: ActivatedRoute, private heroService: HeroService) {
     this.navLinks = [];
   }
   ngOnInit(): void {
-    this.route.params.switchMap((params: Params) => this.heroService.getHero(params['id']))
+    this.route.params.switchMap((params: Params) => this.heroService.getItemByEid(params['examID']))
       .subscribe((res) => {
-        this.hero = res[0];
+      console.log(res);
+        this.hero = res;
         console.log(this.hero);
         this.navLinks.push({
-          'url': 'applyDetail/' + this.hero.id,
+          'url': 'applyDetail/' + this.hero.examID,
           'label': '申请详情',
         });
         this.navLinks.push({
@@ -30,7 +32,7 @@ export class ImgViewerComponent implements OnInit {
           'label': '影像详情',
         });
         this.navLinks.push({
-          'url': 'diagnosisReport/' + this.hero.id,
+          'url': 'diagnosisReport/' + this.hero.examID,
           'label': '填写诊断报告',
         });
       });

@@ -6,7 +6,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { LocalDataSource } from 'ng2-smart-table';
 import { Location } from '@angular/common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DefaultModal } from '../default-modal/default-modal.component';
 
 @Component({
   moduleId: module.id,
@@ -76,6 +75,9 @@ export class HeroesComponent implements OnInit {
   sortBy = 'email';
   sortOrder = 'asc';
 
+  enddate: string;
+  startdate: string;
+
   users: User[];
   shareTo: string;
   selecteduser: string;
@@ -110,9 +112,6 @@ export class HeroesComponent implements OnInit {
       console.log(this.heroes);
     });
   }
-  goBack(): void {
-    this.location.back(); // !
-  }
   doShare(): void {
         this.selectedHero.user.push(this.shareTo);
         this.heroService.update(this.selectedHero)
@@ -121,45 +120,36 @@ export class HeroesComponent implements OnInit {
         });
       }
 
-  switchUser(): void {
-    this.loginService.getuser().then((data) => {
-      // this.source.load(data);
-      console.log(data);
-     for (let i = 0; i < data.length; i++) {
-       if (data[i].name === this.selecteduser) {
-         this.nowuser = data[i].name;
-       }
-     }
-    });
-  }
 
   ngOnInit(): void {
+    this.enddate = this.heroService.getTime();
+    this.startdate = this.enddate;
     this.getUser();
     this.getHeroes();
+    // console.log(this.heroService.getTime() > this.nowdate);
   }
 
   onSelect(hero: Hero): void {
-
     this.selectedHero = hero;
     console.log(this.selectedHero);
+    // console.log(this.nowdate);
   }
   gotoDetail(): void {
     this.router.navigate
-    (['../imgViewer' , this.selectedHero.id, 'applyDetail', this.selectedHero.id], { relativeTo: this.route } );
+    (['../imgViewer' , this.selectedHero.examID, 'applyDetail', this.selectedHero.examID], { relativeTo: this.route } );
 
   }
 
   DeleteApply(item): void {
     this.heroService.deleteHero(item.name);
   }
-  gotoAdd(): void {
-    this.router.navigate(['../sendapply'], { relativeTo: this.route } );
-  }
+
 
   sendMail() {
     this.emailContent.message = '' + this.nowuser + '发来了报告诊断申请';
     console.log(this.emailContent);
     this.heroService.sendMail(this.emailContent);
+
 
   }
 }

@@ -18,7 +18,7 @@ export const PAGES_MENU = [
             path: 'list',
             data: {
               menu: {
-                title: '阅片申请与诊断',
+                title: '申请工作站',
               }
             }
           },
@@ -80,7 +80,7 @@ export const PAGES_MENU = [
             path: 'imageTable',
             data: {
               menu: {
-                title: '影像记录列表',
+                title: '影像诊断工作站',
               }
             }
           },

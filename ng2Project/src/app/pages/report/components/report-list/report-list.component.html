@@ -1,9 +1,45 @@
-<ba-card>
+
   <div class="widget" >
-    <div class="row">
-      <div class="col-md-8"><h2>报告查询</h2></div>
-    </div>
-    <br>
+    <ba-card title="报告查询">
+      <div>
+      <div class="row">
+        <div class="col-md-2">
+          <label>检查编号：</label>
+          <input class="form-control">
+        </div>
+        <div class="col-md-2">
+          <label>影像类型：</label>
+          <select class="form-control" >
+            <option>CT</option>
+            <option>MR</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <label >报告状态：</label>
+          <select class="form-control" >
+            <option>无</option>
+            <option>待书写</option>
+            <option>待审核</option>
+            <option>已审核</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <label >日期选择：</label>
+          <select class="form-control" >
+            <option>检查日期</option>
+            <option>报告日期</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <div class="row" style="margin-top: 4%">
+            <input type="date" class="form-control" [(ngModel)]="startdate" style="width: 33%">
+            <label style="margin-top: 2.4%;">～</label>
+            <input type="date" class="form-control" [(ngModel)]="enddate" style="width: 33%">
+            <button class="btn btn-primary" style="margin-left: 2%;width: 25%" (click)="filterTime()">查询</button>
+          </div>
+        </div>
+      </div>
+      <br>
     <div class="row" *ngIf="reports">
       <div class="panel panel-default">
         <table class="table table-hover" [mfData]="reports | idFilter : idFilterQuery |
@@ -14,7 +50,7 @@
           <tr>
             <th style="width: 10%"></th>
             <th style="width: 15%">
-              <mfDefaultSorter by="_ID">ID</mfDefaultSorter>
+              <mfDefaultSorter by="examID">ID</mfDefaultSorter>
             </th>
             <th style="width: 15%">
               <mfDefaultSorter by="name">姓名</mfDefaultSorter>
@@ -23,7 +59,7 @@
               <mfDefaultSorter by="age">年龄</mfDefaultSorter>
             </th>
             <th style="width: 15%">
-              <mfDefaultSorter by="scantype">检查类型</mfDefaultSorter>
+              <mfDefaultSorter by="examContent">检查类型</mfDefaultSorter>
             </th>
             <th style="width: 20%">
               <mfDefaultSorter [by]="time">时间</mfDefaultSorter>
@@ -32,39 +68,17 @@
               <mfDefaultSorter [by]="status">状态</mfDefaultSorter>
             </th>
           </tr>
-          <tr>
-            <th colspan="1">
-            </th>
-            <th colspan="1">
-              <input class="form-control" [(ngModel)]="idFilterQuery" />
-            </th>
-            <th colspan="1">
-              <input class="form-control" [(ngModel)]="nameFilterQuery" />
-            </th>
-            <th colspan="1">
-              <input class="form-control" [(ngModel)]="ageFilterQuery" />
-            </th>
-            <th colspan="1">
-              <input class="form-control" [(ngModel)]="scanFilterQuery" />
-            </th>
-            <th colspan="1">
-              <input class="form-control" [(ngModel)]="timeFilterQuery" />
-            </th>
-            <th colspan="1">
-              <input class="form-control" [(ngModel)]="statusFilterQuery" />
-            </th>
-          </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let item of mf.data" (click)="onSelect(item);getHero(item.name)">
+          <tr *ngFor="let item of mf.data" (dblclick)="onSelect(item);getDetails(item)">
             <ng-container>
               <td>
                 <button (click)="remove(item)" class="btn btn-danger">x</button>
               </td>
-              <td>{{item._id}}</td>
+              <td>{{item.examID}}</td>
               <td>{{item.name}}</td>
               <td>{{item.age}}</td>
-              <td>{{item.scan}}</td>
+              <td>{{item.examContent}}</td>
               <td>{{item.date}}</td>
               <td [ngStyle]="{'color':item.status==='报告已完成,待审核'?'#ff5151':'#7afec6'}">{{item.status}}</td>
             </ng-container>
@@ -72,7 +86,7 @@
           </tbody>
            <tfoot>
            <tr>
-             <td colspan="7">
+             <td colspan="12">
                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
              </td>
            </tr>
@@ -80,20 +94,8 @@
         </table>
       </div>
     </div>
-    <hr *ngIf="selectedReport">
     <br>
-<div class="row" *ngIf="selectedReport">
-  <div class="col-md-3"></div>
-  <div class="col-md-6">
-    <nav md-tab-nav-bar>
-      <a md-tab-link *ngFor="let link of navLinks" (click)="onswitch(link)">
-        {{link.label}}
-      </a>
-    </nav>
+      </div>
+    </ba-card>
   </div>
-  <div class="col-md-3"></div>
-</div>
-    <report-detail [report]="selectedReport" *ngIf="selectedReport && selectedTab === 0"></report-detail>
-    <application-detail [hero]="hero" *ngIf="selectedReport && selectedTab === 1"></application-detail>
-  </div>
-</ba-card>
+

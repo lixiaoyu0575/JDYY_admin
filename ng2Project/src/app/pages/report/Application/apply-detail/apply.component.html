@@ -1,8 +1,9 @@
 
 <div class="row">
 <div class="col-md-3"></div>
-<div class="col-md-6" *ngIf="hero">
-  <ba-card>
+<div class="col-md-6" >
+  <ba-card *ngIf="!hero">暂无诊断申请</ba-card>
+  <ba-card *ngIf="hero">
   <h1>关于患者{{hero.name}}的申请阅片信息</h1>
     <hr>
     <div class="row">
@@ -16,7 +17,7 @@
       </div>
       <div class="col-md-3">
         <label>扫描类型:</label>
-        {{hero.scantype}}
+        {{hero.examContent}}
       </div>
     </div>
     <br>

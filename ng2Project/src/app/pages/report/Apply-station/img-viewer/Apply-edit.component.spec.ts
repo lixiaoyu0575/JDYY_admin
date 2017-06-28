@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ImgViewerComponent } from './img-viewer.component';
+import { ImgViewerComponent } from './Apply-edit.component';
 
 describe('ImgViewerComponent', () => {
   let component: ImgViewerComponent;

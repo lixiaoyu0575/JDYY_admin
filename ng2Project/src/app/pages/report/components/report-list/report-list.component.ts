@@ -67,9 +67,9 @@ import { DefaultModal } from '../default-modal/default-modal.component';
 export class ReportListComponent implements OnInit {
 
   navLinks = [
-    { 'label': '报告详情' , 'id': 0 },
-    { 'label': '查看阅片申请' , 'id': 1 },
-    { 'label': '报告记录' , 'id': 2 },
+    { 'label': '报告详情' , 'id': 0 , 'select': true },
+    { 'label': '查看阅片申请' , 'id': 1 , 'select': false },
+    { 'label': '报告记录' , 'id': 2 , 'select': false },
   ];
   hero: Hero;
   selectedTab: number;
@@ -88,23 +88,15 @@ export class ReportListComponent implements OnInit {
   nowuser: string;
   title= 'Tour of Heros';
   source: LocalDataSource = new LocalDataSource();
+  startdate: string;
+  enddate: string;
 
   constructor(private router: Router, private route: ActivatedRoute,
               private heroService: HeroService,
               private loginService: LoginService,
-              private location: Location,
-              private modalService: NgbModal) {}
+              ) {}
 
-/*  getUser(): void {
-    this.loginService.getuser().then((data) => {
-      // this.source.load(data);
-      this.users = data;
-      this.nowuser = localStorage['user_name'];
-      this.selecteduser = data[0].name;
-      this.shareTo = data[1].name;
-      this.emailContent.recipients = data[1].email;
-    });
-  }*/
+
   getReports(): void {
     this.heroService.getReport().then((res) => {
       console.log(res);
@@ -112,18 +104,9 @@ export class ReportListComponent implements OnInit {
       console.log(this.reports);
     });
   }
-  goBack(): void {
-    this.location.back(); // !
-  }
-/*  doShare(): void {
-    this.selectedHero.user.push(this.shareTo);
-    this.heroService.update(this.selectedHero)
-      .then(() => {
-        alert('发送成功');
-      });
-  }*/
+
   getHero(): void {
-      this.heroService.getHero(this.selectedReport.id)
+      this.heroService.getHero(this.selectedReport.examID)
         .then(hero => {
           console.log(hero);
           this.hero = hero[0];
@@ -131,11 +114,25 @@ export class ReportListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.startdate = this.heroService.getTime();
+    this.enddate = this.startdate;
     this.getReports();
+  }
+  getDetails(item) {
+    console.log(item);
+    this.router.navigateByUrl('/pages/tables/tableReport/'
+      + item.examID + '/reportDetail/' + item.examID);
   }
 
   onswitch(nav: any): void {
     this.selectedTab = nav.id;
+    this.navLinks.forEach((n) => {
+      if (n.id === nav.id) {
+        n.select = true;
+      } else {
+        n.select = false;
+      }
+    });
     console.log(this.selectedTab);
   }
 
@@ -144,21 +141,5 @@ export class ReportListComponent implements OnInit {
     this.selectedReport = diagnosisReport;
   }
 }
- /* gotoDetail(): void {
-    this.router.navigate
-    (['../imgViewer' , this.selectedHero.name, 'applyDetail', this.selectedHero.name], { relativeTo: this.route } );
 
-  }
-
-  gotoAdd(): void {
-    this.router.navigate(['../sendapply'], { relativeTo: this.route } );
-  }
-
-  sendMail() {
-    this.emailContent.message = '' + this.nowuser + '发来了报告诊断申请';
-    console.log(this.emailContent);
-    this.heroService.sendMail(this.emailContent);
-
-  }
-}*/
 

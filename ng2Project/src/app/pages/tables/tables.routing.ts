@@ -19,10 +19,11 @@ const routes: Routes = [
       { path: 'datatables', component: DataTables },
       { path: 'hottables', component: HotTablesComponent },
       { path: 'imageTable', component: ImageTableComponent },
-      { path: 'imgViewer/:ID', loadChildren: './img-viewer/img-viewer.module#ImgViewerModule' },
+      { path: 'tableReport/:examID', loadChildren: './table-report/table-report.module#TableReportModule' },
+      { path: 'imgViewer/:examID', loadChildren: '../report/Application/img-viewer.module#ImgViewerModule' },
       { path: 'imageGallery', component: ImageGalleryComponent },
-    ]
-  }
+    ],
+  },
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forChild(routes);

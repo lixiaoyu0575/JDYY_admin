@@ -1,0 +1,110 @@
+
+<div class="row" >
+  <div class="col-md-3"></div>
+  <div class="col-md-6" *ngIf="report && !doEdit">
+    <ba-card>
+      <h1>关于患者{{report.name}}的诊断报告</h1>
+      <hr>
+      <div class="row">
+        <div class="col-md-3">
+          <label>姓名:</label>
+          {{report.name}}
+        </div>
+        <div class="col-md-3">
+          <label>年龄:</label>
+          {{report.age}}
+        </div>
+        <div class="col-md-3">
+          <label>扫描类型:</label>
+          {{report.examContent}}
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-12">
+          <label>时间:</label>
+          {{report.date}}
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-12">
+          <label>影像描述:</label>
+          {{report.description}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <label>初步诊断:</label>
+          {{report.diagnosis}}
+        </div>
+      </div>
+      <hr>
+      <button class="btn btn-default" style="left: 80%" (click)="doSwith()">修改/审核报告</button>
+     <!-- <div class="row" >
+        <div class="col-md-8"></div>
+        <div class="col-md-2">
+          <button  class="btn btn-success" (click)="gotoAdd()" >填写报告</button>
+        </div>
+        <div class="col-md-2">
+          <button type="submit" class="btn btn-default" (click)="goBack()">返回</button>
+        </div>
+      </div>-->
+    </ba-card>
+  </div>
+</div>
+
+
+<div class="row" >
+  <div class="col-md-3"></div>
+  <div class="col-md-6" *ngIf="report && doEdit">
+    <ba-card>
+      <h1>关于患者{{report.name}}的诊断报告</h1>
+      <hr>
+      <div class="row">
+        <div class="col-md-3">
+          <label>姓名:</label>
+          {{report.name}}
+        </div>
+        <div class="col-md-3">
+          <label>年龄:</label>
+          {{report.age}}
+        </div>
+        <div class="col-md-3">
+          <label>扫描类型:</label>
+          {{report.examContent}}
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-12">
+          <label>时间:</label>
+          {{report.date}}
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-12">
+          <label>影像描述:</label>
+          <textarea  type="text" class="form-control" [(ngModel)]="report.description"  placeholder="填写影像描述"></textarea>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <label>初步诊断:</label>
+          <textarea  type="text" class="form-control" [(ngModel)]="report.diagnosis"  placeholder="填写影像描述"></textarea>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-12">
+        <button class="btn btn-default" style="left: 80%; width: 15%" (click)="doUpdate(); doSwith()">暂存报告</button>
+        <button class="btn btn-default" style="left: 80%;width: 15%" (click)="doUpdate('doVerify'); doSwith()">完成审核</button>
+        </div>
+      </div>
+    </ba-card>
+  </div>
+</div>
+
+
+

@@ -13,8 +13,8 @@ const routes: Routes = [
     path: '',
     component: ImgViewerComponent,
     children: [
-      { path: 'applyDetail/:id', component: ApplyComponent },
-      { path: 'diagnosisReport/:id', component: AddHeroComponent },
+      { path: 'applyDetail/:examID', component: ApplyComponent },
+      { path: 'diagnosisReport/:examID', component: AddHeroComponent },
       { path: 'imageDetail', component: ImageDetailComponent },
     ],
   },

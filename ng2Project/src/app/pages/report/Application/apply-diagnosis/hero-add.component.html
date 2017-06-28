@@ -3,6 +3,7 @@
     <div class="col-md-3"></div>
     <div class="col-md-6">
      <ba-card>
+
   <h3>影像诊断报告</h3>
        <hr style="background-color:whitesmoke">
        <div class="row">
@@ -12,7 +13,7 @@
          <br>
          <div class="col-md-4" style="padding-left: 0">
          <div class="form-group">
-            <label >性别：</label>
+            <label >性别：</label>{{hero.gender}}
          </div>
        </div>
        <br>
@@ -24,7 +25,7 @@
     <br>
        <div class="row">
          <div class="col-md-4" >
-           <label >设备名称：</label>{{hero.scantype}}
+           <label >扫描类型：</label>{{hero.examContent}}
          </div>
          <br>
          <div class="col-md-4" style="padding-left: 0">
@@ -54,7 +55,7 @@
        <br>
 
     <button type="submit" class="btn btn-danger"
-            (click)="update();gotoHeroes();addReport(report)">
+            (click)="gotoHeroes();addReport(report)">
       创建报告
     </button>
     </ba-card>

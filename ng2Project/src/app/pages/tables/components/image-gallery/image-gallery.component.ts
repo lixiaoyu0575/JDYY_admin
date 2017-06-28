@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import {Http, RequestOptions, Headers} from '@angular/http';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { ImageService } from './../../img-viewer/img-viewer.service';
+import { ImageService } from '../../../report/Apply-station/img-viewer/Apply-edit.service';
 
 import * as _ from 'lodash';
 
