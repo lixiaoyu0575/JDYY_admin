@@ -1,18 +1,91 @@
 <div class="widgets">
-  <ba-card>
-    <div class="widget" >
+<div class="row" *ngIf="hero">
+  <div class="col-md-12">
+  <div class="row">
+    <div class=" col-xl-3 col-lg-3 col-md-3 col-sm-3 col-3">
+      <div><img src="assets/img/app/profile/Nasta.png" (click)="changeInfo()"></div>
+      <br>
+      <h1>我的信息</h1>
+      <hr>
       <div class="row">
-        <div class="col-md-8"><h2>消息列表</h2></div>
+        <div class="col-md-3">
+          <label>姓名:</label>
+          {{hero.name}}
+        </div>
+        <div class="col-md-3">
+          <label>年龄:</label>
+          {{hero.age}}
+        </div>
+      </div>
+      <hr>
+    </div>
+    <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-9">
+      <div class="row">
+
+        <ba-card class="pie-chart-item-container" (click)="gotoList()">
+          <div class="kameleon-icon col-md-3"><img src="assets/img/theme/icon/kameleon/Images.svg"></div>
+          <div class="description text-center">
+            <div>我的影像</div>
+            <br>
+            <div class="description-stats">5</div>
+          </div>
+        </ba-card>
+
+        <ba-card class="pie-chart-item-container">
+          <div class="kameleon-icon col-md-3"><img src="assets/img/theme/icon/kameleon/Checklist.svg"></div>
+          <div class="description text-center">
+            <div>我的共享</div>
+            <br>
+            <div class="description-stats">5</div>
+          </div>
+        </ba-card>
+
+        <ba-card class="pie-chart-item-container" (click)="gotoMessage()">
+          <div class="kameleon-icon col-md-3"><img src="assets/img/theme/icon/kameleon/Bell.svg"></div>
+          <div class="description text-center">
+            <div>我的消息</div>
+            <br>
+            <div class="description-stats">5</div>
+          </div>
+        </ba-card>
+
+        <ba-card>
+          <div class="kameleon-icon col-md-3"><img src="assets/img/theme/icon/kameleon/Key.svg"></div>
+          <div class="description text-center">
+            <div>修改密码</div>
+            <br>
+            <br>
+          </div>
+        </ba-card>
+
+        <ba-card (click)="lgModalShow()">
+          <div class="kameleon-icon col-md-3"><img src="assets/img/theme/icon/kameleon/Programming.svg"></div>
+          <div class="description text-center">
+            <div>添加更多功能</div>
+            <br>
+            <br>
+          </div>
+        </ba-card>
+
       </div>
     </div>
-  </ba-card>
-  <br>
-<div class="row">
-  <div class="col-md-6">
-    <ba-card title="个人信息" baCardClass="with-scroll">
-      <ba-picture-uploader [picture]="profile.picture" [defaultPicture]="defaultPicture" [uploaderOptions]="uploaderOptions"></ba-picture-uploader>
-      <!--<div>picture</div>-->
-    </ba-card>
+  </div>
   </div>
 </div>
+
+
+<div class="row">
+  <ba-card class="col-xlg-6 col-lg-6 col-md-12 col-sm-12 col-12" title="活动记录"
+           baCardClass="xmedium-card feed-comply-panel with-scroll calendar-panel">
+    <calendar></calendar>
+  </ba-card>
+
+  <div class="col-xlg-6 col-lg-6 col-md-12 col-sm-12 col-12">
+    <ba-card baCardClass="large-card with-scroll feed-panel">
+      <feed></feed>
+    </ba-card>
+  </div>
+
+</div>
+
 </div>

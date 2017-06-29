@@ -116,10 +116,10 @@ export const PAGES_MENU = [
             }
           },
           {
-            path: 'feed',
+            path: 'user',
             data: {
               menu: {
-                title: '我的消息'
+                title: '个人主页'
               }
             }
           },

@@ -5,7 +5,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { DataTables } from './dataTables/dataTables.component';
 import { Feed } from './feed/feed.component';
 import {personalInform } from './personalInform/personalInform.component';
-import { profile } from './profile.component';
+import { User } from "./user/user.component";
+import { profile } from './profile.component'
 
 const routes: Routes = [
   {
@@ -14,7 +15,8 @@ const routes: Routes = [
   },
   { path: 'dataTables', component: DataTables },
   {path:'feed',component:Feed},
-  {path:'personalInform',component:personalInform}
+  {path:'personalInform',component:personalInform},
+  {path:'user',component:User}
 ];
 
 export const routing = RouterModule.forChild(routes);

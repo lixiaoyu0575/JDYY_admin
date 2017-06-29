@@ -1,10 +1,14 @@
 <div class="widgets">
   <div class="row">
     <div class="col-md-3"></div>
-    <div class="col-md-9">
+    <div class="col-md-6 center-block">
       <ba-card>
-        <h1>个人信息管理</h1>
+        <h1>个人信息修改</h1>
         <hr style="background-color:whitesmoke">
+        <div class="col-md-6" style="padding-right: 0">
+            <ba-picture-uploader [picture]="profile.picture" [defaultPicture]="defaultPicture" [uploaderOptions]="uploaderOptions"></ba-picture-uploader>
+        </div>
+        <br>
         <div class="form-group" style="width:22%">
           <label >姓名：</label>
           <input type="text" class="form-control"  placeholder="输入姓名">
@@ -42,12 +46,6 @@
           </div>
         </div>
         <br>
-        <div class="col-md-6" style="padding-right: 0">
-          <ba-card title="个人信息" baCardClass="with-scroll">
-            <ba-picture-uploader [picture]="profile.picture" [defaultPicture]="defaultPicture" [uploaderOptions]="uploaderOptions"></ba-picture-uploader>
-            <!--<div>picture</div>-->
-          </ba-card>
-        </div>
         <br>
         <div class="form-group">
           <label >所在地区：</label>

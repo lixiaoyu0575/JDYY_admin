@@ -13,6 +13,7 @@ import { HotTable, HotTableModule } from 'ng2-handsontable';
 
 import { routing } from './profile.routing';
 import { profile } from './profile.component';
+import { HeroService } from '../report/components/List/hero.service';
 
 import { DataTables } from './dataTables/dataTables.component';
 import { DataTablesService } from './dataTables/dataTables.service';
@@ -21,6 +22,10 @@ import {Feed} from './feed/feed.component';
 import { FeedService } from './feed/feed.service';
 import {personalInform} from './personalInform/personalInform.component';
 import {personalInformService } from './personalInform/personalInform.service';
+import { User } from './user/user.component';
+import { userService } from './user/user.service';
+import { Calendar } from './calendar';
+import { CalendarService } from './calendar/calendar.service';
 
 @NgModule({
   imports: [
@@ -39,12 +44,17 @@ import {personalInformService } from './personalInform/personalInform.service';
     DataTables,
     DataFilterPipe,
     Feed,
-    personalInform
+    personalInform,
+    User,
+    Calendar
   ],
   providers: [
     DataTablesService,
     FeedService,
-    personalInformService
+    personalInformService,
+    userService,
+    HeroService,
+    CalendarService
   ]
 })
 export class profileModule {}

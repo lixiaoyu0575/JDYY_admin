@@ -2,7 +2,8 @@
  * Created by yqzheng on 2017/6/25.
  */
 import { Component, OnInit } from '@angular/core';
-import { personalInformService } from './personalInform.service';
+import { Router , ActivatedRoute , Params } from '@angular/router';
+import { NgUploaderOptions } from 'ngx-uploader';
 
 @Component({
   selector: 'person-Inform',
@@ -10,25 +11,23 @@ import { personalInformService } from './personalInform.service';
   // styleUrls: ['./personalInform.scss']
 })
 export class personalInform {
+  public defaultPicture = 'assets/img/theme/no-photo.png';
+  public profile:any = {
+    picture: 'assets/img/app/profile/Nasta.png'
+  };
+  public uploaderOptions:NgUploaderOptions = {
+    url: '',
+  };
 
-  data;
-  filterQuery = "";
-  rowsOnPage = 10;
-  sortBy = "email";
-  sortOrder = "asc";
+  constructor(private router: Router,
+              private route: ActivatedRoute,
+  ) {}
 
-  constructor(private service: personalInformService) {
-    // this.service.getData().then((data) => {
-    //   this.data = data;
-    // });
+  gotoHeroes(): void {
+    this.router.navigate(['../'], { relativeTo: this.route } ); // !
   }
-
-  toInt(num: string) {
-    return +num;
-  }
-
-  sortByWordLength = (a: any) => {
-    return a.city.length;
+  update():void{
+    console.log("submit!");
   }
 
 }
