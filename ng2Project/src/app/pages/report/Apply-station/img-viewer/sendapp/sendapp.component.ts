@@ -2,12 +2,12 @@
  * Created by th3ee on 5/19/17.
  */
 import { Component, OnInit } from '@angular/core';
-import { HeroService } from '../../../report/components/List/hero.service';
+import { HeroService } from '../../../components/List/hero.service';
 import { Router , ActivatedRoute , Params } from '@angular/router';
 import { Location } from '@angular/common';
-import { Hero , User } from '../../../report/components/List/hero';
+import { Hero , User } from '../../../components/List/hero';
 import { LocalDataSource } from 'ng2-smart-table';
-import { LoginService } from '../../../login/login.service';
+import { LoginService } from '../../../../login/login.service';
 
 @Component({
   moduleId: module.id,
@@ -43,7 +43,7 @@ export class SendApplyComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-    this.route.params.switchMap((params: Params) => this.heroService.getItem(params['ID']))
+    this.route.params.switchMap((params: Params) => this.heroService.getItemByEid(params['examID']))
       .subscribe(item => {
         this.item = item;
         console.log(this.item);
@@ -51,31 +51,35 @@ export class SendApplyComponent implements OnInit {
     this.getUser();
   }
   gotoHeroes(): void {
-    this.router.navigate(['../../../report/list'], { relativeTo: this.route } ); // !
+    this.router.navigate(['../../../../list'], { relativeTo: this.route } ); // !
   }
   goBack(): void {
     this.location.back(); // !
   }
   add(reason: string, originaldiagnosis: string, time: string , user: any[]): void {
-    let id = this.item.ID;
-    let date = new Date();
+    let pid = this.item.patientID;
+    let eid = this.item.examID;
     let name = this.item.name;
+    let gender = this.item.gender;
     let age = this.item.age;
-    let scantype = this.item.examContent;
+    let examContent = this.item.examContent;
+    let examPart = this.item.examPart;
     reason = reason.trim();
     originaldiagnosis = originaldiagnosis.trim();
     status = '已发送申请，待填写报告';
-    time = date.toDateString();
+    time = this.item.time;
+    let applytime = this.heroService.getTime();
     user = [this.applyTo];
     if (!name) {
       return;
     }
-    this.heroService.create(id, name, age, scantype , reason, originaldiagnosis, status, time , user).then( hero => {
+    this.heroService.create(pid, eid, name, gender, age, examContent, examPart ,
+      reason, originaldiagnosis, status, time , applytime, user).then( hero => {
       console.log(hero);
-      this.heroes.push(hero);
       this.selectedHero = null;
     });
-    // this.heroService.updateItem(this.item.name);
+    this.item.applystatus = '已申请';
+    this.heroService.updateApplyItem(this.item.examID, this.item.applystatus);
   }
   sendMail() {
     if (this.applyTo === 'Billy') {

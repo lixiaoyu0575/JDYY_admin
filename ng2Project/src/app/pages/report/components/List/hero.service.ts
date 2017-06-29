@@ -1,7 +1,7 @@
 /**
  * Created by th3ee on 5/17/17.
  */
-import { Injectable } from '@angular/core';
+import { Injectable} from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import { Hero, Usercreds } from './hero';
@@ -18,9 +18,30 @@ export class HeroService {
   constructor(private http: Http) {
   }
 
+  getTime(): string {
+      // 格式化日期，获取今天的日期
+      const dates = new Date();
+      const year: number = dates.getFullYear();
+      const month: any = ( dates.getMonth() + 1 ) < 10 ? '0' + ( dates.getMonth() + 1 ) : ( dates.getMonth() + 1 );
+      const day: any = dates.getDate() < 10 ? '0' + dates.getDate() : dates.getDate();
+      const time = year + '-' + month + '-' + day;
+      return time;
+  }
+
   getHeroes(): Promise<Hero[]> { // return an array of Hero[] data type
     return this.http.get(this.localUrl + 'gethero')
       .toPromise().then(response => response.json() as Hero[]);
+  }
+
+  getHeroesByTime(interval: any): Promise<Hero[]> { // return an array of Hero[] data type
+    return this.http.post(this.localUrl + 'getherobytime', JSON.stringify(interval), { headers: this.headers })
+      .toPromise().then(response => response.json() as Hero[]);
+  }
+
+  getItemsByTime(interval: any): Promise<any> {
+    console.log(interval); // return an array of Hero[] data type
+    return this.http.post(this.localUrl + 'getitembytime', JSON.stringify(interval), { headers: this.headers })
+      .toPromise().then(response => response.json());
   }
 
   private handleError(error: any): Promise<any> {
@@ -36,9 +57,10 @@ export class HeroService {
       .catch(this.handleError);
   }
 
-  getHero(id: string): Promise<Hero> {
+  getHero(eid: string): Promise<Hero> {
+    console.log(eid);
     return this.http.post(this.localUrl + 'getherodetail', JSON.stringify({
-      id: id,
+      examID: eid,
     }), { headers: this.headers })
       .toPromise().then(response => {
         console.log(response.json());
@@ -72,18 +94,82 @@ export class HeroService {
       .catch(this.handleError);
   }
 
-  create( id: string, name: string, age: string, scantype: string , reason: string,
-         originaldiagnosis: string, status: string, time: string,
+  getReportDetail(eid: string): Promise<DiagnosisReport> {
+    console.log(eid);
+    return this.http.post(this.localUrl + 'getreport', JSON.stringify({
+      examID: eid,
+    }), { headers: this.headers })
+      .toPromise().then(response => {
+        console.log(response.json());
+        return response.json();
+      })
+      .catch(this.handleError);
+  }
+
+  updateReport(report: any): Promise<any> {
+    return this.http.post(this.localUrl + 'updatereport', JSON.stringify(report), { headers: this.headers })
+      .toPromise()
+      .then((res) => res.json().data)
+      .catch(this.handleError);
+  }
+
+  updateApplyItem(examID: string, applystatus: string): Promise<any> {
+    return this.http.post(this.localUrl + 'updateapplyitem', JSON.stringify({
+      examID: examID,
+      applystatus: applystatus,
+    }), { headers: this.headers })
+      .toPromise()
+      .then((res) => res.json().data)
+      .catch(this.handleError);
+  }
+
+  updateReportItem(examID: string, status: string): Promise<any> {
+    return this.http.post(this.localUrl + 'updatereportitem', JSON.stringify({
+      examID: examID,
+      status: status,
+    }), { headers: this.headers })
+      .toPromise()
+      .then((res) => res.json().data)
+      .catch(this.handleError);
+  }
+
+  addReportRecord(record: any): Promise<any> {
+    console.log(record);
+    return this.http.post(this.localUrl + 'addreportrecord', JSON.stringify(record), { headers: this.headers })
+      .toPromise()
+      .then((res) => res.json().data)
+      .catch(this.handleError);
+  }
+
+  getReportRecord(eid: string): Promise<any> {
+    return this.http.post(this.localUrl + 'getrecord', JSON.stringify({
+      examID: eid,
+    }), { headers: this.headers })
+      .toPromise()
+      .then((res) => {
+      console.log(res.json());
+      return res.json();
+      })
+      .catch(this.handleError);
+  }
+
+  create( pid: string, eid: string , name: string, gender: string,
+          age: string, examContent: string , examPart: string , reason: string,
+         originaldiagnosis: string, status: string, time: string, applytime: string,
          user: string[]): Promise<any> {
     return this.http.post(this.localUrl + 'addhero', JSON.stringify({
-      id: id,
+      patientID: pid,
+      examID: eid,
       name: name,
+      gender: gender,
       age: age,
-      scantype: scantype,
+      examContent: examContent,
+      examPart: examPart,
       reason: reason,
       originaldiagnosis: originaldiagnosis,
       status: status,
       time: time,
+      applytime: applytime,
       user: user,
     }), { headers: this.headers })
       .toPromise()
@@ -108,12 +194,14 @@ export class HeroService {
       .catch(this.handleError);
   }
 
-  getItem(ID: string): Promise <any> {
-    return this.http.post(this.localUrl + 'getitem', JSON.stringify({ ID: ID }), { headers: this.headers })
+  getItemByEid(ID: string): Promise <any> {
+    return this.http.post(this.localUrl + 'getitembyEid', JSON.stringify({ 'examID': ID }), { headers: this.headers })
       .toPromise()
       .then((res) => res.json())
       .catch(this.handleError);
   }
+
+
 }
 
 

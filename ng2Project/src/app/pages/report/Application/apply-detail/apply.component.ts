@@ -30,7 +30,7 @@ export class ApplyComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.params.switchMap((params: Params) => this.heroService.getHero(params['id']))
+    this.route.params.switchMap((params: Params) => this.heroService.getHero(params['examID']))
       .subscribe(hero => {
         console.log(hero);
         this.hero = hero[0];
@@ -39,7 +39,7 @@ export class ApplyComponent implements OnInit {
     this.getHeroes();
   }
   gotoAdd(): void {
-    this.router.navigate(['../../diagnosisReport', this.hero.id], { relativeTo: this.route } );
+    this.router.navigate(['../../diagnosisReport', this.hero.examID], { relativeTo: this.route } );
   }
   getHeroes(): void {
     this.heroService.getHeroes().then((heroes) => {

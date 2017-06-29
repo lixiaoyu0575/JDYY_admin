@@ -8,6 +8,7 @@ import { NgaModule } from '../../theme/nga.module';
 import { DataTableModule } from 'angular2-datatable';
 import { IdFilterPipe, NameFilterPipe, AgeFilterPipe, ScanTypeFilterPipe, TimeFilterPipe, StatusFilterPipe }
 from './components/List/list-table-filter.pipe';
+import { ExamContentFilterPipe } from './Apply-station/apply-list.pipe';
 import { ReportComponent } from './report.component';
 import { HeroesComponent } from './components/List/heroes.component';
 import { HeroService } from './components/List/hero.service';
@@ -17,29 +18,32 @@ import { routing } from './report.routing';
 import { NgbDropdownModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoginService } from '../login/login.service';
 import { ImgViewerModule } from './Application/img-viewer.module';
+import { ApplyEditModule } from './Apply-station/img-viewer/Apply-edit.module';
 import { ReportListComponent } from './components/report-list/report-list.component';
-import { ReportDetailComponent } from './components/report-list/report-detail/report-detail.component';
-import { ApplicationDetailComponent } from './components/report-list/application-detail/application-detail.component';
+import { ApplyListComponent } from './Apply-station/apply-list.component';
+
+
 @NgModule({
   imports: [CommonModule, FormsModule , routing, HttpModule, NgbDropdownModule, DataTableModule, NgaModule,
     NgbModalModule, MdTabsModule,
-    TreeModule, ImgViewerModule],
+    TreeModule, ImgViewerModule, ApplyEditModule],
   declarations: [
     ReportComponent,
     HeroesComponent,
+    ApplyListComponent,
     DefaultModal,
     IdFilterPipe,
     NameFilterPipe,
     ScanTypeFilterPipe,
+    ExamContentFilterPipe,
     TimeFilterPipe,
     StatusFilterPipe,
     AgeFilterPipe,
     ReportListComponent,
-    ReportDetailComponent,
-    ApplicationDetailComponent],
-  providers:    [ HeroService , LoginService, ImageService],
+  ],
+  providers: [HeroService , LoginService, ImageService],
   entryComponents: [DefaultModal],
-  bootstrap:    [ ReportComponent ],
+  bootstrap: [ReportComponent],
 })
 
 

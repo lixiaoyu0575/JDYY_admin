@@ -6,7 +6,7 @@ import { Headers, RequestOptions } from '@angular/http';
 
 import * as _ from 'lodash'
 
-import { ImageService } from '../img-viewer.service';
+import { ImageService } from '../Apply-edit.service';
 
 const localIp = '59.110.52.133';
 

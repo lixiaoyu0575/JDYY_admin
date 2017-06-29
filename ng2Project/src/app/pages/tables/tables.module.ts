@@ -42,10 +42,10 @@ import { SharedModule } from '../../shared/_module';
 
 import { TreeModule } from 'angular-tree-component';
 import { MdTabsModule, MdButtonModule } from '@angular/material';
-import { ImageService } from './img-viewer/img-viewer.service';
+import { ImageService } from '../report/Apply-station/img-viewer/Apply-edit.service';
 
-import { ImgViewerModule } from './img-viewer/img-viewer.module';
 import { HeroService } from '../report/components/List/hero.service';
+import { TableReportModule } from './table-report/table-report.module';
 
 @NgModule({
   imports: [
@@ -60,7 +60,7 @@ import { HeroService } from '../report/components/List/hero.service';
     TreeModule,
     MdTabsModule,
     SharedModule,
-    ImgViewerModule,
+    TableReportModule,
     MdButtonModule,
   ],
   declarations: [

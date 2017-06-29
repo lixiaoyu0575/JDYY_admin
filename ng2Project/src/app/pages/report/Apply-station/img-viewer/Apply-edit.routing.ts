@@ -4,17 +4,17 @@
 import { Routes, RouterModule } from '@angular/router';
 import { ModuleWithProviders } from '@angular/core';
 
-import { ImgViewerComponent } from './img-viewer.component';
+import { ApplyEditComponent } from './Apply-edit.component';
 import { ImageDetailComponent } from './image-detail/image-detail.component';
 import { ImageReportComponent } from './image-report/image-report.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: ImgViewerComponent,
+    component: ApplyEditComponent,
     children: [
       { path: 'imageDetail', component: ImageDetailComponent },
-      { path: 'applyDetail/:ID', component: ImageReportComponent },
+      { path: 'applyDetail/:examID', component: ImageReportComponent },
     ]
   }
 ];

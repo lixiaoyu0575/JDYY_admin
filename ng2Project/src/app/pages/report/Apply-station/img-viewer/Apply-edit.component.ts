@@ -2,22 +2,22 @@ import 'rxjs/add/operator/toPromise';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Http } from '@angular/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { HeroService } from '../../report/components/List/hero.service';
+import { HeroService } from '../../components/List/hero.service';
 
 @Component({
   selector: 'img-viewer',
-  templateUrl: './img-viewer.component.html',
-  styleUrls: ['./img-viewer.component.scss']
+  templateUrl: './Apply-edit.component.html',
+  styleUrls: ['./Apply-edit.component.scss']
 })
 
-export class ImgViewerComponent implements OnInit {
+export class ApplyEditComponent implements OnInit {
   navLinks: object[];
   item;
   constructor(private http: Http, private route: ActivatedRoute, private heroService: HeroService) {
     this.navLinks = [];
   }
   ngOnInit(): void {
-    this.route.params.switchMap((params: Params) => this.heroService.getItem(params['ID']))
+    this.route.params.switchMap((params: Params) => this.heroService.getItemByEid(params['examID']))
       .subscribe(item => {
         console.log(item);
         this.item = item;
@@ -26,7 +26,7 @@ export class ImgViewerComponent implements OnInit {
           'label': '影像详情',
         });
         this.navLinks.push({
-          'url': 'applyDetail/' + this.item.ID,
+          'url': 'applyDetail/' + this.item.examID,
           'label': '发送申请',
         });
       });

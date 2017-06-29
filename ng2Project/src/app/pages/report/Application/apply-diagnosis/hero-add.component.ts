@@ -8,6 +8,7 @@ import { Hero } from '../../components/List/hero';
 import { DiagnosisReport } from './hero-add';
 import { Location } from '@angular/common';
 
+
 @Component({
   moduleId: module.id,
   selector: 'add-hero',
@@ -33,19 +34,23 @@ export class AddHeroComponent implements OnInit {
     this.diagnosis = '';
   }
   ngOnInit(): void {
-    this.route.params.switchMap((params: Params) => this.heroService.getHero(params['id']))
+    this.route.params.switchMap((params: Params) => this.heroService.getItemByEid(params['examID']))
       .subscribe(hero => {
-        this.hero = hero[0];
+        this.hero = hero;
         console.log(this.hero);
-        this.report.id = this.hero.id;
+        this.report.patientID = this.hero.patientID;
+        this.report.examID = this.hero.examID;
         this.report.name = this.hero.name;
         this.report.age = this.hero.age;
-        this.report.scan = this.hero.scantype;
+        this.report.gender = this.hero.gender;
+        this.report.examContent = this.hero.examContent;
+        this.report.examPart = this.hero.examPart;
         this.report.date = this.hero.time;
-        this.report.status = '报告已完成,待审核';
+        this.report.reporttime = this.heroService.getTime();
         console.log(this.report);
       });
      this.getHeroes();
+
      this.formInit();
   }
   gotoHeroes(): void {
@@ -55,15 +60,23 @@ export class AddHeroComponent implements OnInit {
   addReport(report: DiagnosisReport): void {
     this.report.description = this.description;
     this.report.diagnosis = this.diagnosis;
+    this.report.status = '待审核';
     console.log(this.report);
-    this.heroService.createReport(report).then( res => {
-      console.log(res);
-    });
+    this.heroService.createReport(report).then( res =>
+      this.heroService.addReportRecord(
+        { 'examID': this.report.examID ,
+          'operate_type': '生成报告',
+          'name': localStorage['user_name'],
+          'date': this.heroService.getTime()},
+      ),
+    );
+    this.heroService.updateReportItem(this.hero.examID, '待审核');
+    this.heroService.updateApplyItem(this.hero.examID, '诊断中');
   }
 
   update(): void {
     console.log(this.hero.status);
-    this.hero.status = '已审核';
+    this.hero.status = '诊断中';
     console.log(this.hero.status);
     this.heroService.update(this.hero);
   }

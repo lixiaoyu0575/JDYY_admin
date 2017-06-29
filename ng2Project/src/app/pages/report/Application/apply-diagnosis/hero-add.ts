@@ -2,14 +2,16 @@
  * Created by th3ee on 6/21/17.
  */
 export class DiagnosisReport {
-  id: string;
+  patientID: string;
+  examID: string;
   name: string;
   gender: string;
   age: string;
-  office: string;
-  scan: string;
+  examContent: string;
+  examPart: string;
   date: string;
-  bodypart: string[];
+  reporttime: string;
+  bodypart: string;
   description: string;
   diagnosis: string;
   status: string;

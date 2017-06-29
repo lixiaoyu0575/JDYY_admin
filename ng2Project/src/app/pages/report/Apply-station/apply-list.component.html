@@ -112,12 +112,12 @@
             <td style="text-align: center">{{item.age}}</td>
             <td style="text-align: center">{{item.examContent}}</td>
             <td style="text-align: center">{{item.time}}</td>
-            <td style="text-align: center">{{item.status}}</td>
-            <td style="text-align: center">
-              <a href="" style="color: #8eb0e7">阅片</a>
-              &nbsp;
-              <a *ngIf="item.status !== '待书写'" [routerLink]="'/pages/tables/tableReport/'+item.examID+'/reportDetail/'+item.examID" routerLinkActive="active" style="color: #8eb0e7" (click)="onSelect(item)">报告</a>
-              <a *ngIf ="item.status === '待书写'" [routerLink]="'/pages/report/imgViewer/'+item.examID+'/diagnosisReport/'+item.examID" routerLinkActive="active" style="color: #8eb0e7" (click)="onSelect(item)">报告</a>
+            <td style="text-align: center">{{item.applystatus}}</td>
+            <td style="text-align: center" *ngIf="item.applystatus === '待申请'">
+              <a [routerLink]="'/pages/report/applyEdit/'+item.examID+'/imageDetail'" routerLinkActive="active" style="color: #8eb0e7" (click)="onSelect(item)">申请阅片</a>
+            </td>
+            <td style="text-align: center" *ngIf="item.applystatus != '待申请'">
+              <a [routerLink]="'/pages/report/imgViewer/'+item.examID+'/applyDetail/'+item.examID" routerLinkActive="active" style="color: #8eb0e7" (click)="onSelect(item)">查看申请</a>
             </td>
           </tr>
           </tbody>

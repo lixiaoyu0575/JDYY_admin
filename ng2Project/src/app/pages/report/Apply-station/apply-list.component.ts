@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { HeroService } from '../../../report/components/List/hero.service';
+import { HeroService } from '../components/List/hero.service';
 
 @Component({
-  selector: 'app-image-table',
-  templateUrl: './image-table.component.html',
-  styleUrls: ['./image-table.component.scss']
+  selector: 'apply-table',
+  templateUrl: './apply-list.component.html',
+  styleUrls: ['./apply-list.component.scss']
 })
-export class ImageTableComponent implements OnInit {
+export class ApplyListComponent implements OnInit {
 
   data;
  navigateRoute: string;
@@ -28,7 +28,7 @@ export class ImageTableComponent implements OnInit {
   constructor(
     private service: HeroService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
   ) {
     this.service.getAllItems().then((data) => {
       this.data = data;

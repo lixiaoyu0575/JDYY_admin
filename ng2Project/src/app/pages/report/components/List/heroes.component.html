@@ -1,10 +1,45 @@
-<ba-card>
-<div class="widget" >
-  <div class="row">
-    <div class="col-md-8" *ngIf="nowuser"><h2>{{nowuser}}的患者报告列表</h2></div>
-  </div>
+
+<div class="widget">
+  <ba-card title="阅片申请列表">
+    <div class="row">
+      <div class="col-md-2">
+        <label>检查编号：</label>
+        <input class="form-control">
+      </div>
+      <div class="col-md-2">
+        <label>影像类型：</label>
+        <select class="form-control" >
+          <option>CT</option>
+          <option>MR</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <label >报告状态：</label>
+        <select class="form-control" >
+          <option>无</option>
+          <option>待书写</option>
+          <option>待审核</option>
+          <option>已审核</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <label >日期选择：</label>
+        <select class="form-control" >
+          <option>检查日期</option>
+          <option>报告日期</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <div class="row" style="margin-top: 4%">
+          <input type="date" class="form-control" [(ngModel)]="startdate" style="width: 33%">
+          <label style="margin-top: 2.4%;">～</label>
+          <input type="date" class="form-control" [(ngModel)]="enddate" style="width: 33%">
+          <button class="btn btn-primary" style="margin-left: 2%;width: 25%" (click)="filterTime()">查询</button>
+        </div>
+      </div>
+    </div>
   <br>
-  <div class="row" *ngIf="heroes&&nowuser">
+  <div *ngIf="heroes&&nowuser">
       <div class="panel panel-default">
         <table class="table table-hover" [mfData]="heroes | idFilter : idFilterQuery |
          nameFilter : nameFilterQuery | ageFilter : ageFilterQuery | scantypeFilter : scantypeFilterQuery |
@@ -14,7 +49,7 @@
           <tr>
             <th style="width: 10%"></th>
             <th style="width: 15%">
-              <mfDefaultSorter by="_ID">ID</mfDefaultSorter>
+              <mfDefaultSorter by="_ID">检查ID</mfDefaultSorter>
             </th>
             <th style="width: 15%">
               <mfDefaultSorter by="name">姓名</mfDefaultSorter>
@@ -26,13 +61,16 @@
               <mfDefaultSorter by="scan">检查类型</mfDefaultSorter>
             </th>
             <th style="width: 10%">
-              <mfDefaultSorter by="time">时间</mfDefaultSorter>
+              <mfDefaultSorter by="time">检查时间</mfDefaultSorter>
             </th>
-            <th style="width: 20%">
+            <th style="width: 10%">
+              <mfDefaultSorter by="time">申请时间</mfDefaultSorter>
+            </th>
+            <th style="width: 10%">
               <mfDefaultSorter by="status">申请状态</mfDefaultSorter>
             </th>
           </tr>
-          <tr>
+          <!--<tr>
             <th colspan="1">
             </th>
             <th colspan="1">
@@ -53,7 +91,7 @@
             <th colspan="1">
               <input class="form-control" [(ngModel)]="statusFilterQuery" />
             </th>
-          </tr>
+          </tr>-->
           </thead>
           <tbody>
           <tr *ngFor="let item of mf.data" (click)="onSelect(item)">
@@ -61,18 +99,19 @@
             <td>
               <button (click)="DeleteApply(item)" class="btn btn-danger">x</button>
             </td>
-            <td>{{item._id}}</td>
+            <td>{{item.examID}}</td>
             <td>{{item.name}}</td>
             <td>{{item.age}}</td>
-            <td>{{item.scantype}}</td>
+            <td>{{item.examContent}}</td>
             <td>{{item.time}}</td>
+            <td>{{item.applytime}}</td>
             <td [ngStyle]="{'color':item.status==='未审核'?'#ff5151':'#7afec6'}">{{item.status}}</td>
             </ng-container>
           </tr>
           </tbody>
           <tfoot>
           <tr>
-            <td colspan="7">
+            <td colspan="12">
               <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
             </td>
           </tr>
@@ -101,5 +140,6 @@
     </div>
   </div>
 </div>
+  </ba-card>
 </div>
-</ba-card>
+

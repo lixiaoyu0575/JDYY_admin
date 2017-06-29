@@ -2,10 +2,13 @@
  * Created by th3ee on 5/17/17.
  */
 export class Hero {
-  id: string;
+  patientID: string;
+  examID: string;
   name: string;
+  gender: string;
   age: string;
-  scantype: string;
+  examContent: string;
+  examPart: string;
   reason: string;
   originaldiagnosis: string;
   status: string;

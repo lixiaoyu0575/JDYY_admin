@@ -2,20 +2,21 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MdTabsModule } from '@angular/material';
 import { TreeModule } from 'angular-tree-component';
-import { NgaModule } from '../../../theme/nga.module';
+import { NgaModule } from '../../../../theme/nga.module';
 import { FormsModule } from '@angular/forms';
 import { MdSelectModule } from '@angular/material';
 
-import { ImgViewerComponent } from './img-viewer.component';
+import { ApplyEditComponent } from './Apply-edit.component';
 import { ImageDetailComponent } from './image-detail/image-detail.component';
 import { ImageReportComponent } from './image-report/image-report.component';
 import { SendApplyComponent } from './sendapp/sendapp.component';
 
-import { HeroService } from '../../report/components/List/hero.service';
-import { LoginService } from '../../login/login.service';
+import { HeroService } from '../../components/List/hero.service';
+import { LoginService } from '../../../login/login.service';
+import { ImageService } from './Apply-edit.service';
 // import { UserService } from './sendapp/user.service';
 
-import { routing } from './img-viewer.routing';
+import { routing } from './Apply-edit.routing';
 
 
 @NgModule({
@@ -29,7 +30,7 @@ import { routing } from './img-viewer.routing';
     MdSelectModule,
   ],
   declarations: [
-    ImgViewerComponent,
+    ApplyEditComponent,
     ImageDetailComponent,
     ImageReportComponent,
     SendApplyComponent,
@@ -37,6 +38,7 @@ import { routing } from './img-viewer.routing';
   providers: [
     HeroService,
     LoginService,
+    ImageService,
   ],
 })
-export class ImgViewerModule { }
+export class ApplyEditModule { }

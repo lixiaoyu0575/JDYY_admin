@@ -1,0 +1,26 @@
+<ba-card>
+<div class="row">
+  <div class="col-md-3"></div>
+  <div class="col-md-6">
+<div class="vertical-scroll">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>操作类型</th>
+      <th>操作医师</th>
+      <th>时间</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of data">
+      <td>{{ item.operate_type }}</td>
+      <td>{{ item.name }}</td>
+      <td>{{ item.date }}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+  </div>
+  <div class="col-md-3"></div>
+</div>
+</ba-card>
