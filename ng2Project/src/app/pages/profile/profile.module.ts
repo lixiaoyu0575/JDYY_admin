@@ -16,8 +16,8 @@ import { profile } from './profile.component';
 import { HeroService } from '../report/components/List/hero.service';
 
 import { DataTables } from './dataTables/dataTables.component';
-import { DataTablesService } from './dataTables/dataTables.service';
-import { DataFilterPipe } from './dataTables/data-filter.pipe';
+import { IdFilterPipe, NameFilterPipe, AgeFilterPipe,ExamContentFilterPipe, TimeFilterPipe, StatusFilterPipe }
+  from './dataTables/data-filter.pipe';
 import {Feed} from './feed/feed.component';
 import { FeedService } from './feed/feed.service';
 import {personalInform} from './personalInform/personalInform.component';
@@ -26,6 +26,8 @@ import { User } from './user/user.component';
 import { userService } from './user/user.service';
 import { Calendar } from './calendar';
 import { CalendarService } from './calendar/calendar.service';
+import { DataTableRecordComponent } from './dataTables/data-table-record/data-table-record.component';
+import { DataTableImgViewComponent } from './dataTables/data-table-img-view/data-table-img-view.component';
 
 @NgModule({
   imports: [
@@ -42,14 +44,15 @@ import { CalendarService } from './calendar/calendar.service';
   declarations: [
     profile,
     DataTables,
-    DataFilterPipe,
+    IdFilterPipe, NameFilterPipe, AgeFilterPipe,ExamContentFilterPipe, TimeFilterPipe, StatusFilterPipe,
     Feed,
     personalInform,
     User,
-    Calendar
+    Calendar,
+    DataTableRecordComponent,
+    DataTableImgViewComponent
   ],
   providers: [
-    DataTablesService,
     FeedService,
     personalInformService,
     userService,

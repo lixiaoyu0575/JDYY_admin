@@ -6,7 +6,8 @@ import { DataTables } from './dataTables/dataTables.component';
 import { Feed } from './feed/feed.component';
 import {personalInform } from './personalInform/personalInform.component';
 import { User } from "./user/user.component";
-import { profile } from './profile.component'
+import { profile } from './profile.component';
+import { DataTableRecordComponent } from './dataTables/data-table-record/data-table-record.component';
 
 const routes: Routes = [
   {
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: 'dataTables', component: DataTables },
   {path:'feed',component:Feed},
   {path:'personalInform',component:personalInform},
-  {path:'user',component:User}
+  {path:'dataTableRecord/:examID',component:DataTableRecordComponent},
+  {path:'data',component:User}
 ];
 
 export const routing = RouterModule.forChild(routes);

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DataTablesService } from './dataTables.service';
+import { HeroService } from '../../report/components/List/hero.service';
 
 @Component({
   selector: 'data-tables',
@@ -9,23 +9,43 @@ import { DataTablesService } from './dataTables.service';
 export class DataTables {
 
     data;
-    filterQuery = "";
+  idFilterQuery = "";
+  nameFilterQuery = "";
+  ageFilterQuery = "";
+  examContentFilterQuery = "";
+  timeFilterQuery = "";
+  statusFilterQuery = "";
     rowsOnPage = 10;
     sortBy = "email";
     sortOrder = "asc";
+  startdate: string;
+  enddate: string;
 
-    constructor(private service: DataTablesService) {
-    this.service.getData().then((data) => {
-      this.data = data;
-    });
+    constructor(
+      // private service: DataTablesService,
+                private service: HeroService,
+    ) {
+      this.service.getAllItems().then((data) => {
+        this.data = data;
+        console.log(this.data);
+      });
   }
 
     toInt(num: string) {
         return +num;
     }
 
+  filterTime(): void {
+    this.service.getItemsByTime({
+      'startdate' : this.startdate,
+      'enddate' : this.enddate,
+    }).then((data) => {
+      this.data = data;
+    });
+  }
+
     sortByWordLength = (a: any) => {
         return a.city.length;
     }
-  
+
 }

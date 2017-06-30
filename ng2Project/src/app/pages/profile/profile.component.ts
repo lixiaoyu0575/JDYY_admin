@@ -34,7 +34,7 @@ export class profile {
   }
   gotoList(){
     console.log("gotoList!");
-    this.router.navigate(['../../report/list'],{relativeTo:this.route});
+    this.router.navigate(['../dataTables'],{relativeTo:this.route});
   }
   gotoMessage(){
     console.log("gotoMessage!");

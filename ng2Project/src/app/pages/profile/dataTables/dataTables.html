@@ -1,63 +1,130 @@
-
-        <ba-card>
-          <div class="widget" >
-            <div class="row">
-              <div class="col-md-8"><h2>我的报告列表</h2></div>
-            </div>
-            <br>
-            <div class="panel panel-default">
-
-                <table class="table table-hover" [mfData]="data | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
-                    <thead>
-                        <tr>
-                          <th style="width: 10%"></th>
-                            <th style="width: 15%">
-                              <mfDefaultSorter>ID</mfDefaultSorter>
-                            </th>
-                            <th style="width: 15%">
-                                <mfDefaultSorter by="name">姓名</mfDefaultSorter>
-                            </th>
-                            <th style="width: 15%">
-                                <mfDefaultSorter by="age">年龄</mfDefaultSorter>
-                            </th>
-                          <th style="width: 15%">
-                            <mfDefaultSorter by="type">检查类型</mfDefaultSorter>
-                          </th>
-                          <th style="width: 10%">
-                            <mfDefaultSorter [by]="sortByWordLength">时间</mfDefaultSorter>
-                          </th>
-                            <th style="width: 20%">
-                                <mfDefaultSorter [by]="sortByWordLength">申请状态</mfDefaultSorter>
-                            </th>
-                        </tr>
-                        <!--<tr>-->
-                            <!--<th colspan="5">-->
-                                <!--Filter by name:-->
-                                <!--<input class="form-control" [(ngModel)]="filterQuery" />-->
-                            <!--</th>-->
-                        <!--</tr>-->
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let item of mf.data;let num = index">
-                            <td>
-                                {{num+1}}
-                            </td>
-                            <td>{{item.name}}</td>
-                            <td>{{item.email}}</td>
-                            <td>{{item.age}}</td>
-                            <td>{{item.city | uppercase}}</td>
-                          <td>{{item.regDate}}</td>
-                          <td>未审核</td>
-                        </tr>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="5">
-                                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
+<div class="widgets">
+  <div class="row">
+    <ba-card title="我的影像" baCardClass="with-scroll" class="data-table-container">
+      <div class="row">
+        <div class="col-md-2">
+          <label>检查编号：</label>
+          <input class="form-control">
+        </div>
+        <div class="col-md-2">
+          <label>患者ID：</label>
+          <input class="form-control">
+        </div>
+        <div class="col-md-2">
+          <label>患者姓名：</label>
+          <input class="form-control">
+        </div>
+        <div class="col-md-2">
+          <label>影像类型：</label>
+          <select class="form-control" >
+            <option>CT</option>
+            <option>MR</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <label >报告状态：</label>
+          <select class="form-control" >
+            <option>无</option>
+            <option>无报告</option>
+            <option>待审核</option>
+            <option>已审核</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <label >来源：</label>
+          <select class="form-control" >
+            <option>西交大一附院</option>
+            <option>西交大二附院</option>
+          </select>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="row">
+            <h5 >日期检索：</h5>
+            <input type="date" class="form-control" [(ngModel)]="startdate" style="width: 33%">
+            <label style="margin-top: 2.4%;">～</label>
+            <input type="date" class="form-control" [(ngModel)]="enddate" style="width: 33%">
+            <button class="btn btn-primary" style="margin-left: 2%;width: 25%" (click)="filterTime()">查询</button>
           </div>
-        </ba-card>
+        </div>
+      </div>
+      <br>
+      <div class="panel panel-default">
+        <!--<div class="panel-heading">User information T</div>-->
+
+        <table class="table table-hover" [mfData]="data | idFilter : idFilterQuery |
+         nameFilter : nameFilterQuery | ageFilter : ageFilterQuery | examContentFilter : examContentFilterQuery |
+         timeFilter : timeFilterQuery | statusFilter : statusFilterQuery "
+               #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+          <thead>
+          <tr>
+            <th style="width: 10%">
+              <mfDefaultSorter by="hos">来源</mfDefaultSorter>
+            </th>
+            <th style="width: 10%;text-align: center">
+              <mfDefaultSorter by="pID">患者ID</mfDefaultSorter>
+            </th>
+            <th style="width: 10%;text-align: center">
+              <mfDefaultSorter by="eID">检查编号</mfDefaultSorter>
+            </th>
+            <th style="width: 10%;text-align: center">
+              <mfDefaultSorter by="name">姓名</mfDefaultSorter>
+            </th>
+            <th style="width: 10%;text-align: center">
+              <mfDefaultSorter by="gender">性别</mfDefaultSorter>
+            </th>
+            <th style="width: 10%;text-align: center">
+              <mfDefaultSorter by="age">年龄</mfDefaultSorter>
+            </th>
+            <th style="width: 10%;text-align: center">
+              <mfDefaultSorter by="examContent">影像类型</mfDefaultSorter>
+            </th>
+            <th style="width: 10%;text-align: center">
+              <mfDefaultSorter by="time">时间</mfDefaultSorter>
+            </th>
+            <th style="width: 10%;text-align: center">
+              <mfDefaultSorter by="status">报告</mfDefaultSorter>
+            </th>
+            <th style="width: 10%;text-align: center">
+              <mfDefaultSorter by="operation">操作</mfDefaultSorter>
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of mf.data" (dblclick)="onSelect(item);getDetails(item)">
+            <td style="text-align: center">{{item.sendHospital}}</td>
+            <td style="text-align: center">{{item.patientID}}</td>
+            <td style="text-align: center">{{item.examID}}</td>
+            <td style="text-align: center">{{item.name}}</td>
+            <td style="text-align: center">{{item.gender}}</td>
+            <td style="text-align: center">{{item.age}}</td>
+            <td style="text-align: center">{{item.examContent}}</td>
+            <td style="text-align: center">{{item.time}}</td>
+            <td style="text-align: center">{{item.status}}</td>
+            <td style="text-align: center">
+              <a *ngIf="item.status !== '待书写'" [routerLink]="'/pages/profile/dataTableRecord/'+item.examID" routerLinkActive="active" style="color: #8eb0e7" (click)="onSelect(item)">报告</a>
+              &nbsp;
+              <!--<a [routerLink]="'/pages/profile/imgs/'+item.examID" routerLinkActive="active" style="color: #8eb0e7" (click)="onSelect(item)" >浏览</a>-->
+               &nbsp;
+              <a href="" style="color: #8eb0e7">阅片</a>
+              &nbsp;
+              <a href="" style="color: #8eb0e7">分享</a>
+              &nbsp;
+              <a href="" style="color: #8eb0e7">删除</a>
+            </td>
+          </tr>
+          </tbody>
+          <tfoot>
+          <tr>
+            <td colspan="12">
+              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+          </tfoot>
+        </table>
+      </div>
+    </ba-card>
+  </div>
+</div>

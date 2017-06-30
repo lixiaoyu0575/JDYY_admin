@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SendappComponent } from './sendapp.component';
+import { DataTableRecordComponent } from './data-table-record.component';
 
-describe('SendappComponent', () => {
-  let component: SendappComponent;
-  let fixture: ComponentFixture<SendappComponent>;
+describe('DataTableRecordComponent', () => {
+  let component: DataTableRecordComponent;
+  let fixture: ComponentFixture<DataTableRecordComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SendappComponent ]
+      declarations: [ DataTableRecordComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SendappComponent);
+    fixture = TestBed.createComponent(DataTableRecordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

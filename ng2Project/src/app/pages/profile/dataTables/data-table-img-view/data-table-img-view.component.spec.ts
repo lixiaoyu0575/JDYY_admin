@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ImgViewerComponent } from './Apply-edit.component';
+import { DataTableImgViewComponent } from './data-table-img-view.component';
 
-describe('ImgViewerComponent', () => {
-  let component: ImgViewerComponent;
-  let fixture: ComponentFixture<ImgViewerComponent>;
+describe('DataTableImgViewComponent', () => {
+  let component: DataTableImgViewComponent;
+  let fixture: ComponentFixture<DataTableImgViewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ImgViewerComponent ]
+      declarations: [ DataTableImgViewComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ImgViewerComponent);
+    fixture = TestBed.createComponent(DataTableImgViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

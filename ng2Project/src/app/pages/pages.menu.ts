@@ -115,14 +115,14 @@ export const PAGES_MENU = [
               }
             }
           },
-          {
-            path: 'user',
-            data: {
-              menu: {
-                title: '个人主页'
-              }
-            }
-          },
+          // {
+          //   path: 'dataTableRecord',
+          //   data: {
+          //     menu: {
+          //       title: '个人影像列表'
+          //     }
+          //   }
+          // },
           {
             path:'personalInform',
             data:{
